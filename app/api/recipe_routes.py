@@ -8,7 +8,7 @@ from app.models import db
 import os
 from flask import redirect, request
 from sqlalchemy import insert
-from app.models import Ingredient, recipe_ingredient
+# from app.models import Ingredient, recipe_ingredient
 
 
 recipe_routes = Blueprint('recipes', __name__, url_prefix="/api/recipes")

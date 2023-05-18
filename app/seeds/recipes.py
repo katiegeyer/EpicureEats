@@ -1,5 +1,6 @@
 from datetime import datetime
 from app.models import db, Recipe, environment, SCHEMA
+from sqlalchemy.sql import text
 
 
 def seed_recipes():
@@ -41,7 +42,7 @@ def seed_recipes():
         recipe = Recipe(
             recipe_name=recipe_name,
             recipe_owner=recipe_owner,
-            user_id=1,  
+            user_id=1,
             type=type,
             cook_time=cook_time,
             preview_img=preview_img,
@@ -55,7 +56,15 @@ def seed_recipes():
 
 
 # Call the function to seed the data
-seed_recipes()
+# seed_recipes()
+
+def undo_recipes():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.recipes RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM recipes"))
+
+    db.session.commit()
 
 
 def seed_more_recipes():
@@ -111,4 +120,12 @@ def seed_more_recipes():
 
 
 # Call the function to seed the data
-seed_more_recipes()
+# seed_more_recipes()
+
+def undo_more_recipes():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.recipes RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM recipes"))
+
+    db.session.commit()

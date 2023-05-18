@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .recipe_ingredient_join import recipe_ingredient
+# from .recipe_ingredient_join import recipe_ingredient
 
 
 class Recipe(db.Model):
@@ -20,14 +20,14 @@ class Recipe(db.Model):
     updated_at = db.Column(db.Date, nullable=False)
 
     user = db.relationship('User', back_populates='recipes')
-    tags = db.relationship('RecipeTag', back_populates='recipes')
-    ingredients = db.relationship(
-        'Ingredient', secondary=recipe_ingredient, back_populates='recipes')
-    ratings = db.relationship('RecipeRating', back_populates='recipes')
-    boxes = db.relationship('RecipeBoxItem', back_populates='recipes')
-    folders = db.relationship('RecipeFolder', back_populates='recipes')
-    comments = db.relationship('RecipeComment', back_populates='recipes')
-    preparations = db.relationship('Preparation', back_populates='recipes', cascade='all, delete-orphan')
+    # tags = db.relationship('RecipeTag', back_populates='recipes')
+    # ingredients = db.relationship(
+    #     'Ingredient', secondary=recipe_ingredient, back_populates='recipes')
+    # ratings = db.relationship('RecipeRating', back_populates='recipes')
+    # boxes = db.relationship('RecipeBoxItem', back_populates='recipes')
+    # folders = db.relationship('RecipeFolder', back_populates='recipes')
+    # comments = db.relationship('RecipeComment', back_populates='recipes')
+    # preparations = db.relationship('Preparation', back_populates='recipes', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
