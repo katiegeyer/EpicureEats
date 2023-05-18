@@ -14,13 +14,12 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    recipes = db.relationship('Recipe', backpopulates='users')
-    ratings = db.relationship('RecipeRating', backpopulates='users')
-    boxes = db.relationship('RecipeBox', backpopulates='users')
-    comments = db.relationship('RecipeComment', backpopulates='users')
-    liked_comments = db.relationship('CommentLike', backpopulates='users')
-    grocery_lists = db.relationship('GroceryList', backpopulates='users')
-
+    recipes = db.relationship('Recipe', back_populates='users')
+    ratings = db.relationship('RecipeRating', back_populates='users')
+    boxes = db.relationship('RecipeBox', back_populates='users')
+    comments = db.relationship('RecipeComment', back_populates='users')
+    liked_comments = db.relationship('CommentLike', back_populates='users')
+    grocery_lists = db.relationship('GroceryList', back_populates='users')
 
     @property
     def password(self):

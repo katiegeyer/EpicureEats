@@ -1,4 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from sqlalchemy.sql import func
+
 
 class RecipeComment(db.Model):
     __tablename__ ='recipe_comments'

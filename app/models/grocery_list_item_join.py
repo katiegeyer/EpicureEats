@@ -4,7 +4,7 @@ grocery_list_item = db.Table(
     'grocery_list_items',
     db.Model.metadata,
     db.Column("grocery_list_id", db.ForeignKey(
-        add_prefix_for_prod("grocery_list.id")), primary_key=True),
+        add_prefix_for_prod("grocery_lists.id")), primary_key=True),
     db.Column("recipe_ingredient_id", db.ForeignKey(
         add_prefix_for_prod("recipes.id")), primary_key=True),
 )
