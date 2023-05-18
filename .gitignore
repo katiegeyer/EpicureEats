@@ -6,7 +6,11 @@ Pipfile
 
 /.vscode/
 
+<<<<<<< HEAD
 /react-app/node_modules/
+=======
+/react-app/node_modules
+>>>>>>> recipes
 
 
 # production
