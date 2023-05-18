@@ -27,6 +27,7 @@ class Recipe(db.Model):
     boxes = db.relationship('RecipeBoxItem', back_populates='recipes')
     folders = db.relationship('RecipeFolder', back_populates='recipes')
     comments = db.relationship('RecipeComment', back_populates='recipes')
+    preparations = db.relationship('Preparation', back_populates='recipes', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
