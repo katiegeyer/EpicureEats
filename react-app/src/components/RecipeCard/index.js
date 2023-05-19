@@ -1,5 +1,7 @@
 
 import './RecipeCard.css';
+import DeleteRecipe from '../DeleteRecipe';
+import OpenModalButton from '../OpenModalButton';
 
 const RecipeCard = ({ recipe }) => {
     return (
@@ -9,6 +11,11 @@ const RecipeCard = ({ recipe }) => {
             <p className="recipe-card__type">{recipe.type}</p>
             <p className="recipe-card__cook-time">{recipe.cook_time}</p>
             <p className="recipe-card__owner">{recipe.recipe_owner}</p>
+            <OpenModalButton
+                buttonText="Delete"
+                recipeId={recipe.id}
+                modalComponent={<DeleteRecipe recipeId={recipe.id} />}
+            />
         </div>
     );
 };

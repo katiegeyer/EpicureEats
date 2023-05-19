@@ -4,10 +4,12 @@ import { getAllRecipesThunk } from '../../store/recipes'
 import RecipeCard from '../RecipeCard';
 import CreateRecipeForm from '../CreateRecipeForm'
 import OpenModalButton from "../OpenModalButton";
+// import { useParams } from 'react-router-dom';
 
 const RecipePage = () => {
     const dispatch = useDispatch();
     const recipes = useSelector(state => Object.values(state.recipes.allRecipes));
+    
     // console.log('state', state);
 
     useEffect(() => {
@@ -19,7 +21,7 @@ const RecipePage = () => {
         <OpenModalButton
         buttonText="Post a Recipe"
         onItemClick={() => {
-            
+
         }}
         modalComponent={<CreateRecipeForm />}
       />
