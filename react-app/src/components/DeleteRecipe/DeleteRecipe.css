@@ -1,0 +1,37 @@
+.confirm-delete-wrapper {
+    height: 10rem;
+    width: 25rem;
+    padding: 1rem;
+}
+
+.confirm-delete-title {
+    font-size: 30px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 2rem;
+    padding-bottom: 5px;
+}
+
+.confirm-delete-question {
+    margin-bottom: 1rem;
+}
+
+.confirm-delete-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-delete-delete {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    padding: 2px 4px;
+    margin-left: 1rem;
+    border: 1px solid lightgray;
+
+}

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getRecipeThunk } from '../../store/recipes';
 import RecipeCard from '../RecipeCard';
 import { NavLink } from 'react-router-dom';
 
 
-function PlaylistDetailsPage({ recipeId }) {
+function RecipeDetails() {
     const dispatch = useDispatch();
-    //   const { recipeId } = useParams();
+    const { id } = useParams();
     const recipe = useSelector((state) => state.recipes.singleRecipe);
     const sessionUser = useSelector((state) => state.session.user);
     const owner = recipe.recipe_owner;
@@ -16,8 +16,8 @@ function PlaylistDetailsPage({ recipeId }) {
     //   const recipeIngredients = useSelector((state) => state)
 
     useEffect(() => {
-        dispatch(getRecipeThunk(recipeId));
-    }, [dispatch, recipeId]);
+        dispatch(getRecipeThunk(id));
+    }, [dispatch, id]);
 
     return (
         <>
@@ -36,4 +36,4 @@ function PlaylistDetailsPage({ recipeId }) {
     )
 }
 
-export default PlaylistDetailsPage;
+export default RecipeDetails;

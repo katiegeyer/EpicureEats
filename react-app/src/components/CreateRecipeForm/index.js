@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { createRecipeThunk } from "../../store/recipes";
 import { useModal } from "../../context/Modal";
-// import { Redirect } from "react-router-dom";
-import OpenModalButton from "../OpenModalButton";
-
+import './CreateRecipeForm.css'; // Remember to import your CSS
 
 function CreateRecipeForm() {
     const dispatch = useDispatch();
@@ -17,8 +14,6 @@ function CreateRecipeForm() {
     const [cookTime, setCookTime] = useState("");
     const [previewImg, setPreviewImg] = useState("");
     const [errors, setErrors] = useState([]);
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,17 +34,10 @@ function CreateRecipeForm() {
         console.log(recipeName, recipeOwner, type, cookTime, previewImg)
     };
 
-
-
     return (
-        <>
+        <div className="CreateRecipeForm">
             <h1>Post New Recipe</h1>
             <form onSubmit={handleSubmit}>
-                {/* <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))} */}
-                {/* </ul> */}
                 <label>
                     Recipe Name
                     <input
@@ -76,12 +64,6 @@ function CreateRecipeForm() {
                         <option value="Vegetarian">Vegetarian</option>
                         <option value="Vegan">Vegan</option>
                     </select>
-                    {/* <input
-                        type="select"
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                        required
-                    /> */}
                 </label>
                 <label>
                     Cook Time
@@ -103,7 +85,7 @@ function CreateRecipeForm() {
                 </label>
                 <button type="submit">Enter</button>
             </form>
-        </>
+        </div>
     );
 }
 

@@ -7,6 +7,7 @@ import RecipePage from "./components/RecipePage";
 
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import RecipeDetails from "./components/GetOneRecipe";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,9 +27,12 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route path="/recipes/:id">
+            <RecipeDetails />
+          </Route>
           <Route path="/recipes">
             <RecipePage />
-            </Route>
+          </Route>
         </Switch>
       )}
     </>
