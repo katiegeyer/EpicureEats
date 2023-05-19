@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllRecipesThunk } from '../../store/recipes'
 import RecipeCard from '../RecipeCard';
+import CreateRecipeForm from '../CreateRecipeForm'
+import OpenModalButton from "../OpenModalButton";
 
 const RecipePage = () => {
     const dispatch = useDispatch();
@@ -13,9 +15,18 @@ const RecipePage = () => {
     }, [dispatch]);
 
     return (
+        <>
+        <OpenModalButton
+        buttonText="Post a Recipe"
+        onItemClick={() => {
+            
+        }}
+        modalComponent={<CreateRecipeForm />}
+      />
         <div className="recipes-list">
             {recipes.map(recipe => <RecipeCard key={recipe.id} recipe={recipe} />)}
         </div>
+        </>
     );
 };
 

@@ -45,7 +45,22 @@ export const getAllRecipesThunk = () => async (dispatch) => {
     }
 };
 
-const initialState = { allRecipes: {}, singleRecipes: {} }
+export const createRecipeThunk = (recipe) => async (dispatch) => {
+    const response = await fetch('/api/recipes/new', {
+        method: 'POST',
+        body: recipe
+    })
+
+    if (response.ok) {
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(createRecipeAction(data))
+    }
+}
+
+const initialState = { allRecipes: {}, singleRecipe: {} }
 
 export default function recipesReducer(state = initialState, action) {
     let newState;
@@ -75,11 +90,11 @@ export default function recipesReducer(state = initialState, action) {
         //     return newState;
         // }
 
-        // case CREATE_RECIPE:
-        //     newState = { ...state }
-        //     newState.singleRecipe = { ...action.recipeId }
-        //     newState.allRecipes[action.recipeId.id] = action.recipeId
-        //     return newState
+        case CREATE_RECIPE:
+            newState = { ...state }
+            newState.singleRecipe = { ...action.recipe }
+            newState.allRecipes[action.recipe.id] = action.recipe
+            return newState
         // case DELETE_RECIPE:
         //     newState = { ...state, allRecipes: { ...state.allRecipes } }
         //     delete newState.allRecipes[action.recipeId]

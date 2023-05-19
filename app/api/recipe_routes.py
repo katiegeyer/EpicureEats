@@ -13,10 +13,42 @@ from sqlalchemy import insert
 
 recipe_routes = Blueprint('recipes', __name__, url_prefix="/api/recipes")
 
+
 @recipe_routes.route('/')
 def get_all_recipes():
     recipes = Recipe.query.all()
     return {"recipes": [recipe.to_dict() for recipe in recipes]}
+
+# @recipe_routes.route('/new', methods=['POST'])
+# def create_recipe():
+#     form = RecipeForm()
+
+#     form['csrf_token'].data = request.cookies['csrf_token']
+#     if form.validate_on_submit():
+#         preview_img_file = request.files["preview_img"]
+#         preview_img_file.filename = get_unique_filename(
+#             preview_img_file.filename)
+#         preview_img_upload = upload_file_to_s3(preview_img_file)
+
+#         if "url" not in preview_img_upload:
+#             return preview_img_upload, 400
+
+#         preview_img_url = preview_img_upload["url"]
+#         new_recipe = Recipe(
+#             recipe_name=form.data['recipe_name'],
+#             recipe_owner=form.data['recipe_owner'],
+#             type=form.data['type'],
+#             cook_time=form.data['cook_time'],
+#             user_id=current_user.id,
+#             preview_img=preview_img_url,
+#             created_at=date.today(),
+#             updated_at=date.today()
+#         )
+#         db.session.add(new_recipe)
+#         db.session.commit()
+#         return new_recipe.to_dict()
+#     return {"errors": form.errors}
+
 
 @recipe_routes.route('/new', methods=['POST'])
 def create_recipe():
@@ -24,15 +56,9 @@ def create_recipe():
 
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        preview_img_file = request.files["preview_img"]
-        preview_img_file.filename = get_unique_filename(
-            preview_img_file.filename)
-        preview_img_upload = upload_file_to_s3(preview_img_file)
+        # No need to upload a file, just use the provided URL directly
+        preview_img_url = form.data['preview_img']
 
-        if "url" not in preview_img_upload:
-            return preview_img_upload, 400
-
-        preview_img_url = preview_img_upload["url"]
         new_recipe = Recipe(
             recipe_name=form.data['recipe_name'],
             recipe_owner=form.data['recipe_owner'],
@@ -47,6 +73,7 @@ def create_recipe():
         db.session.commit()
         return new_recipe.to_dict()
     return {"errors": form.errors}
+
 
 @recipe_routes.route('/<int:id>', methods=["PUT"])
 def update_recipe(id):
@@ -79,6 +106,7 @@ def update_recipe(id):
 
     return {"errors": form.errors}
 
+
 @recipe_routes.route('/<int:id>', methods=['DELETE'])
 def delete_recipe(id):
     recipe = Recipe.query.get(id)
@@ -89,6 +117,7 @@ def delete_recipe(id):
         db.session.commit()
         return {'success': 'recipe deleted'}
 
+
 @recipe_routes.route('/<int:id>', methods=['GET'])
 def get_recipe(id):
     recipe = Recipe.query.get(id)
@@ -96,6 +125,7 @@ def get_recipe(id):
         return recipe.to_dict()
     else:
         return {"errors": "recipe not found"}
+
 
 @recipe_routes.route('/<int:recipe_id>/ingredients/<int:ingredient_id>', methods=['POST'])
 def add_ingredient_to_recipe(recipe_id, ingredient_id):
@@ -112,6 +142,7 @@ def add_ingredient_to_recipe(recipe_id, ingredient_id):
     db.session.commit()
 
     return {"success": "Ingredient added to the recipe"}
+
 
 @recipe_routes.route('/current')
 @login_required
