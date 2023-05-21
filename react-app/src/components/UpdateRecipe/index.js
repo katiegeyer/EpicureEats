@@ -1,157 +1,170 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRecipeThunk } from "../../store/recipes";
+import { getRecipeThunk } from "../../store/recipes";
+import { useModal } from "../../context/Modal";
+import { useHistory } from 'react-router-dom';
 
-// import { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { updateRecipeThunk } from '../../store/recipes';
-// import
-// import { useHistory } from 'react-router-dom';
-// import { useModal } from '../../context/Modal';
-// import Upload from '../UploadImg';
-// import './UpdatePlaylist.css'
-
-// const UpdatePlaylistForm = ({ playlistId }) => {
-//     const singlePlaylist = useSelector((state) => state.playlists.singlePlaylist);
-//     // console.log('single playlist', singlePlaylist)
-//     const dispatch = useDispatch();
-//     const history = useHistory();
-//     const { closeModal } = useModal();
-
-//     const playlist = useSelector(state => state.playlists.singlePlaylist)
+import { useParams } from "react-router-dom";
 
 
-//     useEffect(() => {
-//         const fetchPlaylistDetails = async () => {
-//             const singlePlaylist = dispatch(getPlaylistThunk(playlistId));
-//             if (singlePlaylist) {
-//                 setName(singlePlaylist.name)
-//                 setPublic(singlePlaylist.is_public)
-//                 setDescription(singlePlaylist.description)
-//                 setPreviewImg(playlist.preview_img || '')
-//             }
-//         }
-//         fetchPlaylistDetails();
-//     }, [dispatch, playlistId]);
+function UpdateRecipeForm({ recipeId }) {
+    const dispatch = useDispatch();
+    const sessionUser = useSelector((state) => state.session.user);
+    const { closeModal } = useModal();
+    const history = useHistory();
 
-//     const [name, setName] = useState(singlePlaylist.name)
-//     const [description, setDescription] = useState(singlePlaylist.description)
-//     const [is_public, setPublic] = useState(singlePlaylist.is_public)
-//     const [preview_img, setPreviewImg] = useState('')
+
+    // const { id: recipeId } = useParams();
+    console.log('id', recipeId)
+    const singleRecipe = useSelector((state) => state.recipes.singleRecipe);
 
 
 
+    // useEffect(() => {
+    //     const fetchRecipeDetails = async () => {
+    //         const singleRecipe = dispatch(getRecipeThunk(recipeId));
+    //         if (singleRecipe) {
+    //             setRecipeName(singleRecipe.recipe_name)
+    //             setRecipeOwner(singleRecipe.recipe_owner)
+    //             setType(singleRecipe.type)
+    //             setCookTime(singleRecipe.cook_time)
+    //             setPreviewImg(singleRecipe.preview_img || '')
+    //         }
+    //     }
+    //     fetchRecipeDetails();
+    // }, [dispatch, recipeId]);
 
-//     console.log('playlist id', playlistId)
 
 
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         const updatedFormData = new FormData();
-//         console.log('form data', updatedFormData);
-//         updatedFormData.append('name', name)
-//         updatedFormData.append('is_public', is_public)
-//         updatedFormData.append('description', description)
-//         updatedFormData.append('preview_img', preview_img)
-//         // const updatedPlaylist = await dispatch(updatePlaylistThunk(playlistId, updatedFormData));
-//         console.log('updated playlist', updatedFormData);
-//         await dispatch(updatePlaylistThunk(playlistId, updatedFormData));
-//         closeModal();
-//         history.push(`/playlists/${playlistId}`);
-//     }
+    // const [recipe_name, setRecipeName] = useState(singleRecipe.recipe_name);
+    // const [recipe_owner, setRecipeOwner] = useState(singleRecipe.recipe_owner);
+    // const [type, setType] = useState(singleRecipe.type);
+    // const [cook_time, setCookTime] = useState(singleRecipe.cook_time);
+    // const [preview_img, setPreviewImg] = useState(singleRecipe.preview_img);
+    const [recipe_name, setRecipeName] = useState('');
+    const [recipe_owner, setRecipeOwner] = useState('');
+    const [type, setType] = useState('');
+    const [cook_time, setCookTime] = useState('');
+    const [preview_img, setPreviewImg] = useState('');
 
-//     return (
-//         <>
+    const [errors, setErrors] = useState([]);
+    // console.log('name', preview_img)
 
-//             <form
-//                 className='create-playlist-form'
-//                 // action={`/ api / playlists / ${playlistId}`}
-//                 // method="PUT"
-//                 encType="multipart/form-data"
-//                 onSubmit={handleSubmit}
-//             >
-//                 <div className='upload-song-form-wrapped'>
-//                     <div className='upload-song-form-info'>
-//                         <div style={{ paddingBottom: '1rem' }}>
-//                             <div>
-//                                 <h5 style={{ display: 'inline-block', fontSize: '12px', color: 'red' }} >*</h5>
-//                                 <label style={{ paddingBottom: '.5rem' }}>&nbsp;Title</label>
-//                             </div>
-//                             <input
-//                                 className='upload-song-form-all-input upload-song-form-title'
-//                                 type='text'
-//                                 name='name'
-//                                 value={name}
-//                                 onChange={(e) => setName(e.target.value)}
-//                                 required
-//                             />
-//                         </div>
-//                         <div>
-//                                 <h5 style={{ display: 'inline-block', fontSize: '12px', color: 'red' }} >*</h5>
-//                                 <label style={{ paddingBottom: '.5rem' }}>&nbsp;Is Public</label>
-//                             </div>
-//                         <input
-//                             type="checkbox"
-//                             name='is_public'
-//                             checked={is_public}
-//                             onChange={(e) => setPublic(e.target.value)}
-//                         />
-//                         <div style={{ paddingBottom: '1rem' }}>
-//                             <div>
-//                                 <h5 style={{ display: 'inline-block', fontSize: '12px', color: 'red' }} >*</h5>
-//                                 <label style={{ paddingBottom: '.5rem' }}>&nbsp;Description</label>
-//                             </div>
-//                             <textarea
-//                                 id="story"
-//                                 name="description"
-//                                 rows="5"
-//                                 cols="40"
-//                                 value={description}
-//                                 onChange={(e) => setDescription(e.target.value)}
-//                                 required
-//                             />
-//                             {/* <label>
-//                                 Preview Image:
-//                                 <Upload onChange={(e) => setPreviewImg(e.target.files[0])} />
-//                             </label> */}
-//                         </div>
-//                         {/* <div
-//                                             style={{ paddingBottom: '1rem' }}
-//                                         > */}
-//                         {/* <div>
-//                                             <h5 style={{ display: 'inline-block', fontSize: '12px', color: 'red' }} >*</h5>
-//                                             <label style={{ paddingBottom: '.5rem' }}>
-//                                                 &nbsp;Preview Image
-//                                             </label>
+    useEffect(() => {
+        const fetchRecipeDetails = async () => {
+            await dispatch(getRecipeThunk(recipeId));
+        };
+        fetchRecipeDetails();
+    }, [dispatch, recipeId]);
 
-//                                         </div>
-//                                         <input
-//                                             className='upload_playlist_img'
-//                                             type='text'
-//                                             name='preview_img'
-//                                             value={formData.preview_img}
-//                                             onChange={handleChange}
-//                                             required
-//                                         >
 
-//                                         </input> */}
-//                         {/* <label>
-//                                             Preview Image:
-//                                             <Upload onChange={(e) => handleChange({ target: { name: 'preview_img', value: e.target.files[0] } })} />
+    useEffect(() => {
+        if (singleRecipe) {
+            setRecipeName(singleRecipe.recipe_name);
+            setRecipeOwner(singleRecipe.recipe_owner);
+            setType(singleRecipe.type);
+            setCookTime(singleRecipe.cook_time);
+            setPreviewImg(singleRecipe.preview_img || '');
+        }
+    }, [singleRecipe]);
 
-//                                             {/* <Upload onChange={(e) => setPreviewImg(e.target.files[0])} /> */}
-//                         {/* </label> */}
+    // useEffect(() => {
+    //     const fetchRecipeDetails = async () => {
+    //         const singleRecipe = dispatch(getRecipeThunk(recipeId));
+    //         if (singleRecipe) {
+    //             setRecipeName(singleRecipe.recipe_name)
+    //             setRecipeOwner(singleRecipe.recipe_owner)
+    //             setType(singleRecipe.type)
+    //             setCookTime(singleRecipe.cook_time)
+    //             setPreviewImg(singleRecipe.preview_img || '')
+    //         }
+    //     }
+    //     fetchRecipeDetails();
+    // }, [dispatch, recipeId]);
 
-//                         <div className='upload-song-form-bottom'>
-//                             <div style={{ display: 'flex', alignItems: 'center' }}>
-//                                 <h5 style={{ fontSize: '12px', color: 'red' }} >*</h5>
-//                                 <h5>&nbsp;Required fields</h5>
-//                             </div>
-//                             <div className='upload-song-form-bottom-bar-button-div'>
-//                                 <button type='submit'>Save</button>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </form>
-//         </>
-//     )
-// }
-// export default UpdatePlaylistForm
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const updatedFormData = new FormData()
+        updatedFormData.append('recipe_name', recipe_name)
+        updatedFormData.append('recipe_owner', recipe_owner)
+        updatedFormData.append('type', type)
+        updatedFormData.append('cook_time', cook_time)
+        updatedFormData.append('preview_img', preview_img)
+        // const updatedRecipe = {
+        //     recipe_name: recipe_name,
+        //     recipe_owner: recipe_owner,
+        //     type: type,
+        //     cook_time: cook_time,
+        //     preview_img: preview_img,
+        // };
+        console.log('FORM DATA', updatedFormData)
+        const data = await dispatch(updateRecipeThunk(recipeId, updatedFormData));
+        if (data) {
+            setErrors(data);
+        }
+        // await dispatch(updateRecipeThunk(recipeId));
+        closeModal();
+        // history.push(`/recipes/${recipeId}`);
+    };
+    console.log('single', singleRecipe)
+
+
+    return (
+        <div className="CreateRecipeForm">
+            <h1>Update Recipe</h1>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Recipe Name
+                    <input
+                        type="text"
+                        value={recipe_name}
+                        onChange={(e) => setRecipeName(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Recipe Owner
+                    <input
+                        type="text"
+                        value={recipe_owner}
+                        onChange={(e) => setRecipeOwner(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Type
+                    <select name="type" id="type" value={type} onChange={(e) => setType(e.target.value)}>
+                        <option></option>
+                        <option value="Non-vegetarian">Non-Vegetarian</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Vegan">Vegan</option>
+                    </select>
+                </label>
+                <label>
+                    Cook Time
+                    <input
+                        type="text"
+                        value={cook_time}
+                        onChange={(e) => setCookTime(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Image of Dish
+                    <input
+                        type="url"
+                        value={preview_img}
+                        onChange={(e) => setPreviewImg(e.target.value)}
+                        required
+                    />
+                </label>
+                <button type="submit">Enter</button>
+            </form>
+        </div>
+
+    );
+}
+
+export default UpdateRecipeForm;

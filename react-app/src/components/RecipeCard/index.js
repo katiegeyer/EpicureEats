@@ -3,14 +3,15 @@ import './RecipeCard.css';
 import DeleteRecipe from '../DeleteRecipe';
 import OpenModalButton from '../OpenModalButton';
 import { NavLink } from 'react-router-dom';
+import UpdateRecipeForm from '../UpdateRecipe';
 
 const RecipeCard = ({ recipe }) => {
     return (
         <div className="recipe-card">
             <div>{recipe && <NavLink className='single-recipe-card-image-nav' to={`/recipes/${recipe.id}`} recipe={recipe}>
-                    <img className='recipe-card__image' src={`${recipe.preview_img}`}></img>
-                    {/* <img src={`${playlistsSongs[0].preview_img}`}></img> */}
-                </NavLink>}
+                <img className='recipe-card__image' src={`${recipe.preview_img}`}></img>
+                {/* <img src={`${playlistsSongs[0].preview_img}`}></img> */}
+            </NavLink>}
             </div>
 
             {/* <img className="recipe-card__image" src={recipe.preview_img} alt={recipe.recipe_name} /> */}
@@ -22,6 +23,11 @@ const RecipeCard = ({ recipe }) => {
                 buttonText="Delete"
                 recipeId={recipe.id}
                 modalComponent={<DeleteRecipe recipeId={recipe.id} />}
+            />
+            <OpenModalButton
+                buttonText="Update"
+                recipeId={recipe.id}
+                modalComponent={<UpdateRecipeForm recipeId={recipe.id} />}
             />
         </div>
     );
