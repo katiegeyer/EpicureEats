@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-# from .recipe_ingredient_join import recipe_ingredient
+from .recipe_ingredient_join import recipe_ingredient
+from .ingredient import Ingredient
 
 
 class Recipe(db.Model):
@@ -21,8 +22,8 @@ class Recipe(db.Model):
 
     user = db.relationship('User', back_populates='recipes')
     # tags = db.relationship('RecipeTag', back_populates='recipes')
-    # ingredients = db.relationship(
-    #     'Ingredient', secondary=recipe_ingredient, back_populates='recipes')
+    ingredients = db.relationship(
+        'Ingredient', secondary=recipe_ingredient, back_populates='recipes')
     # ratings = db.relationship('RecipeRating', back_populates='recipes')
     # boxes = db.relationship('RecipeBoxItem', back_populates='recipes')
     # folders = db.relationship('RecipeFolder', back_populates='recipes')
@@ -42,7 +43,7 @@ class Recipe(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
             # 'user': self.user.to_dict() if self.user else None,
             # 'tags': [tag.to_dict() for tag in self.tags] if self.tags else [],
-            # 'ingredients': [ingredient.to_dict() for ingredient in self.ingredients] if self.ingredients else [],
+            'ingredients': [ingredient.to_dict() for ingredient in self.ingredients] if self.ingredients else [],
             # 'ratings': [rating.to_dict() for rating in self.ratings] if self.ratings else [],
             # 'boxes': [box.to_dict() for box in self.boxes] if self.boxes else [],
             # 'folders': [folder.to_dict() for folder in self.folders] if self.folders else [],

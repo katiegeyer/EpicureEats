@@ -3,11 +3,13 @@ from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
 from app.models import Recipe
 from app.forms import RecipeForm
+from app.models import Ingredient
 from datetime import date
 from app.models import db
 import os
 from flask import redirect, request
 from sqlalchemy import insert
+from app.forms import IngredientForm
 # from app.models import Ingredient, recipe_ingredient
 
 
@@ -127,21 +129,46 @@ def get_recipe(id):
         return {"errors": "recipe not found"}
 
 
-@recipe_routes.route('/<int:recipe_id>/ingredients/<int:ingredient_id>', methods=['POST'])
-def add_ingredient_to_recipe(recipe_id, ingredient_id):
-    recipe = Recipe.query.get(recipe_id)
-    ingredient = Ingredient.query.get(ingredient_id)
+# @recipe_routes.route('/<int:recipe_id>/ingredients/<int:ingredient_id>', methods=['POST'])
+# def add_ingredient_to_recipe(recipe_id, ingredient_id):
+#     recipe = Recipe.query.get(recipe_id)
+#     ingredient = Ingredient.query.get(ingredient_id)
 
-    if not recipe or not ingredient:
-        return {"error": "Recipe or Ingredient not found"}, 404
+#     if not recipe or not ingredient:
+#         return {"error": "Recipe or Ingredient not found"}, 404
 
-    # Add the ingredient to the recipe
-    ins = recipe_ingredient.insert().values(
-        recipe_id=recipe_id, ingredient_id=ingredient_id)
-    db.session.execute(ins)
-    db.session.commit()
+#     # Add the ingredient to the recipe
+#     ins = recipe_ingredient.insert().values(
+#         recipe_id=recipe_id, ingredient_id=ingredient_id)
+#     db.session.execute(ins)
+#     db.session.commit()
 
-    return {"success": "Ingredient added to the recipe"}
+#     return {"success": "Ingredient added to the recipe"}
+
+@recipe_routes.route('/<int:recipe_id>/ingredients', methods=['POST'])
+def add_ingredient_to_recipe(recipe_id):
+    form = IngredientForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        recipe = Recipe.query.get(recipe_id)
+
+        if not recipe:
+            return {"error": "Recipe not found"}, 404
+
+        # Find the ingredient by name, or create it if it doesn't exist
+        ingredient = Ingredient.query.filter_by(name=form.data['name']).first()
+        if not ingredient:
+            ingredient = Ingredient(name=form.data['name'])
+            db.session.add(ingredient)
+            db.session.commit()
+
+        # Add the ingredient to the recipe
+        recipe.ingredients.append(ingredient)
+        db.session.commit()
+        print(ingredient)
+
+        return {"success": "Ingredient added to the recipe"}
 
 
 @recipe_routes.route('/current')
@@ -149,3 +176,88 @@ def add_ingredient_to_recipe(recipe_id, ingredient_id):
 def get_current_user_recipes():
     recipes = Recipe.query.filter_by(user_id=current_user.id).all()
     return {"recipes": [recipe.to_dict() for recipe in recipes]}
+
+# INGREDIENT ROUTES
+
+# Get all ingredients for a specific recipe
+
+
+@recipe_routes.route('/<int:recipe_id>/ingredients', methods=['GET'])
+def get_ingredients(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    if recipe:
+        return {"ingredients": [ingredient.to_dict() for ingredient in recipe.ingredients]}
+    else:
+        return {"errors": "recipe not found"}
+
+# Add a new ingredient to a recipe
+
+
+@recipe_routes.route('/<int:recipe_id>/ingredients', methods=['POST'])
+def add_ingredient(recipe_id):
+    form = IngredientForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        recipe = Recipe.query.get(recipe_id)
+
+        if not recipe:
+            return {"error": "Recipe not found"}, 404
+
+        # Find the ingredient by name, or create it if it doesn't exist
+        ingredient = Ingredient.query.filter_by(name=form.data['name']).first()
+        if not ingredient:
+            ingredient = Ingredient(
+                name=form.data['name'], quantity=form.data['quantity'])
+            db.session.add(ingredient)
+            db.session.commit()
+
+        # Add the ingredient to the recipe
+        recipe.ingredients.append(ingredient)
+        db.session.commit()
+
+        print(ingredient)
+        return ingredient.to_dict()
+
+    return {"errors": form.errors}
+
+# Update an ingredient
+
+
+@recipe_routes.route('/<int:recipe_id>/ingredients/<int:ingredient_id>', methods=['PUT'])
+def update_ingredient(recipe_id, ingredient_id):
+    form = IngredientForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        ingredient = Ingredient.query.get(ingredient_id)
+
+        if not ingredient:
+            return {"errors": "ingredient doesn't exist"}
+
+        ingredient.name = form.data['name']
+        ingredient.quantity = form.data['quantity']
+
+        db.session.add(ingredient)
+        db.session.commit()
+
+        return ingredient.to_dict()
+
+    return {"errors": form.errors}
+
+# Delete an ingredient from a recipe
+
+
+@recipe_routes.route('/<int:recipe_id>/ingredients/<int:ingredient_id>', methods=['DELETE'])
+def remove_ingredient(recipe_id, ingredient_id):
+    recipe = Recipe.query.get(recipe_id)
+    ingredient = Ingredient.query.get(ingredient_id)
+
+    if not recipe or not ingredient:
+        return {"error": "Recipe or Ingredient not found"}, 404
+
+    if ingredient in recipe.ingredients:
+        recipe.ingredients.remove(ingredient)
+        db.session.commit()
+
+    return {'success': 'ingredient removed'}
