@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createRecipeThunk } from "../../store/recipes";
 import { useModal } from "../../context/Modal";
@@ -6,6 +7,7 @@ import './CreateRecipeForm.css'; // Remember to import your CSS
 
 function CreateRecipeForm() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
     const { closeModal } = useModal();
     const [recipeName, setRecipeName] = useState("");
@@ -30,7 +32,9 @@ function CreateRecipeForm() {
         if (data) {
             setErrors(data);
         }
-        closeModal();
+        history.push(`/recipes/${data.id}`)
+        closeModal()
+
         console.log(recipeName, recipeOwner, type, cookTime, previewImg)
     };
 

@@ -265,6 +265,7 @@ export const createRecipeThunk = (recipe) => async (dispatch) => {
             return data.errors
         }
         dispatch(createRecipeAction(data))
+        return data;
     }
 }
 
