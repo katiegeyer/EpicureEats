@@ -9,6 +9,7 @@ class RecipeForm(FlaskForm):
     recipe_owner = StringField("Recipe Owner", validators=[DataRequired()])
     type = SelectField(
         "Type", choices=[("Non-vegetarian", "Non-vegetarian"), ("Vegetarian", "Vegetarian"), ("Vegan", "Vegan")], validators=[DataRequired()])
-    cook_time = FloatField("Cook Time")
+    cook_time = StringField("Cook Time")
     preview_img = StringField("Image URL")
+    description = StringField("Description")
     submit = SubmitField("Submit")

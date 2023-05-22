@@ -38,6 +38,7 @@ def create_recipe():
             cook_time=form.data['cook_time'],
             user_id=current_user.id,
             preview_img=preview_img_url,
+            description=form.data['description'],
             created_at=date.today(),
             updated_at=date.today()
         )
@@ -168,8 +169,10 @@ def get_ingredients(recipe_id):
 
 #     return {"errors": form.errors}
 @recipe_routes.route('/<int:recipe_id>/ingredients', methods=['POST'])
-# @csrf.exempt
+@csrf.exempt
+@login_required
 def add_ingredient(recipe_id):
+    print('COOKIE', request.cookies['csrf_token'])
     form = IngredientForm()
 
     form['csrf_token'].data = request.cookies['csrf_token']

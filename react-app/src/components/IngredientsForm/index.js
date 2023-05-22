@@ -44,18 +44,13 @@ function IngredientsForm({ ingredient }) {
     const sessionUser = useSelector((state) => state.session.user);
     const recipe = useSelector(state => state.recipes.singleRecipe);
     const recipeId = recipe.id
-    console.log('recipeeeee', recipe)
-    console.log('ididid', recipeId)
+    console.log('recipe', recipe)
+    console.log('recipe id', recipeId)
     const { closeModal } = useModal();
     // const [csrf_token, setCsrfToken] = useState("");
-    const [ingredient_name, setIngredientName] = useState("");
-    const [quantity, setQuantity] = useState("");
     const [ingredients, setIngredients] = useState([]);
 
     const [errors, setErrors] = useState([]);
-
-
-
     // useEffect(() => {
     //     // Get the csrf_token from the cookies
     //     const csrf_token = getCookie('csrf_token');
@@ -104,7 +99,7 @@ function IngredientsForm({ ingredient }) {
                 quantity: ingredient.quantity
             }))
         };
-        console.log('ingred', ingred);
+        console.log('ingredients', ingred.ingredients);
 
         const data = await dispatch(createIngredientThunk(recipeId, ingred));
         if (data) {
@@ -113,22 +108,6 @@ function IngredientsForm({ ingredient }) {
 
         closeModal();
     }
-
-    // recipe.append('ingredients', ingredients)
-
-
-    // console.log('type', type)
-
-    //     const data = await dispatch(createIngredientThunk(recipeId));
-    //     if (data) {
-    //         setErrors(data);
-    //     }
-
-    //     closeModal();
-    //     // console.log(recipeName, recipeOwner, type, cookTime, previewImg)
-    //     console.log('ingredient', ingredients);
-
-    // };
 
     return (
         <div className="CreateRecipeForm">

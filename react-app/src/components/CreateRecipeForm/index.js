@@ -15,6 +15,7 @@ function CreateRecipeForm() {
     const [type, setType] = useState("");
     const [cookTime, setCookTime] = useState("");
     const [previewImg, setPreviewImg] = useState("");
+    const [description, setDescription] = useState("");
     const [errors, setErrors] = useState([]);
 
     const handleSubmit = async (e) => {
@@ -25,15 +26,22 @@ function CreateRecipeForm() {
         recipe.append('type', type);
         recipe.append('cook_time', cookTime);
         recipe.append('preview_img', previewImg);
+        recipe.append('description', description || "")
 
         console.log('type', type)
 
         const data = await dispatch(createRecipeThunk(recipe));
-        if (data) {
+        // if (data) {
+        //     setErrors(data);
+        // }
+        // history.push(`/recipes/${data.id}`)
+        // closeModal()
+        if (data && 'id' in data) {
+            history.push(`/recipes/${data.id}`)
+            closeModal()
+        } else {
             setErrors(data);
         }
-        history.push(`/recipes/${data.id}`)
-        closeModal()
 
         console.log(recipeName, recipeOwner, type, cookTime, previewImg)
     };
@@ -75,6 +83,15 @@ function CreateRecipeForm() {
                         type="text"
                         value={cookTime}
                         onChange={(e) => setCookTime(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Description
+                    <input
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </label>
