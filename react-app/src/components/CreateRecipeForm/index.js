@@ -5,13 +5,6 @@ import { createRecipeThunk } from "../../store/recipes";
 import { useModal } from "../../context/Modal";
 import './CreateRecipeForm.css'; // Remember to import your CSS
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        return parts.pop().split(';').shift();
-    }
-}
 
 function CreateRecipeForm() {
     const dispatch = useDispatch();
@@ -27,33 +20,6 @@ function CreateRecipeForm() {
     const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
     const [errors, setErrors] = useState([]);
 
-
-
-    useEffect(() => {
-        // Get the csrf_token from the cookies
-        const csrf_token = getCookie('csrf_token');
-        setCsrfToken(csrf_token);
-    }, []);
-
-    const handleIngredientChange = (index, event) => {
-        const values = [...ingredients];
-        if (event.target.name === "name") {
-            values[index].name = event.target.value;
-        } else {
-            values[index].quantity = event.target.value;
-        }
-        setIngredients(values);
-    };
-
-    const handleAddIngredient = () => {
-        setIngredients([...ingredients, { name: "", quantity: "" }]);
-    };
-
-    const handleRemoveIngredient = (index) => {
-        const values = [...ingredients];
-        values.splice(index, 1);
-        setIngredients(values);
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
