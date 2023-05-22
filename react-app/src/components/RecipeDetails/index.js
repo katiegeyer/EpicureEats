@@ -1,25 +1,22 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { getRecipeThunk } from '../../store/recipes';
-import IngredientsForm from '../IngredientsForm';
-import OpenModalButton from '../OpenModalButton';
 import RecipeCard from '../RecipeCard';
-import { NavLink } from 'react-router-dom';
+import IngredientsForm from '../IngredientsForm';
+import OpenModalButton from "../OpenModalButton";
+// import { useParams } from 'react-router-dom';
+import './RecipeDetails.css'
 
-
-function RecipeDetails() {
+const RecipeDetails = () => {
     const dispatch = useDispatch();
-    const { id } = useParams();
-    const recipe = useSelector((state) => state.recipes.singleRecipe);
-    const sessionUser = useSelector((state) => state.session.user);
-    const owner = recipe.recipe_owner;
-    const current_user = sessionUser.id;
-    //   const recipeIngredients = useSelector((state) => state)
+    const recipe = useSelector(state => Object.values(state.recipes.singleRecipe));
+
+    // console.log('state', state);
 
     useEffect(() => {
-        dispatch(getRecipeThunk(id));
-    }, [dispatch, id]);
+        dispatch(getRecipeThunk());
+    }, [dispatch]);
+
     return (
         <>
             <div className="banner">
@@ -36,7 +33,7 @@ function RecipeDetails() {
                 <RecipeCard key={recipe.id} recipe={recipe} />
             </div>
         </>
-    )
-}
+    );
+};
 
 export default RecipeDetails;
