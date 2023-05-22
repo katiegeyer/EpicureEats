@@ -33,7 +33,7 @@ export const getIngredientsThunk = (recipeId) => async (dispatch) => {
 };
 
 export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) => {
-    const response = await fetch(`/api/recipes/${recipeId}/ingredients/new`, {
+    const response = await fetch(`/api/recipes/${recipeId}/ingredients`, {
         method: 'POST',
         body: ingredient
     })

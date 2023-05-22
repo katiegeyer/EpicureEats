@@ -21,6 +21,27 @@ function CreateRecipeForm() {
     const [errors, setErrors] = useState([]);
 
 
+
+    const handleIngredientChange = (index, event) => {
+        const values = [...ingredients];
+        if (event.target.name === "name") {
+            values[index].name = event.target.value;
+        } else {
+            values[index].quantity = event.target.value;
+        }
+        setIngredients(values);
+    };
+
+    const handleAddIngredient = () => {
+        setIngredients([...ingredients, { name: "", quantity: "" }]);
+    };
+
+    const handleRemoveIngredient = (index) => {
+        const values = [...ingredients];
+        values.splice(index, 1);
+        setIngredients(values);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = new FormData();
