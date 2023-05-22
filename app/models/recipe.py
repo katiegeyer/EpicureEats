@@ -14,8 +14,9 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod('users.id')))
     type = db.Column(db.String(50), nullable=False)
-    cook_time = db.Column(db.Float(50), nullable=False)
+    cook_time = db.Column(db.String(50), nullable=False)
     preview_img = db.Column(db.String(255), nullable=True)
+    description = db.Column(db.String(500), nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 
@@ -38,6 +39,7 @@ class Recipe(db.Model):
             'type': self.type,
             'cook_time': self.cook_time,
             'preview_img': self.preview_img,
+            'description': self.description,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
             # 'user': self.user.to_dict() if self.user else None,

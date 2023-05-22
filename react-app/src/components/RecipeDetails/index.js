@@ -10,7 +10,7 @@ import './RecipeDetails.css'
 const RecipeDetails = () => {
     const dispatch = useDispatch();
     const recipe = useSelector(state => Object.values(state.recipes.singleRecipe));
-
+    console.log('recipe id', recipe.id)
     // console.log('state', state);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const RecipeDetails = () => {
                 onItemClick={() => {
 
                 }}
-                modalComponent={<IngredientsForm />}
+                modalComponent={<IngredientsForm key={recipe.id} />}
             />
             <div className="recipes-list">
                 <RecipeCard key={recipe.id} recipe={recipe} />

@@ -1,0 +1,27 @@
+.profile-dropdown {
+    list-style: none;
+    z-index: 1;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    padding: 10px;
+    border-radius: 2px;
+    border: 2px solid gray
+}
+
+
+.nav-bar-profile-button-log-out {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 10px;
+    margin: 4px 2px;
+    background-color: rgb(17, 107, 47);
+    box-shadow: rgb(225, 255, 196);
+    border: line;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 10px
+}

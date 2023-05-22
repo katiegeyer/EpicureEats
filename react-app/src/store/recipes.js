@@ -275,11 +275,13 @@ export const getRecipeThunk = (recipeId) => async (dispatch) => {
     // console.log("THE RESPONSE ", response)
     if (response.ok) {
         const data = await response.json();
+        console.log('THIS IS THE DATA', data)
         if (data.errors) {
             return
         }
         // console.log("DATAAAA ", data)
         dispatch(getRecipeAction(data))
+        return data;
     }
 }
 

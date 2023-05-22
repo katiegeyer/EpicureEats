@@ -2,6 +2,23 @@ const GET_INGREDIENTS = "ingredients/GET_INGREDIENTS";
 const CREATE_INGREDIENT = 'ingredients/CREATE_INGREDIENT'
 const DELETE_INGREDIENT = 'ingredients/DELETE_INGREDIENT'
 
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 export const getIngredientsAction = (ingredients) => ({
     type: GET_INGREDIENTS,
     ingredients
@@ -28,13 +45,17 @@ export const getIngredientsThunk = (recipeId) => async (dispatch) => {
         }
 
         dispatch(getIngredientsAction(data));
-        c
     }
 };
 
 export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) => {
-    const response = await fetch(`/api/recipes/${recipeId}/ingredients/new`, {
+    console.log('RECIPE IDDDDDD', recipeId)
+    const response = await fetch(`/api/recipes/${recipeId}/ingredients`, {
         method: 'POST',
+        headers: {
+        // 'X-CSRFToken': getCookie('csrf_token'), // You should define this getCookie function to extract cookie
+        'Content-Type': 'application/json'
+        },
         body: ingredient
     })
 
@@ -44,6 +65,7 @@ export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) 
             return data.errors
         }
         dispatch(createIngredientAction(data))
+        return data;
     }
 }
 

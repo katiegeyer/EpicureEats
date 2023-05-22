@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createIngredientThunk } from "../../store/ingredients";
 import { useModal } from "../../context/Modal";
 import './IngredientsForm.css'; // Remember to import your CSS
+import { getRecipeThunk } from "../../store/recipes";
 
 // function getCookie(name) {
 //     const value = `; ${document.cookie}`;
@@ -13,9 +14,38 @@ import './IngredientsForm.css'; // Remember to import your CSS
 //     }
 // }
 
+
+// @recipe_routes.route('/new', methods=['POST'])
+// def create_recipe():
+//     form = RecipeForm()
+
+//     form['csrf_token'].data = request.cookies['csrf_token']
+//     if form.validate_on_submit():
+//         // # No need to upload a file, just use the provided URL directly
+//         preview_img_url = form.data['preview_img']
+
+//         new_recipe = Recipe(
+//             recipe_name=form.data['recipe_name'],
+//             recipe_owner=form.data['recipe_owner'],
+//             type=form.data['type'],
+//             cook_time=form.data['cook_time'],
+//             user_id=current_user.id,
+//             preview_img=preview_img_url,
+//             created_at=date.today(),
+//             updated_at=date.today()
+//         )
+//         db.session.add(new_recipe)
+//         db.session.commit()
+//         return new_recipe.to_dict()
+//     return {"errors": form.errors}
+
 function IngredientsForm({ ingredient }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    const recipe = useSelector(state => state.recipes.singleRecipe);
+    const recipeId = recipe.id
+    console.log('recipeeeee', recipe)
+    console.log('ididid', recipeId)
     const { closeModal } = useModal();
     // const [csrf_token, setCsrfToken] = useState("");
     const [ingredient_name, setIngredientName] = useState("");
@@ -52,39 +82,59 @@ function IngredientsForm({ ingredient }) {
         setIngredients(values);
     };
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     console.log(e.target[0].value)
+    //     const ingred = new FormData();
+    //     // recipe.append('csrf_token', csrf_token);
+    //     // console.log('csrf_token', csrf_token)
+    //     ingredients.forEach((ingredient, index) => {
+    //         console.log('hi')
+    //         ingred.append(`ingredients[${index}][name]`, ingredient.name);
+    //         console.log('ingredient name', ingredient.name)
+    //         ingred.append(`ingredients[${index}][quantity]`, ingredient.quantity);
+    //         console.log('ingredient quantity', ingredient.quantity)
+    //     });
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.target[0].value)
-        const recipe = new FormData();
-        // recipe.append('csrf_token', csrf_token);
-        // console.log('csrf_token', csrf_token)
-        ingredients.forEach((ingredient, index) => {
-            console.log('hi')
-            recipe.append(`ingredients[${index}][name]`, ingredient.name);
-            console.log('ingredient name', ingredient.name)
-            recipe.append(`ingredients[${index}][quantity]`, ingredient.quantity);
-            console.log('ingredient quantity', ingredient.quantity)
-        });
-        // recipe.append('ingredients', ingredients)
+        const ingred = {
+            ingredients: ingredients.map((ingredient) => ({
+                name: ingredient.name,
+                quantity: ingredient.quantity
+            }))
+        };
+        console.log('ingred', ingred);
 
-
-        // console.log('type', type)
-
-        const data = await dispatch(createIngredientThunk(ingredient));
+        const data = await dispatch(createIngredientThunk(recipeId, ingred));
         if (data) {
             setErrors(data);
         }
-    
-        closeModal();
-        // console.log(recipeName, recipeOwner, type, cookTime, previewImg)
-        console.log('ingredient', ingredients);
 
-    };
+        closeModal();
+    }
+
+    // recipe.append('ingredients', ingredients)
+
+
+    // console.log('type', type)
+
+    //     const data = await dispatch(createIngredientThunk(recipeId));
+    //     if (data) {
+    //         setErrors(data);
+    //     }
+
+    //     closeModal();
+    //     // console.log(recipeName, recipeOwner, type, cookTime, previewImg)
+    //     console.log('ingredient', ingredients);
+
+    // };
 
     return (
         <div className="CreateRecipeForm">
             <h1>Add Ingredients</h1>
             <form onSubmit={handleSubmit}>
+                {/* {{ form.csrf_token }} */}
                 {ingredients.map((ingredient, index) => (
                     <div key={index}>
                         <label>
