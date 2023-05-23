@@ -47,7 +47,7 @@ def upgrade():
     sa.Column('type', sa.String(length=50), nullable=False),
     sa.Column('cook_time', sa.String(length=50), nullable=False),
     sa.Column('preview_img', sa.String(length=255), nullable=True),
-    sa.Column('description', sa.String(length=500), nullable=False),
+    sa.Column('description', sa.String(length=2000), nullable=False),
     sa.Column('created_at', sa.Date(), nullable=False),
     sa.Column('updated_at', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
