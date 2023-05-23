@@ -50,21 +50,24 @@ export const getIngredientsThunk = (recipeId) => async (dispatch) => {
 
 export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) => {
     console.log('RECIPE IDDDDDD', recipeId)
+    console.log('ingredient fetch', ingredient)
     const response = await fetch(`/api/recipes/${recipeId}/ingredients`, {
         method: 'POST',
         headers: {
-            // 'X-CSRFToken': getCookie('csrf_token'), //
+            //     // 'X-CSRFToken': getCookie('csrf_token'), //
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(ingredient)
+        body: JSON.stringify({ingredients: ingredient})
     })
-
+    console.log('this is ingredientsss', JSON.stringify(ingredient))
     if (response.ok) {
         const data = await response.json();
+        console.log('this is data', data)
         if (data.errors) {
             return data.errors
         }
         dispatch(createIngredientAction(data))
+        console.log('this is returned data', data)
         return data;
     }
 }

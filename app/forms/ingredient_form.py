@@ -15,9 +15,17 @@ from wtforms.validators import DataRequired
 
 
 class IngredientDataForm(FlaskForm):
+    class Meta:
+        csrf = False
+
     name = StringField('Name', validators=[DataRequired()])
+    print('name', name)
     quantity = StringField('Quantity', validators=[DataRequired()])
+    print('quantity', quantity)
 
 
 class IngredientForm(FlaskForm):
+    # class Meta:
+    #     csrf = False
     ingredients = FieldList(FormField(IngredientDataForm), min_entries=1)
+    print('ingredient form', ingredients)

@@ -1,7 +1,7 @@
 from flask_wtf.csrf import generate_csrf
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
-from app.models import Recipe, Ingredient
+from app.models import Recipe, Ingredient, Preparation
 from app.forms import RecipeForm, IngredientForm
 from datetime import date
 from app.models import db
@@ -25,8 +25,9 @@ def get_all_recipes():
 @recipe_routes.route('/new', methods=['POST'])
 def create_recipe():
     form = RecipeForm()
-
+    # request. keys into the request (request.json will key into the body, giving the json value from the request object's body.  you'll save it to a variable and key into all of the values and assign them)
     form['csrf_token'].data = request.cookies['csrf_token']
+    # print(request.json)
     if form.validate_on_submit():
         # No need to upload a file, just use the provided URL directly
         preview_img_url = form.data['preview_img']
@@ -100,21 +101,21 @@ def get_recipe(id):
         return {"errors": "recipe not found"}
 
 
-@recipe_routes.route('/<int:recipe_id>/ingredients/<int:ingredient_id>', methods=['POST'])
-def add_ingredient_to_recipe(recipe_id, ingredient_id):
-    recipe = Recipe.query.get(recipe_id)
-    ingredient = Ingredient.query.get(ingredient_id)
+# @recipe_routes.route('/<int:recipe_id>/ingredients/<int:ingredient_id>', methods=['POST'])
+# def add_ingredient_to_recipe(recipe_id, ingredient_id):
+#     recipe = Recipe.query.get(recipe_id)
+#     ingredient = Ingredient.query.get(ingredient_id)
 
-    if not recipe or not ingredient:
-        return {"error": "Recipe or Ingredient not found"}, 404
+#     if not recipe or not ingredient:
+#         return {"error": "Recipe or Ingredient not found"}, 404
 
-    # Add the ingredient to the recipe
-    ins = recipe_ingredient.insert().values(
-        recipe_id=recipe_id, ingredient_id=ingredient_id)
-    db.session.execute(ins)
-    db.session.commit()
+#     # Add the ingredient to the recipe
+#     ins = recipe_ingredient.insert().values(
+#         recipe_id=recipe_id, ingredient_id=ingredient_id)
+#     db.session.execute(ins)
+#     db.session.commit()
 
-    return {"success": "Ingredient added to the recipe"}
+#     return {"success": "Ingredient added to the recipe"}
 
 
 @recipe_routes.route('/current')
@@ -168,42 +169,113 @@ def get_ingredients(recipe_id):
 #         return ingredient.to_dict()
 
 #     return {"errors": form.errors}
+
+# @recipe_routes.route('/<int:recipe_id>/ingredients', methods=['POST'])
+# @login_required
+# def add_ingredient(recipe_id):
+#     form = IngredientForm()
+#     form['csrf_token'].data = request.cookies['csrf_token']
+
+#     print('request.json:', request.json)
+#     print('form.data:', form.data)
+
+#     if form.validate_on_submit():
+#         print('Form validated')
+#         recipe = Recipe.query.get(recipe_id)
+#         if not recipe:
+#             return {"error": "Recipe not found"}, 404
+
+#         ingredients = []
+#         for ingredient_data in form.data['ingredients']:
+#             print('Processing ingredient: ', ingredient_data)
+#             # Find the ingredient by name, or create it if it doesn't exist
+#             ingredient = Ingredient.query.filter_by(
+#                 name=ingredient_data['name']).first()
+
+#             if not ingredient:
+#                 ingredient = Ingredient(
+#                     name=ingredient_data['name'],
+#                     quantity=ingredient_data['quantity'])
+#                 db.session.add(ingredient)
+#                 print('Added ingredient: ', ingredient_data)
+#             # Link the ingredient with the recipe
+#             recipe.ingredients.append(ingredient)
+#             ingredients.append(ingredient)
+
+#         # commit the session after the loop
+#         db.session.commit()
+#         return [ingredient.to_dict() for ingredient in ingredients]
+#     print('Form errors: ', form.errors)
+#     return {"errors": form.errors}
+
 @recipe_routes.route('/<int:recipe_id>/ingredients', methods=['POST'])
-@csrf.exempt
 @login_required
 def add_ingredient(recipe_id):
-    print('COOKIE', request.cookies['csrf_token'])
-    form = IngredientForm()
+    data = request.json
+    print('request.json:', data)
 
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        recipe = Recipe.query.get(recipe_id)
+    recipe = Recipe.query.get(recipe_id)
+    if not recipe:
+        return {"error": "Recipe not found"}, 404
 
-        if not recipe:
-            return {"error": "Recipe not found"}, 404
+    ingredients = []
+    for ingredient_data in data['ingredients']:
+        print('Processing ingredient: ', ingredient_data)
+        # Find the ingredient by name, or create it if it doesn't exist
+        ingredient = Ingredient.query.filter_by(
+            name=ingredient_data['name']).first()
 
-        ingredients = []
+        if not ingredient:
+            ingredient = Ingredient(
+                name=ingredient_data['name'],
+                quantity=ingredient_data['quantity'])
+            db.session.add(ingredient)
+            print('Added ingredient: ', ingredient_data)
+        # Link the ingredient with the recipe
+        recipe.ingredients.append(ingredient)
+        ingredients.append(ingredient)
 
-        for ingredient_data in form.data['ingredients']:
-            # Find the ingredient by name, or create it if it doesn't exist
-            ingredient = Ingredient.query.filter_by(
-                name=ingredient_data['name']).first()
-            if not ingredient:
-                ingredient = Ingredient(
-                    name=ingredient_data['name'],
-                    quantity=ingredient_data['quantity'])
-                db.session.add(ingredient)
-                db.session.commit()
+    # commit the session after the loop
+    db.session.commit()
+    return [ingredient.to_dict() for ingredient in ingredients]
 
-            # Add the ingredient to the recipe
-            # recipe.ingredients.append(ingredient)
-            # ingredients.append(ingredient)
 
-        # db.session.commit()
+# @recipe_routes.route('/<int:recipe_id>/ingredients', methods=['POST'])
+# # @csrf.exempt
+# @login_required
+# def add_ingredient(recipe_id):
+#     print('COOKIE', request.cookies['csrf_token'])
+#     form = IngredientForm()
 
-        return [ingredient.to_dict() for ingredient in ingredients]
+#     form['csrf_token'].data = request.cookies['csrf_token']
+#     if form.validate_on_submit():
+#         recipe = Recipe.query.get(recipe_id)
 
-    return {"errors": form.errors}
+#         if not recipe:
+#             return {"error": "Recipe not found"}, 404
+
+#         ingredients = []
+
+#         for ingredient_data in form.data['ingredients']:
+#             # Find the ingredient by name, or create it if it doesn't exist
+#             ingredient = Ingredient.query.filter_by(
+#                 name=ingredient_data['name']).first()
+#             if not ingredient:
+#                 ingredient = Ingredient(
+#                     name=ingredient_data['name'],
+#                     quantity=ingredient_data['quantity'])
+#                 db.session.add(ingredient)
+#                 db.session.commit()
+
+#             # Add the ingredient to the recipe
+#             recipe.ingredients.append(ingredient)
+#             ingredients.append(ingredient)
+
+#         db.session.commit()
+
+#         return [ingredient.to_dict() for ingredient in ingredients]
+
+#     return {"errors": form.errors}
 
 
 # Update an ingredient
@@ -246,3 +318,34 @@ def remove_ingredient(recipe_id, ingredient_id):
         db.session.commit()
 
     return {'success': 'ingredient removed'}
+
+
+@recipe_routes.route('/<int:recipe_id>/preparations', methods=['POST'])
+@login_required
+def add_preparation(recipe_id):
+    data = request.json
+    print('request.json:', data)
+
+    recipe = Recipe.query.get(recipe_id)
+    if not recipe:
+        return {"error": "Recipe not found"}, 404
+
+    preparations = []
+    for preparation_data in data['preparations']:
+        # Find the ingredient by name, or create it if it doesn't exist
+        preparation = Preparation.query.filter_by(
+            step=preparation_data['step']).first()
+
+        if not preparation:
+            preparation = Preparation(
+                step=preparation_data['step'],
+                instruction=preparation_data['instruction'])
+            db.session.add(preparation)
+            print('Added preparation: ', preparation_data)
+        # Link the preparation with the recipe
+        recipe.preparations.append(preparation)
+        preparations.append(preparation)
+
+    # commit the session after the loop
+    db.session.commit()
+    return [preparation.to_dict() for preparation in preparations]

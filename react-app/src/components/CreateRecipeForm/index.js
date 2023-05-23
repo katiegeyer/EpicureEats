@@ -17,7 +17,7 @@ function CreateRecipeForm() {
     const [previewImg, setPreviewImg] = useState("");
     const [description, setDescription] = useState("");
     const [errors, setErrors] = useState([]);
-
+    //instead of using formdata, create a POJO and stringify it to be JSON value
     const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = new FormData();

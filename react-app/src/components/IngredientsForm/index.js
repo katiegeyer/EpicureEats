@@ -48,7 +48,9 @@ function IngredientsForm({ ingredient }) {
     console.log('recipe id', recipeId)
     const { closeModal } = useModal();
     // const [csrf_token, setCsrfToken] = useState("");
-    const [ingredients, setIngredients] = useState([]);
+    // const [ingredients, setIngredients] = useState([]);
+    const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
+
 
     const [errors, setErrors] = useState([]);
     // useEffect(() => {
@@ -99,13 +101,17 @@ function IngredientsForm({ ingredient }) {
                 quantity: ingredient.quantity
             }))
         };
+        console.log('ingredients values', Object.values(ingred.ingredients));
+        console.log('ingred', ingred)
         console.log('ingredients', ingred.ingredients);
+        console.log('payload', { ingredients: ingred.ingredients });
 
-        const data = await dispatch(createIngredientThunk(recipeId, ingred));
+
+        const data = await dispatch(createIngredientThunk(recipeId, ingred.ingredients));
         if (data) {
             setErrors(data);
         }
-
+        console.log('datadata', data)
         closeModal();
     }
 

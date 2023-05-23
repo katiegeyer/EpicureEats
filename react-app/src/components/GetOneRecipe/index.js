@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getRecipeThunk } from '../../store/recipes';
 import IngredientsForm from '../IngredientsForm';
+import PreparationForm from '../Preparations';
 import OpenModalButton from '../OpenModalButton';
 import RecipeCard from '../RecipeCard';
 import './GetOneRecipe.css'
@@ -17,6 +18,18 @@ function RecipeDetails() {
     const sessionUser = useSelector((state) => state.session.user);
     const owner = recipe.recipe_owner;
     const current_user = sessionUser.id;
+    let ingredientList = [];
+
+    if (recipe.ingredients && recipe.ingredients.length > 0) {
+        ingredientList = recipe.ingredients.map(ingredient => ({
+            name: ingredient.name,
+            quantity: ingredient.quantity
+        }));
+    }
+
+    console.log(ingredientList);
+
+
     //   const recipeIngredients = useSelector((state) => state)
 
     useEffect(() => {
@@ -36,12 +49,25 @@ function RecipeDetails() {
                 }}
                 modalComponent={<IngredientsForm key={recipe.id} />}
             />
+            <OpenModalButton
+                buttonText="Add Your Steps"
+                onItemClick={() => {
+
+                }}
+                modalComponent={<PreparationForm key={recipe.id} />}
+            />
             <div className="recipe">
                 <RecipeCard key={recipe.id} recipe={recipe} />
             </div>
             <div className="ingredients-card">
                 <h2>Ingredients</h2>
-                {/* ingredients*/}
+                <ul>
+                    {ingredientList.map((ingredient, index) => (
+                        <li key={index}>
+                            {ingredient.name} - {ingredient.quantity}
+                        </li>
+                    ))}
+                </ul>
             </div>
             <div className="preparations-card">
                 <h2>Preparation</h2>

@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-# from .recipe_ingredient_join import recipe_ingredient
+from .recipe_ingredient_join import recipe_ingredient
+from .r_preparation_join import recipe_preparation
 
 
 class Recipe(db.Model):
@@ -22,13 +23,14 @@ class Recipe(db.Model):
 
     user = db.relationship('User', back_populates='recipes')
     # tags = db.relationship('RecipeTag', back_populates='recipes')
-    # ingredients = db.relationship(
-    #     'Ingredient', secondary=recipe_ingredient, back_populates='recipes')
+    ingredients = db.relationship(
+        'Ingredient', secondary=recipe_ingredient, back_populates='recipes')
     # ratings = db.relationship('RecipeRating', back_populates='recipes')
     # boxes = db.relationship('RecipeBoxItem', back_populates='recipes')
     # folders = db.relationship('RecipeFolder', back_populates='recipes')
     # comments = db.relationship('RecipeComment', back_populates='recipes')
-    # preparations = db.relationship('Preparation', back_populates='recipes', cascade='all, delete-orphan')
+    preparations = db.relationship(
+        'Preparation', secondary=recipe_preparation, back_populates='recipes', single_parent=True, cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -44,7 +46,9 @@ class Recipe(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
             # 'user': self.user.to_dict() if self.user else None,
             # 'tags': [tag.to_dict() for tag in self.tags] if self.tags else [],
-            # 'ingredients': [ingredient.to_dict() for ingredient in self.ingredients] if self.ingredients else [],
+            'ingredients': [ingredient.to_dict() for ingredient in self.ingredients] if self.ingredients else [],
+            'preparations': [preparation.to_dict() for preparation in self.preparations] if self.preparations else [],
+
             # 'ratings': [rating.to_dict() for rating in self.ratings] if self.ratings else [],
             # 'boxes': [box.to_dict() for box in self.boxes] if self.boxes else [],
             # 'folders': [folder.to_dict() for folder in self.folders] if self.folders else [],
