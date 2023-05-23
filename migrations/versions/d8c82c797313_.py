@@ -80,7 +80,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('preparation_id', 'recipe_id')
                     )
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE recipes SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
