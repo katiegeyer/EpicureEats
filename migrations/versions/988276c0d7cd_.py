@@ -17,8 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    pass
+    op.add_column('recipes', sa.Column('description', sa.String))
 
 
 def downgrade():
-    pass
+    op.drop_column('recipes', 'description')
