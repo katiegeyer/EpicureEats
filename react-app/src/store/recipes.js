@@ -1,3 +1,94 @@
+
+
+// export const updateRecipeThunk = (recipeId, updatedRecipe) => async (dispatch) => {
+//     console.log("TEST this", recipeId)
+
+//     // const response = await fetch(`/api/recipes/${recipeId}`, {
+//     //     method: 'PUT',
+//     //     body: updatedRecipe,
+//     // });
+//     const response = await fetch(`/api/recipes/${recipeId}`, {
+//         method: 'PUT',
+//         body: JSON.stringify(updatedRecipe),
+//     });
+//     console.log(response)
+
+
+//     if (response.ok) {
+//         const data = await response.json();
+//         console.log("DATAAA", data)
+
+
+//         if (data.errors) {
+//             // console.log("TEST 6")
+//             return data.errors
+//         }
+//         // console.log("TEST 4")
+//         dispatch(updateRecipeAction(data))
+//         console.log("DATAAA", data)
+//         return data
+//     }
+// }
+
+// const initialState = { allRecipes: {}, singleRecipe: {} }
+
+// export default function recipesReducer(state = initialState, action) {
+//     let newState;
+//     console.log("ACTIONN ", action)
+//     switch (action.type) {
+//         case GET_ALLRECIPES:
+//             console.log('ACTION', action)
+//             newState = { ...state, allRecipes: { ...action.allRecipes } }
+//             action.recipes.recipes.forEach(recipe => newState.allRecipes[recipe.id] = recipe)
+//             console.log("NEW STATEEEE ", newState)
+//             return newState
+//         case GET_RECIPE:
+//             newState = { ...state, singleRecipe: { ...action.recipe } }
+//             return newState
+//         // case ADD_RECIPE_TO_BOX:
+//         //     newState = { ...state }
+//         //     newState.singleRecipe = { ...action.recipe }
+//         //     return newState
+//         // case UPDATE_RECIPE: {
+//         //     newState = {
+//         //         ...state,
+//         //         singleRecipe: {
+//         //             ...state.singleRecipe,
+//         //         },
+//         //     };
+//         //     newState[action.recipe.id] = action.recipe;
+//         //     return newState;
+//         // }
+//         // case UPDATE_RECIPE: {
+//         //     newState = {
+//         //         ...state,
+//         //         allRecipes: {
+//         //             ...state.allRecipes,
+//         //             [action.updatedRecipe.id]: action.updatedRecipe,
+//         //         },
+//         //         singleRecipe: {
+//         //             ...action.updatedRecipe,
+//         //         },
+//         //     };
+//         //     return newState;
+//         // }
+//         case UPDATE_RECIPE: {
+//             console.log("ACTIONN UPDATE", action)
+
+//             newState = {
+//                 ...state,
+//                 singleRecipe: {
+//                     ...state.singleRecipe,
+//                 },
+//                 allRecipes: {
+//                     ...state.allRecipes,
+//                     [action.recipe.id]: action.recipe,
+//                 },
+//             };
+//             return newState;
+//         }
+
+
 const GET_ALLRECIPES = "recipes/GET_ALLRECIPES";
 const GET_RECIPE = "recipe/GET_RECIPE"
 const CREATE_RECIPE = 'recipe/CREATE_RECIPE'
@@ -19,9 +110,9 @@ const createRecipeAction = (recipe) => ({
     recipe
 })
 
-const updateRecipeAction = (recipe) => ({
+const updateRecipeAction = (updatedRecipe) => ({
     type: UPDATE_RECIPE,
-    recipe
+    updatedRecipe
 })
 
 const deleteRecipeAction = (recipeId) => ({
@@ -57,6 +148,23 @@ export const createRecipeThunk = (recipe) => async (dispatch) => {
             return data.errors
         }
         dispatch(createRecipeAction(data))
+        return data;
+    }
+}
+
+export const getRecipeThunk = (recipeId) => async (dispatch) => {
+    // console.log("THE IDDDD ", id)
+    const response = await fetch(`/api/recipes/${recipeId}`)
+    // console.log("THE RESPONSE ", response)
+    if (response.ok) {
+        const data = await response.json();
+        console.log('THIS IS THE DATA', data)
+        if (data.errors) {
+            return
+        }
+        // console.log("DATAAAA ", data)
+        dispatch(getRecipeAction(data))
+        return data;
     }
 }
 
@@ -86,6 +194,32 @@ export const deleteRecipeThunk = (recipeId) => async (dispatch) => {
     }
 }
 
+export const updateRecipeThunk = (recipeId, updatedRecipe) => async (dispatch) => {
+    console.log("TEST this", recipeId)
+
+    const response = await fetch(`/api/recipes/${recipeId}`, {
+        method: 'PUT',
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // },
+        body: updatedRecipe,
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log('this is what i need', data)
+
+        if (data.errors) {
+            // console.log("TEST 6")
+            return data.errors
+        }
+        // console.log("TEST 4")
+        dispatch(updateRecipeAction(data))
+        console.log('Dispatching update action')
+        return data
+    }
+}
+
 
 const initialState = { allRecipes: {}, singleRecipe: {} }
 
@@ -97,25 +231,39 @@ export default function recipesReducer(state = initialState, action) {
             console.log('ACTION', action)
             newState = { ...state, allRecipes: { ...action.allRecipes } }
             action.recipes.recipes.forEach(recipe => newState.allRecipes[recipe.id] = recipe)
-            console.log("NEW STATEEEE ", newState)
+            // console.log("NEW STATEEEE ", newState)
             return newState
-        // case GET_RECIPE:
-        //     newState = { ...state, singleRecipe: { ...action.recipe } }
-        //     return newState
+        case GET_RECIPE:
+            newState = { ...state, singleRecipe: { ...action.recipe } }
+            return newState
         // case ADD_RECIPE_TO_BOX:
         //     newState = { ...state }
         //     newState.singleRecipe = { ...action.recipe }
         //     return newState
         // case UPDATE_RECIPE: {
+        //     console.log('test')
         //     newState = {
         //         ...state,
         //         singleRecipe: {
         //             ...state.singleRecipe,
         //         },
         //     };
-        //     newState[action.recipe.id] = action.recipe;
+        //     newState[action.updatedRecipe.id] = action.updatedRecipe;
+        //     // console.log("NEW STATEEEE ", newState)
+
         //     return newState;
         // }
+        case UPDATE_RECIPE: {
+            console.log(action)
+            console.log('test')
+            newState = {
+                ...state,
+                singleRecipe: action.updatedRecipe
+            };
+            return newState;
+        }
+
+
 
         case CREATE_RECIPE:
             newState = { ...state }

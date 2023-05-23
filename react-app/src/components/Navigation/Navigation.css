@@ -1,7 +1,48 @@
-.profile-dropdown {
+/* .profile-dropdown {
   position: absolute;
-}
+} */
 
 .hidden {
   display: none;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.nav-logo {
+  font-size: 1.5em;
+  color: black;
+  text-decoration: none;
+}
+
+.nav-search {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.nav-search input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.nav-links a {
+  margin-right: 20px;
+  color: black;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: gray;
 }

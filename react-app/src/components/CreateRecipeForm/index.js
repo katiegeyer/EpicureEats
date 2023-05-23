@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { login } from "../../store/session";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createRecipeThunk } from "../../store/recipes";
 import { useModal } from "../../context/Modal";
-// import { Redirect } from "react-router-dom";
-import OpenModalButton from "../OpenModalButton";
-
+import './CreateRecipeForm.css'; // Remember to import your CSS
 
 function CreateRecipeForm() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
     const { closeModal } = useModal();
     const [recipeName, setRecipeName] = useState("");
@@ -16,10 +15,9 @@ function CreateRecipeForm() {
     const [type, setType] = useState("");
     const [cookTime, setCookTime] = useState("");
     const [previewImg, setPreviewImg] = useState("");
+    const [description, setDescription] = useState("");
     const [errors, setErrors] = useState([]);
-
-
-
+    //instead of using formdata, create a POJO and stringify it to be JSON value
     const handleSubmit = async (e) => {
         e.preventDefault();
         const recipe = new FormData();
@@ -28,28 +26,30 @@ function CreateRecipeForm() {
         recipe.append('type', type);
         recipe.append('cook_time', cookTime);
         recipe.append('preview_img', previewImg);
+        recipe.append('description', description || "")
 
         console.log('type', type)
 
         const data = await dispatch(createRecipeThunk(recipe));
-        if (data) {
+        // if (data) {
+        //     setErrors(data);
+        // }
+        // history.push(`/recipes/${data.id}`)
+        // closeModal()
+        if (data && 'id' in data) {
+            history.push(`/recipes/${data.id}`)
+            closeModal()
+        } else {
             setErrors(data);
         }
-        closeModal();
+
         console.log(recipeName, recipeOwner, type, cookTime, previewImg)
     };
 
-
-
     return (
-        <>
+        <div className="CreateRecipeForm">
             <h1>Post New Recipe</h1>
             <form onSubmit={handleSubmit}>
-                {/* <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))} */}
-                {/* </ul> */}
                 <label>
                     Recipe Name
                     <input
@@ -76,12 +76,6 @@ function CreateRecipeForm() {
                         <option value="Vegetarian">Vegetarian</option>
                         <option value="Vegan">Vegan</option>
                     </select>
-                    {/* <input
-                        type="select"
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                        required
-                    /> */}
                 </label>
                 <label>
                     Cook Time
@@ -89,6 +83,15 @@ function CreateRecipeForm() {
                         type="text"
                         value={cookTime}
                         onChange={(e) => setCookTime(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Description
+                    <input
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </label>
@@ -103,7 +106,7 @@ function CreateRecipeForm() {
                 </label>
                 <button type="submit">Enter</button>
             </form>
-        </>
+        </div>
     );
 }
 

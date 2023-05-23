@@ -1,0 +1,35 @@
+.recipes-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.recipe-card {
+    flex: 0 0 calc(33.333% - 20px);
+    box-sizing: border-box;
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.banner {
+    background-color: #f1f1f1;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.banner h1 {
+    font-size: 3em;
+    font-weight: bold;
+    color: #333;
+}

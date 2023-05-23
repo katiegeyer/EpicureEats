@@ -26,7 +26,8 @@
     margin-bottom: 5px;
 }
 
-.CreateRecipeForm form input, .CreateRecipeForm form select {
+.CreateRecipeForm form input,
+.CreateRecipeForm form select {
     margin-bottom: 20px;
     padding: 10px;
     border-radius: 5px;
