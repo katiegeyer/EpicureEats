@@ -11,5 +11,5 @@ class RecipeForm(FlaskForm):
         "Type", choices=[("Non-vegetarian", "Non-vegetarian"), ("Vegetarian", "Vegetarian"), ("Vegan", "Vegan")], validators=[DataRequired()])
     cook_time = StringField("Cook Time")
     preview_img = StringField("Image URL")
-    description = StringField("Description")
+    description = TextAreaField("Description")
     submit = SubmitField("Submit")
