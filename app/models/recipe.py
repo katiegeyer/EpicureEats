@@ -17,7 +17,7 @@ class Recipe(db.Model):
     type = db.Column(db.String(50), nullable=False)
     cook_time = db.Column(db.String(50), nullable=False)
     preview_img = db.Column(db.String(255), nullable=True)
-    description = db.Column(db.String(2000), nullable=False)
+    description = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.Date, nullable=False)
     updated_at = db.Column(db.Date, nullable=False)
 

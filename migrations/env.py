@@ -1,5 +1,6 @@
 
 from __future__ import with_statement
+from flask import current_app
 
 import logging
 from logging.config import fileConfig
@@ -27,7 +28,6 @@ logger = logging.getLogger('alembic.env')
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from flask import current_app
 config.set_main_option(
     'sqlalchemy.url',
     str(current_app.extensions['migrate'].db.engine.url).replace('%', '%%'))
@@ -50,7 +50,7 @@ def run_migrations_offline():
     """
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=url, target_metadata=target_metadata, literal_binds=True
+        url=url, target_metadata=target_metadata, literal_binds=True, compare_type=True
     )
 
     with context.begin_transaction():
@@ -84,7 +84,8 @@ def run_migrations_online():
             connection=connection,
             target_metadata=target_metadata,
             process_revision_directives=process_revision_directives,
-            **current_app.extensions['migrate'].configure_args
+            **current_app.extensions['migrate'].configure_args,
+            compare_type=True
         )
         # Create a schema (only in production)
         if environment == "production":
@@ -95,6 +96,7 @@ def run_migrations_online():
             if environment == "production":
                 context.execute(f"SET search_path TO {SCHEMA}")
             context.run_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()
