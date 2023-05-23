@@ -58,7 +58,7 @@ function UpdateRecipeForm({ recipeId }) {
         fetchRecipeDetails();
     }, [dispatch, recipeId]);
 
-
+    console.log('single recipe', singleRecipe)
     useEffect(() => {
         if (singleRecipe) {
             setRecipeName(singleRecipe.recipe_name);
@@ -100,6 +100,9 @@ function UpdateRecipeForm({ recipeId }) {
         //     preview_img: preview_img,
         // };
         console.log('FORM DATA', updatedFormData)
+        for (let [key, value] of updatedFormData.entries()) {
+            console.log(key, value);
+        }
         const data = await dispatch(updateRecipeThunk(recipeId, updatedFormData));
         if (data) {
             setErrors(data);

@@ -1,3 +1,5 @@
+from flask import request
+from datetime import datetime
 from flask_wtf.csrf import generate_csrf
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
@@ -47,6 +49,36 @@ def create_recipe():
         db.session.commit()
         return new_recipe.to_dict()
     return {"errors": form.errors}
+
+
+# @recipe_routes.route('/<int:id>', methods=["PUT"])
+# def update_recipe(id):
+#     data = request.json
+
+#     recipe = Recipe.query.get(id)
+
+#     if not recipe:
+#         return {"errors": "recipe doesn't exist"}
+
+#     elif recipe.user_id != current_user.id:
+#         return {"errors": "this is not your recipe"}
+
+#     recipe.recipe_name = data.get('recipe_name')
+#     recipe.recipe_owner = data.get('recipe_owner')
+#     recipe.type = data.get('type')
+#     recipe.cook_time = data.get('cook_time')
+#     recipe.description = data.get('description')
+#     if data.get('preview_img'):
+#         recipe.preview_img = data.get('preview_img')
+#     else:
+#         recipe.preview_img = None
+#     recipe.updated_at = date.today()
+
+#     db.session.add(recipe)
+#     db.session.commit()
+
+#     return recipe.to_dict()
+
 
 
 @recipe_routes.route('/<int:id>', methods=["PUT"])
@@ -219,7 +251,7 @@ def add_ingredient(recipe_id):
         return {"error": "Recipe not found"}, 404
 
     ingredients = []
-    for ingredient_data in data['ingredients']:
+    for ingredient_data in data['ingredient']:
         print('Processing ingredient: ', ingredient_data)
         # Find the ingredient by name, or create it if it doesn't exist
         ingredient = Ingredient.query.filter_by(
@@ -332,13 +364,15 @@ def add_preparation(recipe_id):
 
     preparations = []
     for preparation_data in data['preparations']:
+        print('Processing prep: ', preparation_data)
+        print('preppp', Preparation)
         # Find the ingredient by name, or create it if it doesn't exist
         preparation = Preparation.query.filter_by(
-            step=preparation_data['step']).first()
+            step=preparation_data['step_number']).first()
 
         if not preparation:
             preparation = Preparation(
-                step=preparation_data['step'],
+                step=preparation_data['step_number'],
                 instruction=preparation_data['instruction'])
             db.session.add(preparation)
             print('Added preparation: ', preparation_data)

@@ -22,6 +22,6 @@ class Preparation(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'step': self.step,
+            'step_number': self.step,
             'instruction': self.instruction,
         }

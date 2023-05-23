@@ -199,7 +199,10 @@ export const updateRecipeThunk = (recipeId, updatedRecipe) => async (dispatch) =
 
     const response = await fetch(`/api/recipes/${recipeId}`, {
         method: 'PUT',
-        body: JSON.stringify(updatedRecipe),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // },
+        body: updatedRecipe,
     });
 
     if (response.ok) {

@@ -112,6 +112,7 @@ function IngredientsForm({ ingredient }) {
             setErrors(data);
         }
         console.log('datadata', data)
+        // window.location(`/recipes/${recipeId}`)
         closeModal();
     }
 

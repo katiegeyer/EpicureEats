@@ -57,7 +57,7 @@ export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) 
             //     // 'X-CSRFToken': getCookie('csrf_token'), //
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ingredients: ingredient})
+        body: JSON.stringify({ingredient})
     })
     console.log('this is ingredientsss', JSON.stringify(ingredient))
     if (response.ok) {

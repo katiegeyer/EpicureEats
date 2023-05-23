@@ -7,7 +7,7 @@ class PreparationDataForm(FlaskForm):
     class Meta:
         csrf = False
 
-    step = IntegerField('Step Number', validators=[DataRequired()])
+    step_number = IntegerField('Step Number', validators=[DataRequired()])
     instruction = StringField('Instruction', validators=[DataRequired()])
 
 

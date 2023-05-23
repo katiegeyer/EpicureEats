@@ -28,7 +28,17 @@ function RecipeDetails() {
     }
 
     console.log(ingredientList);
+    let preparationList = [];
 
+
+    if (recipe.preparations && recipe.preparations.length > 0) {
+        preparationList = recipe.preparations.map(preparation => ({
+            step: preparation.step_number,
+            instruction: preparation.instruction
+        }));
+    }
+
+    console.log(preparationList);
 
     //   const recipeIngredients = useSelector((state) => state)
 
@@ -57,7 +67,7 @@ function RecipeDetails() {
                 modalComponent={<PreparationForm key={recipe.id} />}
             />
             <div className="recipe">
-                <RecipeCard key={recipe.id} recipe={recipe} />
+                <RecipeCard key={recipe.id} recipe={recipe} className="one_recipe_card" />
             </div>
             <div className="ingredients-card">
                 <h2>Ingredients</h2>
@@ -71,7 +81,13 @@ function RecipeDetails() {
             </div>
             <div className="preparations-card">
                 <h2>Preparation</h2>
-                {/* preparation steps*/}
+                <ul>
+                    {preparationList.map((preparation, index) => (
+                        <li key={index}>
+                            {preparation.step} - {preparation.instruction}
+                        </li>
+                    ))}
+                </ul>
             </div>
         </>
     )
