@@ -8,8 +8,10 @@ import IngredientsForm from '../IngredientsForm';
 import PreparationForm from '../Preparations';
 import OpenModalButton from '../OpenModalButton';
 import RecipeCard from '../RecipeCard';
+import DeleteIngredient from '../DeleteIngredient';
 import './GetOneRecipe.css'
 import { NavLink } from 'react-router-dom';
+import UpdateIngredientForm from '../UpdateIngredient';
 
 function RecipeDetails() {
     const dispatch = useDispatch();
@@ -27,7 +29,7 @@ function RecipeDetails() {
         }));
     }
 
-    console.log(ingredientList);
+    console.log('this is the list', ingredientList);
     let preparationList = [];
 
 
@@ -36,7 +38,7 @@ function RecipeDetails() {
             step: preparation.step_number,
             instruction: preparation.instruction
         }));
-    }
+    } 
 
     console.log(preparationList);
 
@@ -75,6 +77,11 @@ function RecipeDetails() {
                     {ingredientList.map((ingredient, index) => (
                         <li key={index}>
                             {ingredient.name} - {ingredient.quantity}
+                            {/* <OpenModalButton
+                                buttonText="Delete"
+                                ingredientId={ingredient.id}
+                                modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
+                            /> */}
                         </li>
                     ))}
                 </ul>

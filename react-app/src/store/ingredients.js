@@ -1,6 +1,7 @@
 const GET_INGREDIENTS = "ingredients/GET_INGREDIENTS";
-const CREATE_INGREDIENT = 'ingredients/CREATE_INGREDIENT'
-const DELETE_INGREDIENT = 'ingredients/DELETE_INGREDIENT'
+const CREATE_INGREDIENT = 'ingredients/CREATE_INGREDIENT';
+const DELETE_INGREDIENT = 'ingredients/DELETE_INGREDIENT';
+const UPDATE_INGREDIENT = 'ingredients/UPDATE_INGREDIENT';
 
 
 // function getCookie(name) {
@@ -34,6 +35,11 @@ const deleteIngredientAction = (ingredientId) => ({
     ingredientId
 })
 
+const updateIngredientAction = (ingredient) => ({
+    type: UPDATE_INGREDIENT,
+    ingredient
+});
+
 export const getIngredientsThunk = (recipeId) => async (dispatch) => {
     const response = await fetch(`/api/recipes/${recipeId}/ingredients`)
 
@@ -57,7 +63,7 @@ export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) 
             //     // 'X-CSRFToken': getCookie('csrf_token'), //
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ingredient})
+        body: JSON.stringify({ ingredient })
     })
     console.log('this is ingredientsss', JSON.stringify(ingredient))
     if (response.ok) {
@@ -73,9 +79,11 @@ export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) 
 }
 
 export const deleteIngredientThunk = (recipeId, ingredientId) => async (dispatch) => {
-    const response = await fetch(`/api/recipes/${recipeId}/ingredients/${ingredientId}`, {
+    console.log('recipeIDIDID', recipeId)
+    const response = await fetch(`/api/recipes/${recipeId}/ingredients`, {
         method: 'DELETE'
     })
+    console.log('hi')
     if (response.ok) {
         const data = await response.json()
         if (data.errors) {
@@ -84,6 +92,26 @@ export const deleteIngredientThunk = (recipeId, ingredientId) => async (dispatch
         dispatch(deleteIngredientAction(data))
     }
 }
+export const updateIngredientThunk = (recipeId, ingredientId, updatedIngredient) => async (dispatch) => {
+    const response = await fetch(`/api/recipes/${recipeId}/ingredients/${ingredientId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedIngredient)
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+        dispatch(updateIngredientAction(data));
+        return data;
+    }
+};
+
 
 const initialState = { ingredients: {} }
 
@@ -102,6 +130,11 @@ export default function ingredientsReducer(state = initialState, action) {
             newState = { ...state, ingredients: { ...state.ingredients } }
             delete newState.ingredients[action.ingredientId]
             return newState
+        case UPDATE_INGREDIENT:
+            newState = { ...state };
+            newState.ingredients[action.ingredient.id] = action.ingredient;
+            return newState;
+
         default:
             return state;
     }
