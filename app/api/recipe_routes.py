@@ -80,7 +80,6 @@ def create_recipe():
 #     return recipe.to_dict()
 
 
-
 @recipe_routes.route('/<int:id>', methods=["PUT"])
 def update_recipe(id):
     form = RecipeForm()
@@ -383,3 +382,40 @@ def add_preparation(recipe_id):
     # commit the session after the loop
     db.session.commit()
     return [preparation.to_dict() for preparation in preparations]
+
+# COMMENTS ROUTES
+
+
+
+@recipe_routes.route('/<int:recipe_id>/comments', methods=['GET'])
+def get_comments(recipe_id):
+    comments = RecipeComment.query.filter_by(recipe_id=recipe_id).all()
+    return jsonify([comment.to_dict() for comment in comments])
+
+
+@recipe_routes.route('/comments/<int:id>', methods=['POST'])
+def post_comment():
+    data = request.get_json()
+    comment = RecipeComment(user_id=data['user_id'], recipe_id=data['recipe_id'],
+                            user_name=data['user_name'], is_public=data['is_public'])
+    db.session.add(comment)
+    db.session.commit()
+    return jsonify(comment.to_dict()), 201
+
+
+@recipe_routes.route('/<int:recipe_id>/comments/<int:id>', methods=['PUT'])
+def update_comment(id):
+    data = request.get_json()
+    comment = RecipeComment.query.get(id)
+    comment.is_public = data['is_public']
+    db.session.commit()
+    return jsonify(comment.to_dict())
+
+
+@recipe_routes.route('/<int:recipe_id>/comments/<int:id>', methods=['DELETE'])
+def delete_comment(id):
+    comment = RecipeComment.query.get(id)
+    db.session.delete(comment)
+    db.session.commit()
+    return jsonify({'message': 'deleted'})
+
