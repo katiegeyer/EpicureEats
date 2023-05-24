@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     recipes = db.relationship('Recipe', back_populates='user')
     # ratings = db.relationship('RecipeRating', back_populates='users')
     # boxes = db.relationship('RecipeBox', back_populates='users')
-    # comments = db.relationship('RecipeComment', back_populates='users')
+    recipe_comments = db.relationship('RecipeComment', back_populates='users')
     # liked_comments = db.relationship('CommentLike', back_populates='users')
     # grocery_lists = db.relationship('GroceryList', back_populates='users')
 

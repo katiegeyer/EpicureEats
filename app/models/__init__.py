@@ -6,7 +6,7 @@ from .recipe import Recipe
 from .ingredient import Ingredient
 # from .recipe_box_item_join import recipe_box_item
 # from .recipe_box import RecipeBox
-# from .recipe_comment import RecipeComment
+from .recipe_comment import RecipeComment
 from .preparation import Preparation
 from .r_preparation_join import recipe_preparation
 from .recipe_ingredient_join import recipe_ingredient

@@ -29,5 +29,5 @@ class RecipeComment(db.Model):
     }
 
 
-    user = db.relationship('User', back_populates = 'recipe_comments')
-    recipe = db.relationship('Recipe', back_populates = 'recipe_comments')
+    users = db.relationship('User', back_populates = 'recipe_comments')
+    recipes = db.relationship('Recipe', back_populates = 'recipe_comments')

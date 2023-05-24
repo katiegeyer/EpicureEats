@@ -12,6 +12,7 @@ import DeleteIngredient from '../DeleteIngredient';
 import './GetOneRecipe.css'
 import { NavLink } from 'react-router-dom';
 import UpdateIngredientForm from '../UpdateIngredient';
+import Comments from '../Comments';
 
 function RecipeDetails() {
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ function RecipeDetails() {
             step: preparation.step_number,
             instruction: preparation.instruction
         }));
-    } 
+    }
 
     console.log(preparationList);
 
@@ -95,6 +96,7 @@ function RecipeDetails() {
                         </li>
                     ))}
                 </ul>
+                <Comments recipeId={id} />
             </div>
         </>
     )

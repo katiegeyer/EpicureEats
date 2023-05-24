@@ -5,19 +5,31 @@ const UPDATE_COMMENT = 'comments/UPDATE_COMMENT';
 const DELETE_COMMENT = 'comments/DELETE_COMMENT';
 
 // Action Creators
-export const setComments = (comments) => ({ type: SET_COMMENTS, comments });
-export const addComment = (comment) => ({ type: ADD_COMMENT, comment });
-export const updateComment = (comment) => ({ type: UPDATE_COMMENT, comment });
-export const deleteComment = (id) => ({ type: DELETE_COMMENT, id });
+export const getCommentsAction = (comments) => ({
+    type: SET_COMMENTS,
+    comments
+});
+export const createCommentAction = (comment) => ({
+    type: ADD_COMMENT,
+    comment
+});
+export const updateCommentAction = (comment) => ({
+    type: UPDATE_COMMENT, comment
+});
+export const deleteCommentAction = (commentId) => ({
+    type: DELETE_COMMENT,
+    commentId
+});
 
 // Thunks
-export const fetchComments = (recipeId) => async dispatch => {
+export const fetchCommentsThunk = (recipeId) => async dispatch => {
     const response = await fetch(`/api/recipes/${recipeId}/comments`);
     const comments = await response.json();
-    dispatch(setComments(comments));
+    console.log('commentsTHUNK', comments)
+    dispatch(getCommentsAction(comments));
 };
 
-export const createComment = (recipeId, comment) => async dispatch => {
+export const createCommentThunk = (recipeId, comment) => async dispatch => {
     const response = await fetch(`/api/recipes/${recipeId}/comments`, {
         method: 'POST',
         headers: {
@@ -25,11 +37,18 @@ export const createComment = (recipeId, comment) => async dispatch => {
         },
         body: JSON.stringify(comment),
     });
-    const newComment = await response.json();
-    dispatch(addComment(newComment));
-};
+    if (response.ok) {
+        const data = await response.json();
 
-export const editComment = (recipeId, comment) => async dispatch => {
+        if (data.errors) {
+            return data.errors
+        }
+        dispatch(createCommentAction(data));
+        return data
+    };
+}
+
+export const editCommentThunk = (recipeId, comment) => async dispatch => {
     const response = await fetch(`/api/recipes/${recipeId}/comments/${comment.id}`, {
         method: 'PUT',
         headers: {
@@ -38,21 +57,22 @@ export const editComment = (recipeId, comment) => async dispatch => {
         body: JSON.stringify(comment),
     });
     const updatedComment = await response.json();
-    dispatch(updateComment(updatedComment));
+    dispatch(updateCommentAction(updatedComment));
 };
 
-export const removeComment = (recipeId, id) => async dispatch => {
-    await fetch(`/api/recipes/${recipeId}/comments/${id}`, { method: 'DELETE' });
-    dispatch(deleteComment(id));
+export const removeCommentThunk = (recipeId, commentId) => async dispatch => {
+    await fetch(`/api/recipes/${recipeId}/comments/${commentId}`, { method: 'DELETE' });
+    dispatch(deleteCommentAction(commentId));
 };
 
 // Reducer
-const initialState = {};
+const initialState = {comments : []};
 
 export default function commentsReducer(state = initialState, action) {
     switch (action.type) {
         case SET_COMMENTS:
-            return { ...state, ...action.comments };
+            newState = { ...state, comments: { ...action.comments} }
+            action.comments.comments.forEach(comment => newState.comments[comment.id] = comment)
         case ADD_COMMENT:
             return { ...state, [action.comment.id]: action.comment };
         case UPDATE_COMMENT:

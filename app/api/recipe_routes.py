@@ -3,7 +3,7 @@ from datetime import datetime
 from flask_wtf.csrf import generate_csrf
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
-from app.models import Recipe, Ingredient, Preparation
+from app.models import Recipe, Ingredient, Preparation, RecipeComment
 from app.forms import RecipeForm, IngredientForm
 from datetime import date
 from app.models import db
@@ -386,7 +386,6 @@ def add_preparation(recipe_id):
 # COMMENTS ROUTES
 
 
-
 @recipe_routes.route('/<int:recipe_id>/comments', methods=['GET'])
 def get_comments(recipe_id):
     comments = RecipeComment.query.filter_by(recipe_id=recipe_id).all()
@@ -418,4 +417,3 @@ def delete_comment(id):
     db.session.delete(comment)
     db.session.commit()
     return jsonify({'message': 'deleted'})
-

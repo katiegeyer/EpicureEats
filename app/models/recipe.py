@@ -28,7 +28,7 @@ class Recipe(db.Model):
     # ratings = db.relationship('RecipeRating', back_populates='recipes')
     # boxes = db.relationship('RecipeBoxItem', back_populates='recipes')
     # folders = db.relationship('RecipeFolder', back_populates='recipes')
-    comments = db.relationship('RecipeComment', back_populates='recipes')
+    recipe_comments = db.relationship('RecipeComment', back_populates='recipes')
     preparations = db.relationship(
         'Preparation', secondary=recipe_preparation, back_populates='recipes', single_parent=True, cascade='all, delete-orphan')
 
