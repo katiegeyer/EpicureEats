@@ -388,15 +388,34 @@ def add_preparation(recipe_id):
 
 @recipe_routes.route('/<int:recipe_id>/comments', methods=['GET'])
 def get_comments(recipe_id):
+    print("this is running")
     comments = RecipeComment.query.filter_by(recipe_id=recipe_id).all()
-    return jsonify([comment.to_dict() for comment in comments])
+    print("COMMENTSSSSSS", comments)
+    return {"comments": [comment.to_dict() for comment in comments]}
+# @recipe_routes.route('/recipes/<int:recipe_id>/comments', methods=['POST'])
+# @login_required
+# def post_comment(recipe_id):
+#     data = request.get_json()
+#     recipe = Recipe.query.filter_by(recipe_id=recipe_id)
+#     if recipe:
+#         comment = RecipeComment(
+#             text=data['text'], user_id=current_user.id, recipe_id=recipe_id)
 
-
-@recipe_routes.route('/comments/<int:id>', methods=['POST'])
-def post_comment():
+#     # comment = RecipeComment(user_id=data['user_id'], recipe_id=data['recipe_id'],
+#     #                         user_name=data['user_name'])
+#     db.session.add(comment)
+#     db.session.commit()
+#     return jsonify(comment.to_dict()), 201
+@recipe_routes.route('/<int:recipe_id>/comments', methods=['POST'])
+@login_required
+def post_comment(recipe_id):
     data = request.get_json()
-    comment = RecipeComment(user_id=data['user_id'], recipe_id=data['recipe_id'],
-                            user_name=data['user_name'], is_public=data['is_public'])
+    print('DATAAAA', data)
+    recipe = Recipe.query.get(recipe_id)
+    if recipe is None:
+        return jsonify({'error': 'Recipe not found'}), 404
+    comment = RecipeComment(
+        comment=data['text'], user_id=current_user.id, recipe_id=recipe_id)
     db.session.add(comment)
     db.session.commit()
     return jsonify(comment.to_dict()), 201

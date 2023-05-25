@@ -13,6 +13,8 @@ import './GetOneRecipe.css'
 import { NavLink } from 'react-router-dom';
 import UpdateIngredientForm from '../UpdateIngredient';
 import Comments from '../Comments';
+import { createCommentThunk } from '../../store/comments';
+import CommentForm from '../CommentForm';
 
 function RecipeDetails() {
     const dispatch = useDispatch();
@@ -25,6 +27,7 @@ function RecipeDetails() {
 
     if (recipe.ingredients && recipe.ingredients.length > 0) {
         ingredientList = recipe.ingredients.map(ingredient => ({
+            id: ingredient.id,
             name: ingredient.name,
             quantity: ingredient.quantity
         }));
@@ -36,6 +39,7 @@ function RecipeDetails() {
 
     if (recipe.preparations && recipe.preparations.length > 0) {
         preparationList = recipe.preparations.map(preparation => ({
+            id: preparation.id,
             step: preparation.step_number,
             instruction: preparation.instruction
         }));
@@ -72,17 +76,18 @@ function RecipeDetails() {
             <div className="recipe">
                 <RecipeCard key={recipe.id} recipe={recipe} className="one_recipe_card" />
             </div>
+            <br />
             <div className="ingredients-card">
                 <h2>Ingredients</h2>
                 <ul>
                     {ingredientList.map((ingredient, index) => (
                         <li key={index}>
                             {ingredient.name} - {ingredient.quantity}
-                            {/* <OpenModalButton
+                            <OpenModalButton
                                 buttonText="Delete"
                                 ingredientId={ingredient.id}
                                 modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
-                            /> */}
+                            />
                         </li>
                     ))}
                 </ul>
@@ -96,7 +101,10 @@ function RecipeDetails() {
                         </li>
                     ))}
                 </ul>
-                <Comments recipeId={id} />
+                <br />
+                {/* <Comments recipeId={id} /> */}
+                <Comments recipeId={recipe.id}/>
+
             </div>
         </>
     )

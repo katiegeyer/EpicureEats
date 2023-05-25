@@ -9,7 +9,7 @@ function CommentForm({ recipeId }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Here, we assume createComment is a redux thunk that dispatches an action to add a comment
-        dispatch(createComment(recipeId, { text: comment }));
+        dispatch(createCommentThunk(recipeId, { text: comment }));
         setComment(''); // Clear the comment box after submitting
     };
 

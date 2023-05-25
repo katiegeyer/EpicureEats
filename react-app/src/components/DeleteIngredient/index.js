@@ -7,11 +7,11 @@ import './DeleteIngredient.css'
 import { useParams } from 'react-router-dom';
 
 
-const DeleteIngredient = () => {
+const DeleteIngredient = ({recipeId, ingredientId}) => {
     const history = useHistory()
     const { closeModal } = useModal()
     const dispatch = useDispatch()
-    const recipeId = useParams()
+    // const params = useParams()
 
     // console.log("SONGIDDDD", songId)
     // const songId = useSelector(state => state)
@@ -19,17 +19,18 @@ const DeleteIngredient = () => {
     useEffect(() => {
         dispatch(getIngredientsThunk(recipeId));
     }, [dispatch, recipeId]);
-    const recipeIngredients = useSelector(state => state.ingredients);
-    const recipeIng = recipeIngredients.ingredients
-    const ingredientId = recipeIng.id
-    console.log('INGRWERKJLKFA', recipeIng)
-
-
+    // const recipeIngredients = useSelector(state => state.ingredients);
+    // console.log('recipesssss', recipeIngredients)
+    // const recipeIng = recipeIngredients.ingredients
+    // const ingredientId = recipeIng.id
+    // console.log('INGRWERKJLKFA', recipeIng)
+    // const ingredientId = params.ingredientId;
+    // const recipeId = params.recipeId;
 
 
     // singleIngredient
     const deleteClick = (e) => {
-        if (ingredientId) {
+        if (ingredientId !== undefined) {
             dispatch(deleteIngredientThunk(recipeId, ingredientId))
             closeModal()
             window.location.replace(`/recipes/${recipeId}`)

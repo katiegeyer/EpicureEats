@@ -86,7 +86,8 @@ function IngredientsForm({ ingredient, updateRecipe }) {
         const ingred = {
             ingredients: ingredients.map((ingredient) => ({
                 name: ingredient.name,
-                quantity: ingredient.quantity
+                quantity: ingredient.quantity,
+                id: ingredient.id
             }))
         };
         console.log('ingredients values', Object.values(ingred.ingredients));
@@ -96,9 +97,14 @@ function IngredientsForm({ ingredient, updateRecipe }) {
 
 
         const data = await dispatch(createIngredientThunk(recipeId, ingred.ingredients));
-        if (data) {
+        if (data.status == 'error') {
             setErrors(data);
         }
+        // else {
+        //     ingredients.find(ingredient => {
+        //         ingredient.id === data.data[0].id
+        //     })
+        // }
         console.log('datadata', data)
         // window.location(`/recipes/${recipeId}`)
         closeModal();

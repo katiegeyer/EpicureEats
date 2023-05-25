@@ -24,9 +24,10 @@ export const deleteCommentAction = (commentId) => ({
 // Thunks
 export const fetchCommentsThunk = (recipeId) => async dispatch => {
     const response = await fetch(`/api/recipes/${recipeId}/comments`);
-    const comments = await response.json();
-    console.log('commentsTHUNK', comments)
-    dispatch(getCommentsAction(comments));
+    const data = await response.json();
+    console.log('commentsTHUNK', data)
+    dispatch(getCommentsAction(data.comments));
+    return data
 };
 
 export const createCommentThunk = (recipeId, comment) => async dispatch => {
@@ -48,6 +49,7 @@ export const createCommentThunk = (recipeId, comment) => async dispatch => {
     };
 }
 
+
 export const editCommentThunk = (recipeId, comment) => async dispatch => {
     const response = await fetch(`/api/recipes/${recipeId}/comments/${comment.id}`, {
         method: 'PUT',
@@ -66,22 +68,46 @@ export const removeCommentThunk = (recipeId, commentId) => async dispatch => {
 };
 
 // Reducer
-const initialState = {comments : []};
+const initialState = { comments: [] };
 
 export default function commentsReducer(state = initialState, action) {
+    let newState;
     switch (action.type) {
         case SET_COMMENTS:
-            newState = { ...state, comments: { ...action.comments} }
-            action.comments.comments.forEach(comment => newState.comments[comment.id] = comment)
+            newState = { ...state, comments: [...action.comments] }
+            return newState
         case ADD_COMMENT:
-            return { ...state, [action.comment.id]: action.comment };
+            return { ...state, comments: [...state.comments, action.comment] };
         case UPDATE_COMMENT:
-            return { ...state, [action.comment.id]: action.comment };
+            const updatedComments = state.comments.map(comment => comment.id === action.comment.id ? action.comment : comment);
+            return { ...state, comments: updatedComments };
+
         case DELETE_COMMENT:
-            const newState = { ...state };
+            newState = { ...state };
             delete newState[action.id];
             return newState;
         default:
             return state;
     }
 }
+
+// const initialState = { comments: [] };
+
+// export default function commentsReducer(state = initialState, action) {
+//     let newState;
+//     switch (action.type) {
+//         case SET_COMMENTS:
+//             newState = { ...state, comments: { ...action.comments } }
+//             action.comments.comments.forEach(comment => newState.comments[comment.id] = comment)
+//         case ADD_COMMENT:
+//             return { ...state, [action.comment.id]: action.comment };
+//         case UPDATE_COMMENT:
+//             return { ...state, [action.comment.id]: action.comment };
+//         case DELETE_COMMENT:
+//             const newState = { ...state };
+//             delete newState[action.id];
+//             return newState;
+//         default:
+//             return state;
+//     }
+// }

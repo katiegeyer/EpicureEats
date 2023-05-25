@@ -68,19 +68,20 @@ export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) 
     console.log('this is ingredientsss', JSON.stringify(ingredient))
     if (response.ok) {
         const data = await response.json();
+        ingredient[0].id = data[0].id;
         console.log('this is data', data)
         if (data.errors) {
-            return data.errors
+            return { status: 'error', data: data.errors }
         }
         dispatch(createIngredientAction(data))
         console.log('this is returned data', data)
-        return data;
+        return { status: 'ok', data: data };
     }
 }
 
 export const deleteIngredientThunk = (recipeId, ingredientId) => async (dispatch) => {
     console.log('recipeIDIDID', recipeId)
-    const response = await fetch(`/api/recipes/${recipeId}/ingredients`, {
+    const response = await fetch(`/api/recipes/${recipeId}/ingredients/${ingredientId}`, {
         method: 'DELETE'
     })
     console.log('hi')
@@ -124,7 +125,7 @@ export default function ingredientsReducer(state = initialState, action) {
             return newState
         case CREATE_INGREDIENT:
             newState = { ...state }
-            newState.ingredients[action.ingredient.id] = action.ingredient
+            newState.ingredients[action.ingredient[0].id] = action.ingredient[0]
             return newState
         case DELETE_INGREDIENT:
             newState = { ...state, ingredients: { ...state.ingredients } }
