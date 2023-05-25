@@ -406,6 +406,8 @@ def get_comments(recipe_id):
 #     db.session.add(comment)
 #     db.session.commit()
 #     return jsonify(comment.to_dict()), 201
+
+
 @recipe_routes.route('/<int:recipe_id>/comments', methods=['POST'])
 @login_required
 def post_comment(recipe_id):
@@ -415,7 +417,7 @@ def post_comment(recipe_id):
     if recipe is None:
         return jsonify({'error': 'Recipe not found'}), 404
     comment = RecipeComment(
-        comment=data['text'], user_id=current_user.id, recipe_id=recipe_id)
+        comment=data['text'], user_id=current_user.id, user_name=data['user_name'], recipe_id=recipe_id)
     db.session.add(comment)
     db.session.commit()
     return jsonify(comment.to_dict()), 201
