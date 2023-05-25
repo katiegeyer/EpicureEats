@@ -1,13 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function SplashPage() {
+    const sessionUser = useSelector((state) => state.session.user);
     return (
         <div className="splash-container">
             <div className="splash-header">
                 <h1>Welcome to Epicure Eats</h1>
                 <p>Discover, cook, enjoy.</p>
-                <NavLink to="/signup">Sign Up</NavLink>
+                {!sessionUser &&
+
+                    <NavLink to="/signup">Sign Up</NavLink>
+                }
             </div>
             <div className="splash-image">
                 <NavLink exact to='/recipes'>

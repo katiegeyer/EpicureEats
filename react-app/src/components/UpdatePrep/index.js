@@ -30,12 +30,12 @@ function UpdatePreparationForm({ preparation, preparationId, recipeId }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedPreparation = [{
-                step_number: step_number,
-                instruction: instruction,
+            step_number: step_number,
+            instruction: instruction,
         }];
         const data = await dispatch(updatePreparationThunk(recipeId, preparationId, updatedPreparation));
-        if (data.errors) {
-            setErrors(data.errors);
+        if (data.status == 'error') {
+            setErrors(data);
         }
         closeModal();
     }
@@ -63,7 +63,7 @@ function UpdatePreparationForm({ preparation, preparationId, recipeId }) {
                 </label>
                 <button type="submit">Update</button>
             </form>
-            {errors && errors.map((error, idx) => <div key={idx}>{error}</div>)}
+            {/* {errors && errors.map((error, idx) => <div key={idx}>{error}</div>)} */}
         </div>
     );
 }

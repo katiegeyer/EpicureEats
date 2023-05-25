@@ -77,17 +77,16 @@ export const updatePreparationThunk = (recipeId, preparationId, preparation) => 
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ preparation })
+        body: JSON.stringify({ preparation: preparation })
     });
 
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
-            return data.errors;
+            return { status: 'error', data: data.errors }
         }
-
-        dispatch(updatePreparationAction(data));
-        return data;
+        dispatch(updatePreparationAction(data))
+        return { status: 'ok', data: data };
     }
 }
 

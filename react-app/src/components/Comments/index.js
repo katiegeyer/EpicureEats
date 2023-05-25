@@ -13,6 +13,10 @@ function Comments({ recipeId }) {
     const [userName, setUserName] = useState('');
 
     const comment = useSelector(state => state.comments.comments)
+    const sessionUser = useSelector((state) => state.session.user);
+    const commentUserId = comment.map(c => c.user_id);
+    console.log('COMENT OWNER', commentUserId)
+    console.log('session', sessionUser.id)
 
     const fetchComments = async () => {
         if (!recipeId) return;
@@ -74,11 +78,13 @@ function Comments({ recipeId }) {
                             <h5>{moment(comment.created_at).format('MMMM Do YYYY, h:mm:ss a')}</h5>
                         </div>
                         <p className="comment-text">{comment.comment}</p>
-                        <OpenModalButton
-                            buttonText="Delete"
-                            commentId={comment.id}
-                            modalComponent={<DeleteComment recipeId={recipeId} commentId={comment.id} />}
-                        />
+                        {sessionUser.id == comment.user_id &&
+                            <OpenModalButton
+                                buttonText="Delete"
+                                commentId={comment.id}
+                                modalComponent={<DeleteComment recipeId={recipeId} commentId={comment.id} />}
+                            />
+                        }
                     </div>
 
                 ))}

@@ -28,6 +28,9 @@ function RecipeDetails() {
     const { openModal } = useModal();
     const recipe = useSelector((state) => state.recipes.singleRecipe);
     const sessionUser = useSelector((state) => state.session.user);
+    const comment = useSelector((state) => state.comments.comments)
+    const commentUserId = comment.map(c => c.user_id);
+    console.log('COMENT OWNER', commentUserId)
     const owner = recipe.recipe_owner;
     const current_user = sessionUser?.id;
     const [update, setUpdate] = useState(false);
@@ -117,11 +120,11 @@ function RecipeDetails() {
                                 preparationId={preparation.id}
                                 modalComponent={<DeletePreparation recipeId={recipe.id} preparationId={preparation.id} />}
                             />
-                            <OpenModalButton
+                            {/* <OpenModalButton
                                 buttonText="Update"
                                 preparationId={preparation.id}
                                 modalComponent={<UpdatePreparationForm recipeId={recipe.id} preparationId={preparation.id} />}
-                            />
+                            /> */}
                         </li>
                     ))}
                 </ul>
