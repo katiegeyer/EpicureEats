@@ -23,6 +23,7 @@ export const deleteCommentAction = (commentId) => ({
 
 // Thunks
 export const fetchCommentsThunk = (recipeId) => async dispatch => {
+    console.log('kthsjhsdf', recipeId)
     const response = await fetch(`/api/recipes/${recipeId}/comments`);
     const data = await response.json();
     console.log('commentsTHUNK', data)
@@ -63,6 +64,7 @@ export const editCommentThunk = (recipeId, comment) => async dispatch => {
 };
 
 export const removeCommentThunk = (recipeId, commentId) => async dispatch => {
+    console.log('this is the comment IDDDD', commentId)
     await fetch(`/api/recipes/${recipeId}/comments/${commentId}`, { method: 'DELETE' });
     dispatch(deleteCommentAction(commentId));
 };
@@ -84,8 +86,9 @@ export default function commentsReducer(state = initialState, action) {
 
         case DELETE_COMMENT:
             newState = { ...state };
-            delete newState[action.id];
+            newState.comments = newState.comments.filter(comment => comment.id !== action.commentId);
             return newState;
+
         default:
             return state;
     }

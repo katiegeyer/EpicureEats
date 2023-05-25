@@ -4,7 +4,7 @@ from flask_wtf.csrf import generate_csrf
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
 from app.models import Recipe, Ingredient, Preparation, RecipeComment
-from app.forms import RecipeForm, IngredientForm
+from app.forms import RecipeForm, IngredientForm, PreparationDataForm
 from datetime import date
 from app.models import db
 import os
@@ -350,6 +350,17 @@ def remove_ingredient(recipe_id, ingredient_id):
 
     return {'success': 'ingredient removed'}
 
+# PREPARATION ROUTES
+
+
+@recipe_routes.route('/<int:recipe_id>/preparations', methods=['GET'])
+def get_preparations(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    if recipe:
+        return {"preparations": [preparation.to_dict() for preparation in recipe.preparations]}
+    else:
+        return {"errors": "recipe not found"}
+
 
 @recipe_routes.route('/<int:recipe_id>/preparations', methods=['POST'])
 @login_required
@@ -382,6 +393,44 @@ def add_preparation(recipe_id):
     # commit the session after the loop
     db.session.commit()
     return [preparation.to_dict() for preparation in preparations]
+
+
+@recipe_routes.route('/<int:recipe_id>/preparations/<int:preparation_id>', methods=['DELETE'])
+def remove_preparation(recipe_id, preparation_id):
+    recipe = Recipe.query.get(recipe_id)
+    preparation = Preparation.query.get(preparation_id)
+
+    if not recipe or not preparation:
+        return {"error": "Recipe or preparation not found"}, 404
+
+    if preparation in recipe.preparations:
+        recipe.preparations.remove(preparation)
+        db.session.commit()
+
+    return {'success': 'preparation removed'}
+
+
+@recipe_routes.route('/<int:recipe_id>/preparations/<int:preparation_id>', methods=['PUT'])
+def update_preparation(recipe_id, preparation_id):
+    data = request.get_json()
+    form = PreparationDataForm(data=data)
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        preparation = preparation.query.get(preparation_id)
+
+        if not preparation:
+            return {"errors": "preparation doesn't exist"}
+
+        preparation.step = form.data['step_number']
+        preparation.instruction = form.data['instruction']
+
+        db.session.add(preparation)
+        db.session.commit()
+
+        return preparation.to_dict()
+
+    return {"errors": form.errors}
 
 # COMMENTS ROUTES
 
@@ -423,18 +472,26 @@ def post_comment(recipe_id):
     return jsonify(comment.to_dict()), 201
 
 
-@recipe_routes.route('/<int:recipe_id>/comments/<int:id>', methods=['PUT'])
-def update_comment(id):
+@recipe_routes.route('/<int:recipe_id>/comments/<int:comment_id>', methods=['PUT'])
+def update_comment(comment_id):
     data = request.get_json()
-    comment = RecipeComment.query.get(id)
+    comment = RecipeComment.query.get(comment_id)
     comment.is_public = data['is_public']
     db.session.commit()
     return jsonify(comment.to_dict())
 
 
-@recipe_routes.route('/<int:recipe_id>/comments/<int:id>', methods=['DELETE'])
-def delete_comment(id):
-    comment = RecipeComment.query.get(id)
+@recipe_routes.route('/<int:recipe_id>/comments/<int:comment_id>', methods=['DELETE'])
+# def delete_comment(recipe_id, comment_id):
+#     # your code here
+#     print('COMEOMOEMRE', id)
+#     comment = RecipeComment.query.get(id)
+#     db.session.delete(comment)
+#     db.session.commit()
+#     return jsonify({'message': 'deleted'})
+def delete_comment(recipe_id, comment_id):
+    print('COMEOMOEMRE', comment_id)
+    comment = RecipeComment.query.get(comment_id)
     db.session.delete(comment)
     db.session.commit()
     return jsonify({'message': 'deleted'})

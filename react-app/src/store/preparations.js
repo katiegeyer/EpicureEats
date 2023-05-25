@@ -1,21 +1,27 @@
 const GET_PREPARATIONS = "preparations/GET_PREPARATIONS";
-const CREATE_PREPARATION = 'preparations/CREATE_PREPARATION'
-const DELETE_PREPARATION = 'preparations/DELETE_PREPARATION'
+const CREATE_PREPARATION = 'preparations/CREATE_PREPARATION';
+const DELETE_PREPARATION = 'preparations/DELETE_PREPARATION';
+const UPDATE_PREPARATION = 'preparations/UPDATE_PREPARATION';
 
 export const getPreparationsAction = (preparations) => ({
     type: GET_PREPARATIONS,
-   preparations
+    preparations
 });
 
 const createPreparationAction = (preparation) => ({
     type: CREATE_PREPARATION,
-   preparation
+    preparation
 })
 
 const deletePreparationAction = (preparationId) => ({
     type: DELETE_PREPARATION,
-   preparationId
+    preparationId
 })
+
+const updatePreparationAction = (preparation) => ({
+    type: UPDATE_PREPARATION,
+    preparation
+});
 
 export const getPreparationsThunk = (recipeId) => async (dispatch) => {
     const response = await fetch(`/api/recipes/${recipeId}/preparations`)
@@ -31,13 +37,13 @@ export const getPreparationsThunk = (recipeId) => async (dispatch) => {
     }
 };
 
-export const createPreparationThunk = (recipeId,preparation) => async (dispatch) => {
+export const createPreparationThunk = (recipeId, preparation) => async (dispatch) => {
     const response = await fetch(`/api/recipes/${recipeId}/preparations`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({preparations:preparation})
+        body: JSON.stringify({ preparations: preparation })
     })
 
     if (response.ok) {
@@ -50,7 +56,7 @@ export const createPreparationThunk = (recipeId,preparation) => async (dispatch)
     }
 }
 
-export const deletePreparationThunk = (recipeId,preparationId) => async (dispatch) => {
+export const deletePreparationThunk = (recipeId, preparationId) => async (dispatch) => {
     const response = await fetch(`/api/recipes/${recipeId}/preparations/${preparationId}`, {
         method: 'DELETE'
     })
@@ -63,22 +69,50 @@ export const deletePreparationThunk = (recipeId,preparationId) => async (dispatc
     }
 }
 
-const initialState = {preparations: {} }
+export const updatePreparationThunk = (recipeId, preparationId, preparation) => async (dispatch) => {
+    console.log('UPDATE RECIPE ID', recipeId);
+    console.log('update prep id', preparationId)
+    const response = await fetch(`/api/recipes/${recipeId}/preparations/${preparationId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ preparation })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+
+        dispatch(updatePreparationAction(data));
+        return data;
+    }
+}
+
+const initialState = { preparations: {} }
 
 export default function preparationsReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
         case GET_PREPARATIONS:
+            // newState = { ...state, preparations: { ...action.preparations } }
+            // return newState
             newState = { ...state, preparations: { ...action.preparations } }
-            return newState
+            action.preparations.preparations.forEach(preparation => newState.preparations[preparation.id] = preparation)
         case CREATE_PREPARATION:
             newState = { ...state }
-            newState.preparations[action.preparation.id] = action.preparation
+            newState.preparations[action.preparationId] = action.preparation
             return newState
         case DELETE_PREPARATION:
             newState = { ...state, preparations: { ...state.preparations } }
             delete newState.preparations[action.preparationId]
             return newState
+        case UPDATE_PREPARATION:
+            newState = { ...state, preparations: { ...state.preparations } }
+            newState.preparations[action.preparation.id] = action.preparation;
+            return newState;
         default:
             return state;
     }

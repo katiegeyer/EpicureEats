@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 // import './PreparationForm.css'; // Remember to create a CSS file for this component
 import { getRecipeThunk } from "../../store/recipes";
 
-function PreparationForm({ preparation }) {
+function PreparationForm({ preparation, setUpdate }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const recipe = useSelector(state => state.recipes.singleRecipe);
@@ -45,8 +45,10 @@ function PreparationForm({ preparation }) {
         };
 
         const data = await dispatch(createPreparationThunk(recipeId, stepObj.steps));
-        if (data) {
+        if (data.status == 'error') {
             setErrors(data);
+        } else {
+            setUpdate(prev => !prev); // This will cause the RecipeDetails component to re-render
         }
         closeModal();
     }

@@ -12,7 +12,7 @@ class PreparationDataForm(FlaskForm):
 
 
 
-class IngredientForm(FlaskForm):
+class PreparationDataForm(FlaskForm):
     # class Meta:
     #     csrf = False
-    steps = FieldList(FormField(PreparationDataForm), min_entries=1)
+    preparation = FieldList(FormField(PreparationDataForm), min_entries=1)

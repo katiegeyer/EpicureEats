@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createCommentThunk, fetchCommentsThunk } from '../../store/comments';
+import { createCommentThunk, fetchCommentsThunk, removeCommentThunk } from '../../store/comments';
 import moment from 'moment';
+import OpenModalButton from '../OpenModalButton';
+import DeleteComment from '../DeleteComment';
 import './Comments.css';
 
 function Comments({ recipeId }) {
@@ -10,7 +12,10 @@ function Comments({ recipeId }) {
     const [commentText, setCommentText] = useState('');
     const [userName, setUserName] = useState('');
 
+    const comment = useSelector(state => state.comments.comments)
+
     const fetchComments = async () => {
+        if (!recipeId) return;
         const data = await dispatch(fetchCommentsThunk(recipeId));
         if (Array.isArray(data.comments)) {
             setComments(data.comments);
@@ -18,6 +23,9 @@ function Comments({ recipeId }) {
             console.warn("data fetched not an array", data);
         }
     }
+    console.log('COMEOSOFKJASFSDF', comment.id)
+    console.log('Comment IDs:', comment.map(c => c.id));
+    console.log('recipe ID', recipeId)
 
     useEffect(() => {
         fetchComments();
@@ -35,6 +43,9 @@ function Comments({ recipeId }) {
         setUserName('');
         fetchComments();
     };
+    if (typeof recipeId === 'undefined') {
+        console.error('recipeId is undefined!');
+    }
 
     return (
         <div className="comments-container">
@@ -63,7 +74,13 @@ function Comments({ recipeId }) {
                             <h5>{moment(comment.created_at).format('MMMM Do YYYY, h:mm:ss a')}</h5>
                         </div>
                         <p className="comment-text">{comment.comment}</p>
+                        <OpenModalButton
+                            buttonText="Delete"
+                            commentId={comment.id}
+                            modalComponent={<DeleteComment recipeId={recipeId} commentId={comment.id} />}
+                        />
                     </div>
+
                 ))}
             </div>
         </div >

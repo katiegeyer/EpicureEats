@@ -9,7 +9,7 @@ class Preparation(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    step = db.Column(db.Integer, nullable=False)
+    step = db.Column(db.Integer, nullable=False, unique=True)
     instruction = db.Column(db.String, nullable=True)
 
     recipes = db.relationship(

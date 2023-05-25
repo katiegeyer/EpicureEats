@@ -7,7 +7,7 @@ import './IngredientsForm.css'; // Remember to import your CSS
 import recipesReducer, { getRecipeThunk } from "../../store/recipes";
 
 
-function IngredientsForm({ ingredient, updateRecipe }) {
+function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const recipe = useSelector(state => state.recipes.singleRecipe);
@@ -23,29 +23,6 @@ function IngredientsForm({ ingredient, updateRecipe }) {
 
 
     const [errors, setErrors] = useState([]);
-    // useEffect(() => {
-    //     // Get the csrf_token from the cookies
-    //     const csrf_token = getCookie('csrf_token');
-    //     setCsrfToken(csrf_token);
-    // }, []);
-    // useEffect(() => {
-    //     setIngredients(recipeIngredients);
-    // }, [recipeIngredients]);
-    // useEffect(() => {
-    //     dispatch(getIngredientsThunk(recipeId));
-    // }, [dispatch, recipeId]);
-
-    // const recipeIng = recipeIngredients.ingredients
-
-    // useEffect(() => {
-    //     if (Array.isArray(recipeIngredients.ingredients)) {
-    //         setIngredients(recipeIngredients.ingredients);
-    //     } else {
-    //         setIngredients([]);
-    //     }
-    // }, [recipeIngredients]);
-
-
 
     const handleIngredientChange = (index, event) => {
         const values = [...ingredients];
@@ -95,11 +72,16 @@ function IngredientsForm({ ingredient, updateRecipe }) {
         console.log('ingredients', ingred.ingredients);
         console.log('payload', { ingredients: ingred.ingredients });
 
-
         const data = await dispatch(createIngredientThunk(recipeId, ingred.ingredients));
         if (data.status == 'error') {
             setErrors(data);
+        } else {
+            setUpdate(prev => !prev); // This will cause the RecipeDetails component to re-render
         }
+        // const data = await dispatch(createIngredientThunk(recipeId, ingred.ingredients));
+        // if (data.status == 'error') {
+        //     setErrors(data);
+        // }
         // else {
         //     ingredients.find(ingredient => {
         //         ingredient.id === data.data[0].id
