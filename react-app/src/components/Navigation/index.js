@@ -7,8 +7,13 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
+const alertClickHandler = () => {
+    return alert('Feature Coming Soon!')
+}
+
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
+
 
     return (
         <>
@@ -16,11 +21,11 @@ function Navigation({ isLoaded }) {
                 <nav className="navbar">
                     <NavLink className="nav-logo" exact to="/">Epicure Eats</NavLink>
                     <div className="nav-search">
-                        <input type="text" placeholder="Search Recipes" />
+                        <input type="text" placeholder="Search feature coming soon!" />
                     </div>
                     <div className="nav-links">
-                        <NavLink to="/grocery-list">Your Grocery List</NavLink>
-                        <NavLink to="/recipe-box">Your Recipe Box</NavLink>
+                        {/* <div onClick={() => alertClickHandler()} >Your Grocery List</div> */}
+                        <div onClick={() => alertClickHandler()} >Your Recipe Box</div>
                         {isLoaded && (
                             <ProfileButton user={sessionUser} />
                         )}
@@ -30,7 +35,7 @@ function Navigation({ isLoaded }) {
             {!sessionUser &&
                 <nav className="navbar">
                     <NavLink className="nav-logo" exact to="/">Epicure Eats</NavLink>
-                    <OpenModalButton
+                    {/* <OpenModalButton
                         buttonText="Sign Up"
                         // onItemClick={closeMenu}
                         modalComponent={<SignupFormModal />}
@@ -39,10 +44,10 @@ function Navigation({ isLoaded }) {
                         buttonText="Log In"
                         // onItemClick={closeMenu}
                         modalComponent={<LoginFormModal />}
-                    />
+                    /> */}
                 </nav>
             }
-            
+
         </>
     );
 }

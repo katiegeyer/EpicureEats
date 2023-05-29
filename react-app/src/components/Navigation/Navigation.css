@@ -27,7 +27,7 @@
 }
 
 .nav-search input {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -35,6 +35,9 @@
 
 .nav-links {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .nav-links a {

@@ -1,16 +1,16 @@
-/* CSS for SplashPage component */
 .splash-container {
     display: flex;
+    flex-direction: column;
     text-align: center;
     align-items: center;
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .splash-header {
-    margin-bottom: 50px;
+    margin-bottom: 5px;
 }
 
 .splash-header h1 {
@@ -39,40 +39,58 @@
 
 .splash-image {
     position: relative;
-    background-size: cover;
-    background-position: center;
-    height: 500px;
-    /* Or whatever height you prefer */
+    width: 100%;
     overflow: hidden;
+    cursor: pointer;
     /* This will make sure the overlay is contained within the image box */
+}
+
+.splash-image img {
+    width: 100%;
+    height: 800px;
+    /* Or whatever height you prefer */
+}
+
+.shade {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .recipe-card-sp {
     position: absolute;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent black background */
-    color: #fff;
-    /* White text */
-    width: 100%;
+    top: 20%;
+    /* Adjust as needed */
+    left: 15%;
+    /* Adjust as needed */
+    /* background: white; */
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+    width: 70%;
+    /* Adjust as needed */
     padding: 20px;
     box-sizing: border-box;
     transition: all 0.3s ease;
-    /* Smooth reveal */
+    box-shadow: 2px 2px 5px black;
+    bottom: 30%;
 }
 
-
-
-
-
-
-
-
-.recipe-card-sp h2 {
-    margin: 0 0 10px;
-    font-size: 1.5em;
+.recipe-card-sp button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    row-gap: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.recipe-card-sp p {
-    margin: 0 0 10px;
+.signup-login-buttons:hover {
+    background-color: #0056b3;
 }

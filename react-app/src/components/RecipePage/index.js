@@ -55,6 +55,8 @@ import "slick-carousel/slick/slick-theme.css";
 const RecipePage = () => {
     const dispatch = useDispatch();
     const recipes = useSelector(state => Object.values(state.recipes.allRecipes));
+    const sessionUser = useSelector((state) => state.session.user);
+
 
     useEffect(() => {
         dispatch(getAllRecipesThunk());
@@ -100,11 +102,13 @@ const RecipePage = () => {
             <div className="banner">
                 <h1>Epicure Eats</h1>
             </div>
-            <OpenModalButton
-                buttonText="Post a Recipe"
-                onItemClick={() => { }}
-                modalComponent={<CreateRecipeForm />}
-            />
+            {sessionUser &&
+                <OpenModalButton
+                    buttonText="Post a Recipe"
+                    onItemClick={() => { }}
+                    modalComponent={<CreateRecipeForm />}
+                />
+            }
             <div className="recipes-list">
                 <Slider {...settings}>
                     {recipes.map(recipe =>

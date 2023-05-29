@@ -62,7 +62,7 @@ function LoginFormModal() {
   //       </label>
   return (
     <div className="login-page">
-      <img className="login-image" src='https://bakingamoment.com/wp-content/uploads/2021/02/IMG_9987-flourless-chocolate-cake.jpg' />
+      {/* <img className="login-image" src='https://bakingamoment.com/wp-content/uploads/2021/02/IMG_9987-flourless-chocolate-cake.jpg' /> */}
       <div className="login-modal">
         <h1>Log In</h1>
         <p>Enter your email address and password to log in or sign up to create an account</p>
@@ -73,7 +73,8 @@ function LoginFormModal() {
             ))}
           </ul>
           <label>
-            Email
+            Email:
+            <br />
             <input
               type="text"
               value={email}
@@ -82,7 +83,8 @@ function LoginFormModal() {
             />
           </label>
           <label>
-            Password
+            Password:
+            <br />
             <input
               type="password"
               value={password}
@@ -90,10 +92,14 @@ function LoginFormModal() {
               required
             />
           </label>
+          <br />
           <button type="submit" disabled={!email || !password}>Log In</button>
+          <br />
           <div className="login-modal-demo">
             <button onClick={() => demoClick()}>Demo User</button>
           </div>
+          <br />
+
           <div className="login-form-signup">
             <OpenModalButton
               buttonText="Don't have an account? Sign up!"
@@ -101,10 +107,15 @@ function LoginFormModal() {
               modalComponent={<SignupFormModal />}
               loginModalClass='login'
             />
+          <br />
+
+          <br />
+
           </div>
+
         </form>
       </div>
-    </div>
+    </div >
   );
 }
 

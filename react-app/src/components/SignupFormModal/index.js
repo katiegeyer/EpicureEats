@@ -13,17 +13,22 @@ function SignupFormModal() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const [username, setUsername] = useState("");
 	const [errs, setErrs] = useState([]);
 	const [displayErr, setDisplayErr] = useState(false)
 	const { closeModal } = useModal();
 
 	useEffect(() => {
 		const errors = {}
+		if (!username) errors.username = "Username is required"
+		if (username.length < 4) errors.usernameLengthSmall = "Username is under 4 characters"
+		if (username.length > 20) errors.usernameLengthLarge = "Username is over 20 characters"
 		if (!email.includes('@')) errors.email = "Invalid Email"
+		if (!email.includes('.com' || '.edu' || '.net' || '.org' || '.gov')) errors.email = "Invalid Email"
 		if (!password) errors.password = "Password is required"
 		if (confirmPassword !== password) errors.confirmPassword = 'Passwords must match'
 		setErrs(errors)
-	}, [email, password, confirmPassword])
+	}, [username, email, password, confirmPassword])
 
 
 	const handleSubmit = async (e) => {
@@ -35,26 +40,42 @@ function SignupFormModal() {
 			return
 		}
 		else {
-			const newUser = await dispatch(signUp(email, password))
-			history.push('/profile')
+			const newUser = await dispatch(signUp(username, email, password))
+			history.push('/recipes')
 			// setUrl(`/groups/${newGroup.id}`)
 			closeModal()
 		}
 	}
 
 	return (
-		<>
-			<div className="signup-modal-wrapper">
+		<div className="login-page">
+			{/* <img className="login-image" src='https://bakingamoment.com/wp-content/uploads/2021/02/IMG_9987-flourless-chocolate-cake.jpg' /> */}
+			<div className="login-modal">
 				<h1 className="signup-modal-h1" >Sign Up</h1>
 				{displayErr === true && errs.email && (<div className="errors">· {errs.email}</div>)}
+				{displayErr === true && errs.username && (<div className="errors">· {errs.username}</div>)}
+				{displayErr === true && errs.usernameLengthSmall && (<div className="errors">· {errs.usernameLengthSmall}</div>)}
+				{displayErr === true && errs.usernameLengthLarge && (<div className="errors">· {errs.usernameLengthLarge}</div>)}
 				{displayErr === true && errs.password && (<div className="errors">· {errs.password}</div>)}
 				{displayErr === true && errs.confirmPassword && (<div className="errors">· {errs.confirmPassword}</div>)}
+				<br />
 				<div className="signup-modal-content">
 					<form
 						onSubmit={handleSubmit}
 						className="signup-modal-form"
 					>
-
+						<label className="signup-modal-labels">
+							<div>Username</div>
+							<input
+								className="signup-modal-inputs"
+								type="text"
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+								required
+							/>
+						</label>
+						<br />
+						<br />
 						<label className="signup-modal-labels">
 							<div>Email</div>
 							<input
@@ -65,6 +86,9 @@ function SignupFormModal() {
 								required
 							/>
 						</label>
+						<br />
+						<br />
+
 						<label className="signup-modal-labels">
 							<div>Password</div>
 							<input
@@ -75,6 +99,8 @@ function SignupFormModal() {
 								required
 							/>
 						</label>
+						<br />
+						<br />
 						<label className="signup-modal-labels">
 							<div>Confirm Password</div>
 							<input
@@ -85,25 +111,31 @@ function SignupFormModal() {
 								required
 							/>
 						</label>
-
+						<br />
+						<br />
 						<div className="signup-modal-submit-div">
+							<button
+								className="signup-modal-submit-signup"
+								type="submit"
+								disabled={!email || !password || !confirmPassword}
+							>Sign Up</button>
+							<br />
+							<br />
+
 							<OpenModalButton
 								buttonText="Already have an account? Log in"
 								// onItemClick={closeMenu}
 								modalComponent={<LoginFormModal />}
 								signupModalClass='signup'
 							/>
-							<button
-								className="signup-modal-submit-signup"
-								type="submit"
-								disabled={!email || !password || !confirmPassword}
-							>Sign Up</button>
+							<br />
 
+							<br />
 						</div>
 					</form>
 				</div>
-			</div>
-		</>
+			</div >
+		</div >
 	);
 
 }
