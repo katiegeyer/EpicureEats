@@ -115,56 +115,87 @@ function UpdateRecipeForm({ recipeId }) {
 
 
     return (
-        <div className="CreateRecipeForm">
-            <h1>Update Recipe</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Recipe Name
-                    <input
-                        type="text"
-                        value={recipe_name}
-                        onChange={(e) => setRecipeName(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Recipe Owner
-                    <input
-                        type="text"
-                        value={recipe_owner}
-                        onChange={(e) => setRecipeOwner(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Type
-                    <select name="type" id="type" value={type} onChange={(e) => setType(e.target.value)}>
-                        <option></option>
-                        <option value="Non-vegetarian">Non-Vegetarian</option>
-                        <option value="Vegetarian">Vegetarian</option>
-                        <option value="Vegan">Vegan</option>
-                    </select>
-                </label>
-                <label>
-                    Cook Time
-                    <input
-                        type="text"
-                        value={cook_time}
-                        onChange={(e) => setCookTime(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Image of Dish
-                    <input
-                        type="url"
-                        value={preview_img}
-                        onChange={(e) => setPreviewImg(e.target.value)}
-                        required
-                    />
-                </label>
-                <button type="submit">Enter</button>
-            </form>
+        <div className="login-page">
+            <div className="login-modal">
+                <h1>Update Recipe</h1>
+                <br />
+
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Recipe Name
+                        <br />
+
+                        <input
+                            type="text"
+                            value={recipe_name}
+                            onChange={(e) => setRecipeName(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <br />
+                    <br />
+
+                    <label>
+                        Recipe Owner
+                        <br />
+
+                        <input
+                            type="text"
+                            value={recipe_owner}
+                            onChange={(e) => setRecipeOwner(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <br />
+                    <br />
+
+
+                    <label>
+                        Type
+                        <br />
+
+                        <select name="type" id="type" value={type} onChange={(e) => setType(e.target.value)} required>
+                            <option></option>
+                            <option value="Non-vegetarian">Non-Vegetarian</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Vegan">Vegan</option>
+                        </select>
+                    </label>
+                    <br />
+                    <br />
+
+                    <label>
+                        Cook Time
+                        <br />
+
+                        <input
+                            type="text"
+                            value={cook_time}
+                            onChange={(e) => setCookTime(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <br />
+                    <br />
+
+                    <label>
+                        Image of Dish
+                        <br />
+
+                        <input
+                            type="url"
+                            value={preview_img}
+                            onChange={(e) => setPreviewImg(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <br />
+                    <br />
+                    <br />
+
+                    <button type="submit">Enter</button>
+                </form>
+            </div>
         </div>
 
     );
