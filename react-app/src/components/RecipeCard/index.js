@@ -62,10 +62,15 @@ const RecipeCard = ({ recipe }) => {
     return (
         <div className="recipe-card">
             <div>
-                {recipe && (
+                {recipe && sessionUser && (
                     <NavLink className="single-recipe-card-image-nav" to={`/recipes/${recipe.id}`} recipe={recipe}>
                         <img className="recipe-card__image" src={recipe.preview_img} alt={recipe.recipe_name} />
                     </NavLink>
+                )}
+            </div>
+            <div>
+                {recipe && !sessionUser && (
+                    <img className="recipe-card__image" src={recipe.preview_img} alt={recipe.recipe_name} />
                 )}
             </div>
 
@@ -73,7 +78,7 @@ const RecipeCard = ({ recipe }) => {
             <p className="recipe-card__type">{recipe.type}</p>
             <p className="recipe-card__cook-time">{recipe.cook_time}</p>
             <p className="recipe-card__owner">{recipe.recipe_owner}</p>
-            <p className="recipe-card_description">{recipe.description}</p>
+            {/* <p className="recipe-card_description">{recipe.description}</p> */}
 
             {sessionUser && sessionUser.id === recipeCreator && (
                 <>

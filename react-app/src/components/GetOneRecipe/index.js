@@ -33,6 +33,9 @@ function RecipeDetails() {
     console.log('COMENT OWNER', commentUserId)
     const owner = recipe.recipe_owner;
     const current_user = sessionUser?.id;
+    console.log('current user', current_user)
+    const recipeUser = recipe.user_id;
+    console.log('recipe user', recipeUser);
     const [update, setUpdate] = useState(false);
     let ingredientList = [];
 
@@ -76,20 +79,25 @@ function RecipeDetails() {
             <div className="banner">
                 <h1>Epicure Eats</h1>
             </div>
-            <OpenModalButton
-                buttonText="Add Your Ingredients"
-                onItemClick={() => {
+            {recipeUser == current_user &&
+                <>
+                    <OpenModalButton
+                        buttonText="Add Your Ingredients"
+                        onItemClick={() => {
 
-                }}
-                modalComponent={<IngredientsForm key={recipe.id} setUpdate={setUpdate} />}
-            />
-            <OpenModalButton
-                buttonText="Add Your Steps"
-                onItemClick={() => {
+                        }}
+                        modalComponent={<IngredientsForm key={recipe.id} setUpdate={setUpdate} />}
+                    />
+                    <OpenModalButton
+                        buttonText="Add Your Steps"
+                        onItemClick={() => {
 
-                }}
-                modalComponent={<PreparationForm key={recipe.id} setUpdate={setUpdate} />}
-            />
+                        }}
+                        modalComponent={<PreparationForm key={recipe.id} setUpdate={setUpdate} />}
+                    />
+                </>
+
+            }
             <div className="recipe">
                 <RecipeCard key={recipe.id} recipe={recipe} className="one_recipe_card" />
             </div>
@@ -100,11 +108,13 @@ function RecipeDetails() {
                     {ingredientList.map((ingredient, index) => (
                         <li key={index}>
                             {ingredient.name} - {ingredient.quantity}
-                            <OpenModalButton
-                                buttonText="Delete"
-                                ingredientId={ingredient.id}
-                                modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
-                            />
+                            {recipeUser == current_user &&
+                                <OpenModalButton
+                                    buttonText="Delete"
+                                    ingredientId={ingredient.id}
+                                    modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
+                                />
+                            }
                         </li>
                     ))}
                 </ul>
@@ -115,11 +125,13 @@ function RecipeDetails() {
                     {preparationList.map((preparation, index) => (
                         <li key={index}>
                             {preparation.step} - {preparation.instruction}
-                            <OpenModalButton
-                                buttonText="Delete"
-                                preparationId={preparation.id}
-                                modalComponent={<DeletePreparation recipeId={recipe.id} preparationId={preparation.id} />}
-                            />
+                            {recipeUser == current_user &&
+                                <OpenModalButton
+                                    buttonText="Delete"
+                                    preparationId={preparation.id}
+                                    modalComponent={<DeletePreparation recipeId={recipe.id} preparationId={preparation.id} />}
+                                />
+                            }
                             {/* <OpenModalButton
                                 buttonText="Update"
                                 preparationId={preparation.id}

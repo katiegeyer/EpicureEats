@@ -1,0 +1,54 @@
+.login-page {
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+  max-height: 90vh;
+  align-items: center;
+  /* To align items vertically in the center */
+  justify-content: center;
+  /* To align items horizontally in the center */
+  width: 100%;
+}
+
+.login-image {
+  max-width: 50%;
+  /* or you can set this to a fixed pixel value */
+  height: auto;
+  /* To maintain the aspect ratio */
+  object-fit: cover;
+  /* This will ensure the image covers the full area of its container without stretching */
+}
+
+.login-modal {
+  width: 50%;
+  /* This will occupy the remaining half of the width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 90vh;
+}
+
+.login-modal label {
+  margin-top: 10px;
+}
+
+.login-modal input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-modal button {
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}

@@ -22,9 +22,10 @@ function LoginFormPage() {
   };
 
   return (
-    <>
+    <div className="login-modal">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <p>Enter your email address and password to log in or sign up to create an account</p>
+      <form onSubmit={handleSubmit} className="login-form">
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
@@ -50,8 +51,40 @@ function LoginFormPage() {
         </label>
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
+  // return (
+  //   <>
+  //     <h1>Log In</h1>
+  //     <form onSubmit={handleSubmit}>
+  //       <ul>
+  //         {errors.map((error, idx) => (
+  //           <li key={idx}>{error}</li>
+  //         ))}
+  //       </ul>
+  //       <label>
+  //         Email
+  //         <input
+  //           type="text"
+  //           value={email}
+  //           onChange={(e) => setEmail(e.target.value)}
+  //           required
+  //         />
+  //       </label>
+  //       <label>
+  //         Password
+  //         <input
+  //           type="password"
+  //           value={password}
+  //           onChange={(e) => setPassword(e.target.value)}
+  //           required
+  //         />
+  //       </label>
+  //       <button type="submit">Log In</button>
+  //     </form>
+  //   </>
+  // );
+
 }
 
 export default LoginFormPage;

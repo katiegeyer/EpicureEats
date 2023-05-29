@@ -38,10 +38,41 @@
 }
 
 .splash-image {
-    width: 100%;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    /* Or whatever height you prefer */
+    overflow: hidden;
+    /* This will make sure the overlay is contained within the image box */
 }
 
-.splash-image img {
+.recipe-card-sp {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
+    color: #fff;
+    /* White text */
     width: 100%;
-    height: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    /* Smooth reveal */
+}
+
+
+
+
+
+
+
+
+.recipe-card-sp h2 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+}
+
+.recipe-card-sp p {
+    margin: 0 0 10px;
 }
