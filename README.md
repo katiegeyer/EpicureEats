@@ -109,7 +109,7 @@ Now, add your start command in the Start field:
 gunicorn app:app
 ```
 
-We are using react-slick and moment in our program, you will need to install both:
+We are using react-slick and moment in our program, you will need to install both in your terminal:
 
 ```shell
 # start script
