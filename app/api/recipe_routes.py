@@ -98,6 +98,7 @@ def update_recipe(id):
         recipe.recipe_owner = form.data['recipe_owner']
         recipe.type = form.data['type']
         recipe.cook_time = form.data['cook_time']
+        recipe.description = form.data['description']
         if 'preview_img' in form.data:
             recipe.preview_img = form.data['preview_img']
         else:
