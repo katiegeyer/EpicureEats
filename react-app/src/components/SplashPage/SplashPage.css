@@ -63,6 +63,7 @@
 .recipe-card-sp {
     position: absolute;
     top: 20%;
+    margin-bottom: -40px;
     /* Adjust as needed */
     left: 15%;
     /* Adjust as needed */

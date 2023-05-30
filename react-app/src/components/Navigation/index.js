@@ -4,6 +4,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useSelector } from 'react-redux';
+import CreateRecipeForm from '../CreateRecipeForm';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
@@ -24,8 +25,16 @@ function Navigation({ isLoaded }) {
                         <input type="text" placeholder="Search feature coming soon!" />
                     </div>
                     <div className="nav-links">
-                        {/* <div onClick={() => alertClickHandler()} >Your Grocery List</div> */}
+                        {/* <div onClick={() => alertClickHandler()} >Your Grocery List</div>
                         <div onClick={() => alertClickHandler()} >Your Recipe Box</div>
+                        {isLoaded && (
+                            <ProfileButton user={sessionUser} />
+                        )} */}
+                        <OpenModalButton
+                            buttonText="Post a Recipe"
+                            onItemClick={() => { }}
+                            modalComponent={<CreateRecipeForm />}
+                        />
                         {isLoaded && (
                             <ProfileButton user={sessionUser} />
                         )}

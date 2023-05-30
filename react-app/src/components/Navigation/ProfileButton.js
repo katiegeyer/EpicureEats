@@ -6,6 +6,9 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import './ProfileButton.css'
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import UpdateProfile from "../UpdateUser";
+import DeleteRecipe from "../DeleteRecipe";
+import DeleteUser from "../DeleteUser";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -57,6 +60,12 @@ function ProfileButton({ user }) {
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>
+            <br />
+            <OpenModalButton
+              buttonText="Delete Account"
+              onItemClick={closeMenu}
+              modalComponent={<DeleteUser />}
+            />
           </>
         ) : (
           <>

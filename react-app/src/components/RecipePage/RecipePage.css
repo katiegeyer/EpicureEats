@@ -56,14 +56,15 @@ body {
 }
 
 .slick-slider {
-    width: 100%;
-    height: 800px;
+    margin: 100px;
+    height: 0px;
+    /* margin-top:100px; */
     /* adjust this as needed */
 }
 
 button.slick-prev,
 button.slick-prev:hover {
-    left: 6px !important;
+    margin-left: 10px;
 }
 
 button.slick-next,
@@ -81,10 +82,16 @@ button.slick-arrow:hover {
 button.slick-arrow::before,
 button.slick-arrow:hover::before {
     color: black;
+    bottom: 25px;
+    position: absolute;
     /* background-color: white; */
 }
 
 .slick-dots {
-    bottom: 200px;
+    position: absolute;
+    height: 72px;
+}
 
+.rc-button-bar {
+    margin-bottom: 80px;
 }

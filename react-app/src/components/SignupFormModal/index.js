@@ -9,7 +9,8 @@ import LoginFormModal from "../LoginFormModal";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
-	const history = useHistory()
+	const history = useHistory();
+	// const user = useSelector((state) => state.session.user);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -23,8 +24,11 @@ function SignupFormModal() {
 		if (!username) errors.username = "Username is required"
 		if (username.length < 4) errors.usernameLengthSmall = "Username is under 4 characters"
 		if (username.length > 20) errors.usernameLengthLarge = "Username is over 20 characters"
-		if (!email.includes('@')) errors.email = "Invalid Email"
-		if (!email.includes('.com' || '.edu' || '.net' || '.org' || '.gov')) errors.email = "Invalid Email"
+		// if (!email.includes('@')) errors.email = "Invalid Email"
+		// if (!email.includes('.com' || '.edu' || '.net' || '.org' || '.gov')) errors.email = "Invalid Email"
+
+		if (!email.includes('@') || (!email.includes('.com') && !email.includes('.io') && !email.includes('.edu') && !email.includes('.net') && !email.includes('.org') && !email.includes('.gov'))) errors.email = "Invalid Email";
+
 		if (!password) errors.password = "Password is required"
 		if (confirmPassword !== password) errors.confirmPassword = 'Passwords must match'
 		setErrs(errors)

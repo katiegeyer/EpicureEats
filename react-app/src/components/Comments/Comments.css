@@ -1,3 +1,5 @@
+
+
 .comments-container {
     width: 70%;
     margin: auto;
@@ -53,4 +55,15 @@
 
 .comment-text {
     margin: 0;
+}
+
+.name-input {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.comment-input {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+input {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }

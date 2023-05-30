@@ -83,9 +83,18 @@ function RecipeDetails() {
                 <RecipeCard key={recipe.id} recipe={recipe} className="one_recipe_card" />
             </div>
             <br />
+            <br />
+
+            <div className='description'>
+                {recipe.description}
+            </div>
+            <br />
+            <br />
+            <br />
+
             <div className='recipe-details'>
                 <div className="ingredients-card details-card">
-                    <div className='details-card-title'>
+                    <div className='details-card-title prepcard'>
                         <h2>Ingredients</h2>
                         {recipeUser == current_user &&
                             <>
@@ -104,12 +113,12 @@ function RecipeDetails() {
                             <li key={index}>
                                 {ingredient.name} - {ingredient.quantity}
                                 {recipeUser == current_user &&
-                                <div className='delete-detail-button'>
-                                    <OpenModalButton
-                                        buttonText="Delete"
-                                        ingredientId={ingredient.id}
-                                        modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
-                                    />
+                                    <div className='delete-detail-button'>
+                                        <OpenModalButton
+                                            buttonText="Delete"
+                                            ingredientId={ingredient.id}
+                                            modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
+                                        />
                                     </div>
                                 }
                             </li>
@@ -135,7 +144,7 @@ function RecipeDetails() {
                     <ul>
                         {preparationList.map((preparation, index) => (
                             <li key={index}>
-                                {preparation.step} - {preparation.instruction}
+                                {preparation.step} -  {preparation.instruction}
                                 {recipeUser == current_user &&
                                     <div className='delete-detail-button'>
                                         <OpenModalButton
