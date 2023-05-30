@@ -25,3 +25,7 @@
     cursor: pointer;
     border-radius: 10px
 }
+
+.profile-button-wrapper {
+    position: relative;
+}
