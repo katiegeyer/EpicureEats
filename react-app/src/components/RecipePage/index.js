@@ -104,7 +104,7 @@ const RecipePage = () => {
     return (
         <>
             <div className="nav-link-container">
-                <NavLink to="/" className="return-home-link">Return Home</NavLink>
+                <NavLink to="/" className="return-home-link">Return Home:</NavLink>
             </div>
             <div className="banner">
                 <h1>Epicure Eats</h1>
