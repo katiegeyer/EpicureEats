@@ -120,3 +120,7 @@ a:-webkit-any-link {
 .splash-page-about-content>a:hover {
     cursor: pointer;
 }
+
+.splash-image img:hover {
+    filter: brightness(50%);
+}
