@@ -93,7 +93,7 @@ function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
     }
 
     return (
-        <div className="login-page">
+        <div className="login-page-ing">
             <div className="login-modal">
                 <h1>Add Ingredients</h1>
                 <form onSubmit={handleSubmit}>
@@ -101,7 +101,8 @@ function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
                     {ingredients.map((ingredient, index) => (
                         <div key={index}>
                             <label>
-                                Ingredient
+                                Ingredient:
+                                {/* <br /> */}
                                 <input
                                     type="text"
                                     name="name"
@@ -110,8 +111,10 @@ function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
                                     required
                                 />
                             </label>
+                            {/* <br /> */}
                             <label>
-                                Quantity
+                                Quantity:
+                                {/* <br /> */}
                                 <input
                                     type="text"
                                     name="quantity"
@@ -125,6 +128,7 @@ function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
                             </button>
                         </div>
                     ))}
+                    <br />
                     <button type="button" onClick={handleAddIngredient}>
                         Add Ingredient
                     </button>

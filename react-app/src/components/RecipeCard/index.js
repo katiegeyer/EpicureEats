@@ -47,7 +47,7 @@
 // };
 
 // export default RecipeCard;
-import React from 'react';
+import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
@@ -70,7 +70,9 @@ const RecipeCard = ({ recipe }) => {
             </div>
             <div>
                 {recipe && !sessionUser && (
-                    <img className="recipe-card__image" src={recipe.preview_img} alt={recipe.recipe_name} />
+                    <div className='single-recipe-card-image-nav'>
+                        <img className="recipe-card__image" src={recipe.preview_img} alt={recipe.recipe_name} />
+                    </div>
                 )}
             </div>
 
@@ -81,7 +83,7 @@ const RecipeCard = ({ recipe }) => {
             {/* <p className="recipe-card_description">{recipe.description}</p> */}
 
             {sessionUser && sessionUser.id === recipeCreator && (
-                <>
+                <div className='rc-button-bar'>
                     <OpenModalButton
                         buttonText="Delete"
                         recipeId={recipe.id}
@@ -92,7 +94,7 @@ const RecipeCard = ({ recipe }) => {
                         recipeId={recipe.id}
                         modalComponent={<UpdateRecipeForm recipeId={recipe.id} />}
                     />
-                </>
+                </div>
             )}
         </div>
     );

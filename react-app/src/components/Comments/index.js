@@ -87,7 +87,7 @@ function Comments({ recipeId }) {
                     onChange={e => setUserName(e.target.value)}
                     placeholder="Enter your display name"
                 /> {displayErr === true && err.user_name && (<div className="errors">Must include Display Name</div>)}
-                <input
+                <textarea
                     className="comment-input"
                     value={commentText}
                     onChange={e => setCommentText(e.target.value)}
@@ -105,6 +105,7 @@ function Comments({ recipeId }) {
                             <h5>{moment(comment.created_at).format('MMMM Do YYYY, h:mm:ss a')}</h5>
                         </div>
                         <p className="comment-text">{comment.comment}</p>
+                        <br />
                         {sessionUser.id == comment.user_id &&
                             <OpenModalButton
                                 buttonText="Delete"

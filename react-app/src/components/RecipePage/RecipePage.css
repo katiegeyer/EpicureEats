@@ -60,3 +60,31 @@ body {
     height: 800px;
     /* adjust this as needed */
 }
+
+button.slick-prev,
+button.slick-prev:hover {
+    left: 6px !important;
+}
+
+button.slick-next,
+button.slick-next:hover {
+    right: 6px !important;
+}
+
+
+button.slick-arrow,
+button.slick-arrow:hover {
+
+    z-index: 1;
+}
+
+button.slick-arrow::before,
+button.slick-arrow:hover::before {
+    color: black;
+    /* background-color: white; */
+}
+
+.slick-dots {
+    bottom: 200px;
+
+}

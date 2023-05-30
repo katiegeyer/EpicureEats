@@ -79,72 +79,87 @@ function RecipeDetails() {
             <div className="banner">
                 <h1>Epicure Eats</h1>
             </div>
-            {recipeUser == current_user &&
-                <>
-                    <OpenModalButton
-                        buttonText="Add Your Ingredients"
-                        onItemClick={() => {
-
-                        }}
-                        modalComponent={<IngredientsForm key={recipe.id} setUpdate={setUpdate} />}
-                    />
-                    <OpenModalButton
-                        buttonText="Add Your Steps"
-                        onItemClick={() => {
-
-                        }}
-                        modalComponent={<PreparationForm key={recipe.id} setUpdate={setUpdate} />}
-                    />
-                </>
-
-            }
             <div className="recipe">
                 <RecipeCard key={recipe.id} recipe={recipe} className="one_recipe_card" />
             </div>
             <br />
-            <div className="ingredients-card">
-                <h2>Ingredients</h2>
-                <ul>
-                    {ingredientList.map((ingredient, index) => (
-                        <li key={index}>
-                            {ingredient.name} - {ingredient.quantity}
-                            {recipeUser == current_user &&
+            <div className='recipe-details'>
+                <div className="ingredients-card details-card">
+                    <div className='details-card-title'>
+                        <h2>Ingredients</h2>
+                        {recipeUser == current_user &&
+                            <>
                                 <OpenModalButton
-                                    buttonText="Delete"
-                                    ingredientId={ingredient.id}
-                                    modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
+                                    buttonText="Add Your Ingredients"
+                                    onItemClick={() => {
+
+                                    }}
+                                    modalComponent={<IngredientsForm key={recipe.id} setUpdate={setUpdate} />}
                                 />
-                            }
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="preparations-card">
-                <h2>Preparation</h2>
-                <ul>
-                    {preparationList.map((preparation, index) => (
-                        <li key={index}>
-                            {preparation.step} - {preparation.instruction}
-                            {recipeUser == current_user &&
+                            </>
+                        }
+                    </div>
+                    <ul>
+                        {ingredientList.map((ingredient, index) => (
+                            <li key={index}>
+                                {ingredient.name} - {ingredient.quantity}
+                                {recipeUser == current_user &&
+                                <div className='delete-detail-button'>
+                                    <OpenModalButton
+                                        buttonText="Delete"
+                                        ingredientId={ingredient.id}
+                                        modalComponent={<DeleteIngredient recipeId={recipe.id} ingredientId={ingredient.id} />}
+                                    />
+                                    </div>
+                                }
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="preparations-card details-card">
+                    <div className='details-card-title'>
+                        <h2>Preparation</h2>
+                        {recipeUser == current_user &&
+                            <>
                                 <OpenModalButton
-                                    buttonText="Delete"
-                                    preparationId={preparation.id}
-                                    modalComponent={<DeletePreparation recipeId={recipe.id} preparationId={preparation.id} />}
+                                    buttonText="Add Your Steps"
+                                    onItemClick={() => {
+
+                                    }}
+                                    modalComponent={<PreparationForm key={recipe.id} setUpdate={setUpdate} />}
                                 />
-                            }
-                            {/* <OpenModalButton
+                            </>
+
+                        }
+                    </div>
+                    <ul>
+                        {preparationList.map((preparation, index) => (
+                            <li key={index}>
+                                {preparation.step} - {preparation.instruction}
+                                {recipeUser == current_user &&
+                                    <div className='delete-detail-button'>
+                                        <OpenModalButton
+                                            buttonText="Delete"
+                                            preparationId={preparation.id}
+                                            modalComponent={<DeletePreparation recipeId={recipe.id} preparationId={preparation.id} />}
+                                        />
+                                    </div>
+                                }
+                                {/* <OpenModalButton
                                 buttonText="Update"
                                 preparationId={preparation.id}
                                 modalComponent={<UpdatePreparationForm recipeId={recipe.id} preparationId={preparation.id} />}
                             /> */}
-                        </li>
-                    ))}
-                </ul>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
                 <br />
                 {/* <Comments recipeId={id} /> */}
-                <Comments recipeId={recipe.id} />
 
             </div>
+            <Comments recipeId={recipe.id} />
         </>
     )
 }
