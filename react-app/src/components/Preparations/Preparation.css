@@ -1,0 +1,29 @@
+
+
+/* .step-field {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* provides a gap between the elements */
+/* } */ */
+.step-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.step-field label {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    margin-top: 5px;
+    border: red 5px solid;
+}
+
+.step-field button {
+    align-self: flex-start;
+    margin-top: 2px;
+}
+

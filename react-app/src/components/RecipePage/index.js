@@ -74,10 +74,10 @@ const RecipePage = () => {
     const settings = {
         centerMode: true,
         // prevArrow: <button type="button" class="slick-prev">Previous</button>,
-        // centerPadding: '60px',
+        centerPadding: '60px',
         arrows: true,
         dots: true,
-        slidesToShow: 4,
+        slidesToShow: 3,
         responsive: [
             {
                 breakpoint: 768,
@@ -105,13 +105,13 @@ const RecipePage = () => {
             <div className="banner">
                 <h1>Epicure Eats</h1>
             </div>
-            {sessionUser &&
+            {/* {sessionUser &&
                 <OpenModalButton
                     buttonText="Post a Recipe"
                     onItemClick={() => { }}
                     modalComponent={<CreateRecipeForm />}
                 />
-            }
+            } */}
             <div className="recipes-list">
                 <Slider {...settings}>
                     {recipes.map(recipe =>
@@ -121,6 +121,9 @@ const RecipePage = () => {
                     )}
                 </Slider>
             </div>
+            {/* <br />
+            < br />
+            <br /> */}
         </>
     );
 };

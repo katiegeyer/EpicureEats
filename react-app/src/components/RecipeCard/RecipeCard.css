@@ -1,4 +1,6 @@
-*/ .recipe-card {
+*/
+
+.recipe-card {
     display: flex;
     flex-direction: column;
     row-gap: 100px;
@@ -14,13 +16,14 @@
 }
 
 .recipe-card__image {
-    width: 23rem;
+    width: 20rem;
     margin-bottom: 0.25rem;
-    height: 23rem;
+    height: 20rem;
     row-gap: 100px;
     object-fit: cover;
     max-height: 500px;
     margin: 0 0.25rem;
+    border: black 5px solid;
     /* Adjust this value to change the maximum height of the image */
 }
 

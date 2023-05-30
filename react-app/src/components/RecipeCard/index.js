@@ -77,9 +77,9 @@ const RecipeCard = ({ recipe }) => {
             </div>
 
             <h2 className="recipe-card__title">{recipe.recipe_name}</h2>
-            <p className="recipe-card__type">{recipe.type} • {recipe.cook_time}</p>
+            <p className="recipe-card__type">{recipe.type} &#x23F2; {recipe.cook_time}</p>
             {/* <p className="recipe-card__cook-time">{recipe.cook_time}</p> */}
-            <p className="recipe-card__owner">{recipe.recipe_owner}</p>
+            <p className="recipe-card__owner">By {recipe.recipe_owner}</p>
             {/* <p className="recipe-card_description">{recipe.description}</p> */}
 
             {sessionUser && sessionUser.id === recipeCreator && (
