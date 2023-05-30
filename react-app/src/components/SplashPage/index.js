@@ -129,7 +129,17 @@ function SplashPage() {
                 <p>There is something profoundly satisfying about sharing a meal. Eating together, breaking bread together, is one of the oldest and most fundamentally unifying of human experiences.</p>
                 <p>Barbara Coloroso</p>
             </div>
+            <br/>
+            <br/>
+
+            <div className='splash-page-footer'>
+                <div className='splash-page-footer-inner'>
+                    Find out more about us: <a href='https://github.com/katiegeyer' target="_blank">Katie's Github</a>
+
+                </div>
+            </div>
         </div>
+
     )
 }
 

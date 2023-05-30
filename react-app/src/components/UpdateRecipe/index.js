@@ -46,6 +46,7 @@ function UpdateRecipeForm({ recipeId }) {
     const [recipe_owner, setRecipeOwner] = useState('');
     const [type, setType] = useState('');
     const [cook_time, setCookTime] = useState('');
+    const [description, setDescription] = useState('')
     const [preview_img, setPreviewImg] = useState('');
 
     const [errors, setErrors] = useState([]);
@@ -65,6 +66,7 @@ function UpdateRecipeForm({ recipeId }) {
             setRecipeOwner(singleRecipe.recipe_owner);
             setType(singleRecipe.type);
             setCookTime(singleRecipe.cook_time);
+            setDescription(singleRecipe.description);
             setPreviewImg(singleRecipe.preview_img || '');
         }
     }, [singleRecipe]);
@@ -91,6 +93,7 @@ function UpdateRecipeForm({ recipeId }) {
         updatedFormData.append('recipe_owner', recipe_owner)
         updatedFormData.append('type', type)
         updatedFormData.append('cook_time', cook_time)
+        updatedFormData.append('description', description)
         updatedFormData.append('preview_img', preview_img)
         // const updatedRecipe = {
         //     recipe_name: recipe_name,
@@ -177,7 +180,19 @@ function UpdateRecipeForm({ recipeId }) {
                     </label>
                     <br />
                     <br />
+                    <label>
+                        Description
+                        <br />
 
+                        <input
+                            type="text"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <br />
+                    <br />
                     <label>
                         Image of Dish
                         <br />
