@@ -2,6 +2,7 @@
     height: 10rem;
     width: 25rem;
     padding: 1rem;
+    margin-bottom: 20px;
 }
 
 .confirm-delete-title {
@@ -18,12 +19,14 @@
 .confirm-delete-buttons {
     display: flex;
     flex-direction: row-reverse;
+    margin-bottom: 5px;
 }
 
 .confirm-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .confirm-delete-delete {
@@ -33,5 +36,6 @@
     padding: 2px 4px;
     margin-left: 1rem;
     border: 1px solid lightgray;
+    margin-bottom: 5px;
 
 }
