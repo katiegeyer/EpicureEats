@@ -50,6 +50,7 @@ import OpenModalButton from "../OpenModalButton";
 import './RecipePage.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { NavLink } from 'react-router-dom';
 
 
 const RecipePage = () => {
@@ -102,6 +103,9 @@ const RecipePage = () => {
 
     return (
         <>
+            <div className="nav-link-container">
+                <NavLink to="/" className="return-home-link">Return Home</NavLink>
+            </div>
             <div className="banner">
                 <h1>Epicure Eats</h1>
             </div>

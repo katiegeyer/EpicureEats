@@ -1,4 +1,18 @@
-# Flask React Project
+Welcome to Epicure Eats!!
+
+Epicure eats is the spot to find recipes, create food, and build community.
+
+Once in our website, you will find a homepage where you can click the main picture which leads you to either a log in form or sign up form.  Once you have logged in or created an account, it will take you to the recipes page where you can discover and review new recipes.
+
+Upon signing in, you will find an option to 'Post a Recipe' on the right side of your nav bar.  If you choose to do so, you can enter the information along with a delicious image, and post your recipe for other's to enjoy.
+
+Once on your recipe page, you will have the ability to add ingredients and cooking steps.  There is no limit, and you can always remove the ingredients and steps you no longer need in the case you change your mind.
+
+On the recipes page, you are able to review other's recipes as well as delete your own comments.
+
+If you are thoroughly unsatisfied with your experience, feel free to navigate to the profile dropdown menu and delete your account.
+
+
 
 This is the starter for the Flask React project.
 
@@ -95,9 +109,15 @@ Now, add your start command in the Start field:
 gunicorn app:app
 ```
 
-_If you are using websockets, use the following start command instead for increased performance:_
+We are using react-slick and moment in our program, you will need to install both:
 
-`gunicorn --worker-class eventlet -w 1 app:app`
+```shell
+# start script
+npm install react-moment
+npm install react-slick --save
+npm install slick-carousel
+```
+
 
 ### Part B: Add the Environment Variables
 
