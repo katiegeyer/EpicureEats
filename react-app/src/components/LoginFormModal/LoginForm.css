@@ -1,0 +1,88 @@
+.login-page {
+  position: absolute;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  /* top: 50%;
+  left: 50%; */
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+  max-height: 90vh;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  width: 600px;
+  background-image: url('https://bakingamoment.com/wp-content/uploads/2021/02/IMG_9987-flourless-chocolate-cake.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.recipe-card-sp {
+  position: relative;
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px 5px black;
+}
+
+.login-image {
+  max-width: 50%;
+  /* or you can set this to a fixed pixel value */
+  height: auto;
+  /* To maintain the aspect ratio */
+  object-fit: cover;
+  /* This will ensure the image covers the full area of its container without stretching */
+}
+
+.login-modal {
+  width: 50%;
+  /* This will occupy the remaining half of the width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 90vh;
+}
+
+.login-modal label {
+  margin-top: 10px;
+}
+
+.login-modal input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* button.signup-modal-submit-signup {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  row-gap: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+} */
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  /* margin-top: 20px; */
+  row-gap: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

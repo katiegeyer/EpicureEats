@@ -11,12 +11,25 @@ function Comments({ recipeId }) {
     const [comments, setComments] = useState([]);
     const [commentText, setCommentText] = useState('');
     const [userName, setUserName] = useState('');
+    const [displayErr, setDisplayErr] = useState(false)
+    const [err, setErr] = useState({});
+
+
 
     const comment = useSelector(state => state.comments.comments)
     const sessionUser = useSelector((state) => state.session.user);
     const commentUserId = comment.map(c => c.user_id);
     console.log('COMENT OWNER', commentUserId)
     console.log('session', sessionUser.id)
+
+    // useEffect(() => {
+    //     const errors = {}
+    //     if (!commentText) errors.comment = "Comment cannot be empty"
+    //     if (commentText.length < 5) errors.commentLength = "Comment must be greater than 5 characters"
+    //     if (!userName) errors.user_name = "Display name is required"
+    //     setErr(errors)
+    // }, [commentText, userName])
+
 
     const fetchComments = async () => {
         if (!recipeId) return;
@@ -37,18 +50,31 @@ function Comments({ recipeId }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newComment = {
-            user_name: userName,
-            text: commentText,
-            recipe_id: recipeId,
+        const errors = {};
+
+        if (!commentText) errors.comment = "Comment cannot be empty";
+        if (commentText.length < 5) errors.commentLength = "Comment must be greater than 5 characters";
+        if (!userName) errors.user_name = "Display name is required";
+        if (Object.keys(errors).length > 0) {
+            setErr(errors);
+            console.log('errorssss', errors);
+            setDisplayErr(true);
+        }
+        else {
+            const newComment = {
+                user_name: userName,
+                text: commentText,
+                recipe_id: recipeId,
+            };
+            await dispatch(createCommentThunk(recipeId, newComment));
+            setCommentText('');
+            setUserName('');
+            setErr({});
+            fetchComments();
         };
-        await dispatch(createCommentThunk(recipeId, newComment));
-        setCommentText('');
-        setUserName('');
-        fetchComments();
-    };
-    if (typeof recipeId === 'undefined') {
-        console.error('recipeId is undefined!');
+        if (typeof recipeId === 'undefined') {
+            console.error('recipeId is undefined!');
+        }
     }
 
     return (
@@ -60,13 +86,14 @@ function Comments({ recipeId }) {
                     value={userName}
                     onChange={e => setUserName(e.target.value)}
                     placeholder="Enter your display name"
-                />
-                <input
+                /> {displayErr === true && err.user_name && (<div className="errors">Must include Display Name</div>)}
+                <textarea
                     className="comment-input"
                     value={commentText}
                     onChange={e => setCommentText(e.target.value)}
                     placeholder="Add a review..."
                 />
+                {displayErr === true && err.commentLength && (<div className="errors">Review must be greater than 5 characters</div>)}
                 <br />
                 <button className="submit-button" type="submit">Submit</button>
             </form>
@@ -78,6 +105,7 @@ function Comments({ recipeId }) {
                             <h5>{moment(comment.created_at).format('MMMM Do YYYY, h:mm:ss a')}</h5>
                         </div>
                         <p className="comment-text">{comment.comment}</p>
+                        <br />
                         {sessionUser.id == comment.user_id &&
                             <OpenModalButton
                                 buttonText="Delete"

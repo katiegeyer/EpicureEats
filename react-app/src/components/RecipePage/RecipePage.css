@@ -1,4 +1,4 @@
-.recipes-list {
+/* .recipes-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -32,4 +32,59 @@
     font-size: 3em;
     font-weight: bold;
     color: #333;
+}
+
+.slick-slider {
+    width: 100%;
+    height: 100px;
+    /* adjust this as needed */
+/* } */
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.banner {
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.banner h1 {
+    font-size: 3em;
+    font-weight: bold;
+    color: #333;
+}
+
+.slick-slider {
+    width: 100%;
+    height: 800px;
+    /* adjust this as needed */
+}
+
+button.slick-prev,
+button.slick-prev:hover {
+    left: 6px !important;
+}
+
+button.slick-next,
+button.slick-next:hover {
+    right: 6px !important;
+}
+
+
+button.slick-arrow,
+button.slick-arrow:hover {
+
+    z-index: 1;
+}
+
+button.slick-arrow::before,
+button.slick-arrow:hover::before {
+    color: black;
+    /* background-color: white; */
+}
+
+.slick-dots {
+    bottom: 200px;
+
 }

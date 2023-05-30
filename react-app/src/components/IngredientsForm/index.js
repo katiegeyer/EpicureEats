@@ -93,43 +93,49 @@ function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
     }
 
     return (
-        <div className="CreateRecipeForm">
-            <h1>Add Ingredients</h1>
-            <form onSubmit={handleSubmit}>
-                {/* {{ form.csrf_token }} */}
-                {ingredients.map((ingredient, index) => (
-                    <div key={index}>
-                        <label>
-                            Ingredient
-                            <input
-                                type="text"
-                                name="name"
-                                value={ingredient.name}
-                                onChange={(event) => handleIngredientChange(index, event)}
-                                required
-                            />
-                        </label>
-                        <label>
-                            Quantity
-                            <input
-                                type="text"
-                                name="quantity"
-                                value={ingredient.quantity}
-                                onChange={(event) => handleIngredientChange(index, event)}
-                                required
-                            />
-                        </label>
-                        <button type="button" onClick={() => handleRemoveIngredient(index)}>
-                            Remove
-                        </button>
-                    </div>
-                ))}
-                <button type="button" onClick={handleAddIngredient}>
-                    Add Ingredient
-                </button>
+        <div className="login-page-ing">
+            <div className="login-modal">
+                <h1>Add Ingredients</h1>
+                <form onSubmit={handleSubmit}>
+                    {/* {{ form.csrf_token }} */}
+                    {ingredients.map((ingredient, index) => (
+                        <div key={index}>
+                            <label>
+                                Ingredient:
+                                {/* <br /> */}
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={ingredient.name}
+                                    onChange={(event) => handleIngredientChange(index, event)}
+                                    required
+                                />
+                            </label>
+                            {/* <br /> */}
+                            <label>
+                                Quantity:
+                                {/* <br /> */}
+                                <input
+                                    type="text"
+                                    name="quantity"
+                                    value={ingredient.quantity}
+                                    onChange={(event) => handleIngredientChange(index, event)}
+                                    required
+                                />
+                            </label>
+                            <button type="button" onClick={() => handleRemoveIngredient(index)}>
+                                Remove
+                            </button>
+                        </div>
+                    ))}
+                    <br />
+                    <button type="button" onClick={handleAddIngredient}>
+                        Add Ingredient
+                    </button>
 
-                <button type="submit">Enter</button>
-            </form>
+                    <button type="submit">Enter</button>
+                </form>
+            </div>
         </div>
     );
 }

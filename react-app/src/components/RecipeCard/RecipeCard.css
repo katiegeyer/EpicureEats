@@ -1,19 +1,27 @@
-/*
-.recipe-card {
+*/ .recipe-card {
     display: flex;
     flex-direction: column;
+    row-gap: 100px;
     align-items: center;
     border: 1px solid #ddd;
     border-radius: 5px;
+    /* height: 300px; */
     width: 200px;
-    margin: 15px;
+    margin: 20px;
     padding: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    font-family: 'NYTCheltenham', Georgia, 'Times New Roman', Times, serif;
 }
 
 .recipe-card__image {
-    width: 100%;
-    height: auto;
+    width: 23rem;
+    margin-bottom: 0.25rem;
+    height: 23rem;
+    row-gap: 100px;
+    object-fit: cover;
+    max-height: 500px;
+    margin: 0 0.25rem;
+    /* Adjust this value to change the maximum height of the image */
 }
 
 .recipe-card__title,
@@ -22,30 +30,18 @@
 .recipe-card__owner {
     margin: 10px 0;
     text-align: center;
-} */
-
-.recipe-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 200px;
-    margin: 15px;
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.recipe-card__image {
+.rc-button-bar {
     width: 100%;
-    height: auto;
+    display: flex;
+    /* align-items: center; */
+    gap: 0.5rem;
+    justify-content: center;
 }
 
-.recipe-card__title,
-.recipe-card__type,
-.recipe-card__cook-time,
-.recipe-card__owner,
-.recipe-card_description {
-    margin: 10px 0;
-    text-align: center;
+.single-recipe-card-image-nav {
+    display: flex;
+    justify-content: center;
+    margin: 0 .25rem;
 }

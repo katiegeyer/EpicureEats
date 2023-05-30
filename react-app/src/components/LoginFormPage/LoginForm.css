@@ -1,0 +1,56 @@
+.login-modal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.login-image {
+    display: flex;
+    flex-direction: row;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.login-form label {
+    margin-top: 10px;
+}
+
+.login-form input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* .login-form button {
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+} */
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    /* margin-top: 20px; */
+    row-gap: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
