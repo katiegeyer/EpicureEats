@@ -95,3 +95,20 @@ button.slick-arrow:hover::before {
 .rc-button-bar {
     margin-bottom: 80px;
 }
+
+.nav-link-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .return-home-link {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .return-home-link:hover {
+    color: #777;
+  }

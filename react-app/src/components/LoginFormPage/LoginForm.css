@@ -54,3 +54,7 @@ button {
     transition: all 0.2s;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+.login-form li {
+    color: red;
+}
