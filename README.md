@@ -1,4 +1,79 @@
-Welcome to Epicure Eats!!
+# Epicure Eats
+
+Welcome to Epicure Eats! A platform for food lovers to find recipes, create food, and build community. Once in our website, you will find a homepage where you can click the main picture which leads you to either a log in form or sign up form. Once logged in or an account is created, it will take you to the recipes page where you can discover and review new recipes. You can post your own recipe, review others, and even delete your own comments or account if needed.
+
+This project is built with a Flask-React architecture.
+
+## Live Site
+[Epicure Eats Live](<https://epicure-eats.onrender.com/>)
+
+## Features
+- Dynamic forms to post your own recipe.
+- Ability to add ingredients and cooking steps, and remove them if needed.
+- Review and comment on others' recipes.
+- User account management with the ability to delete account.
+
+## Technologies Used
+- React.js
+- Redux
+- Python
+- Flask
+- JavaScript
+- SQL
+- Git
+- HTML5
+- CSS
+- PostgreSQL
+
+## Getting Started
+
+1. Clone this repository (only this branch)
+
+2. Install dependencies
+```shell
+pipenv install -r requirements.txt
+```
+
+3. Create a .env file based on the example with proper settings for your development environment.
+
+4. Make sure the SQLite3 database connection URL is in the .env file. This starter organizes all tables inside the flask_schema schema, defined by the SCHEMA environment variable. Replace the value for SCHEMA with a unique name, making sure you use the snake_case convention.
+
+5. Get into your pipenv, migrate your database, seed your database, and run your Flask app
+```shell
+pipenv shell
+flask db upgrade
+flask seed all
+flask run
+```
+6. To run the React App in development, checkout the README inside the react-app directory.
+
+## Additional Libraries
+We are using react-slick and moment in our program, you will need to install both in your terminal:
+
+```shell
+npm install react-moment
+npm install react-slick --save
+npm install slick-carousel
+```
+
+## Deployment through Render.com
+Please refer to the detailed instruction inside the repo for Render.com deployment.
+
+## Acknowledgement
+This is the starter for the Flask React project.
+
+## License
+This project is licensed under the terms of the XYZ license.
+
+## Contact
+For more information, feel free to reach us at [our contact email](mailto:kegeyer@icloud.com)
+
+## Epicure Eats in Action
+
+
+
+
+<!-- Welcome to Epicure Eats!!
 
 Epicure eats is the spot to find recipes, create food, and build community.
 
@@ -165,4 +240,4 @@ successfully deployed your Flask application to Render! You can find the URL for
 your site just below the name of the Web Service at the top of the page.
 
 [Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+[Dashboard]: https://dashboard.render.com/ -->
