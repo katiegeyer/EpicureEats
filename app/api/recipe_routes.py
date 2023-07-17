@@ -11,6 +11,7 @@ import os
 from flask import redirect, request
 from sqlalchemy import insert
 from flask_wtf.csrf import CSRFProtect, generate_csrf
+from sqlalchemy import or_
 # from app.models import Ingredient, recipe_ingredient
 
 csrf = CSRFProtect()
@@ -496,3 +497,16 @@ def delete_comment(recipe_id, comment_id):
     db.session.delete(comment)
     db.session.commit()
     return jsonify({'message': 'deleted'})
+
+
+@recipe_routes.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('q')
+    results = Recipe.query.filter(
+        db.or_(
+            Recipe.recipe_name.ilike(f'%{query}%'),
+            Recipe.description.ilike(f'%{query}%'),
+            Recipe.type.ilike(f'%{query}%')  # Include the type field in search
+        )
+    ).all()
+    return {"recipes": [result.to_dict() for result in results]}
