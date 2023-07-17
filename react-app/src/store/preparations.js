@@ -70,8 +70,6 @@ export const deletePreparationThunk = (recipeId, preparationId) => async (dispat
 }
 
 export const updatePreparationThunk = (recipeId, preparationId, preparation) => async (dispatch) => {
-    console.log('UPDATE RECIPE ID', recipeId);
-    console.log('update prep id', preparationId)
     const response = await fetch(`/api/recipes/${recipeId}/preparations/${preparationId}`, {
         method: 'PUT',
         headers: {

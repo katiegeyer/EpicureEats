@@ -35,28 +35,23 @@ const deleteUserAction = (userId) => ({
 
 export const getAllUsersThunk = () => async (dispatch) => {
     const response = await fetch("/api/users/")
-    console.log("responseeeeeeeeeeeeeeee", response)
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
             return;
         }
-        console.log("dataaaaaaaaaaaaaaaa", data)
 
         dispatch(getAllUsersAction(data));
     }
 };
 
 export const getUserThunk = (id) => async (dispatch) => {
-    console.log("THE PASSED IDDDD ", id)
     const response = await fetch(`/api/users/${id}`)
-    console.log("THE RESPONSE ", response)
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
             return
         }
-        // console.log("DATAAAA ", data)
         dispatch(getUserAction(data))
     }
 }
@@ -101,19 +96,6 @@ export const updateUserThunk = (user, userId) => async (dispatch) => {
     }
 }
 
-// export const deleteUserThunk = (userId) => async (dispatch) => {
-// 	const response = await fetch(`/api/users/${userId}`, {
-// 		method: 'DELETE',
-// 		body: userId
-// 	})
-// 	if (response.ok) {
-// 		const data = await response.json()
-// 		if (data.errors) {
-// 			return data.errors
-// 		}
-// 		dispatch(deleteUserAction(data))
-// 	}
-// }
 export const deleteUserThunk = (userId) => async (dispatch) => {
     const response = await fetch(`/api/users/${userId}`, {
         method: 'DELETE',

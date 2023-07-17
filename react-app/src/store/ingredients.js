@@ -45,7 +45,6 @@ export const getIngredientsThunk = (recipeId) => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json();
-        // console.log('DDDAAATAAALLRECIPES', data)
         if (data.errors) {
             return;
         }
@@ -55,8 +54,6 @@ export const getIngredientsThunk = (recipeId) => async (dispatch) => {
 };
 
 export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) => {
-    console.log('RECIPE IDDDDDD', recipeId)
-    console.log('ingredient fetch', ingredient)
     const response = await fetch(`/api/recipes/${recipeId}/ingredients`, {
         method: 'POST',
         headers: {
@@ -65,26 +62,21 @@ export const createIngredientThunk = (recipeId, ingredient) => async (dispatch) 
         },
         body: JSON.stringify({ ingredient })
     })
-    console.log('this is ingredientsss', JSON.stringify(ingredient))
     if (response.ok) {
         const data = await response.json();
         ingredient[0].id = data[0].id;
-        console.log('this is data', data)
         if (data.errors) {
             return { status: 'error', data: data.errors }
         }
         dispatch(createIngredientAction(data))
-        console.log('this is returned data', data)
         return { status: 'ok', data: data };
     }
 }
 
 export const deleteIngredientThunk = (recipeId, ingredientId) => async (dispatch) => {
-    console.log('recipeIDIDID', recipeId)
     const response = await fetch(`/api/recipes/${recipeId}/ingredients/${ingredientId}`, {
         method: 'DELETE'
     })
-    console.log('hi')
     if (response.ok) {
         const data = await response.json()
         if (data.errors) {

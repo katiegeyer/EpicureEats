@@ -16,7 +16,7 @@ function UpdateRecipeForm({ recipeId }) {
 
 
     // const { id: recipeId } = useParams();
-    console.log('id', recipeId)
+
     const singleRecipe = useSelector((state) => state.recipes.singleRecipe);
 
 
@@ -50,7 +50,7 @@ function UpdateRecipeForm({ recipeId }) {
     const [preview_img, setPreviewImg] = useState('');
 
     const [errors, setErrors] = useState([]);
-    // console.log('name', preview_img)
+
 
     useEffect(() => {
         const fetchRecipeDetails = async () => {
@@ -59,7 +59,6 @@ function UpdateRecipeForm({ recipeId }) {
         fetchRecipeDetails();
     }, [dispatch, recipeId]);
 
-    console.log('single recipe', singleRecipe)
     useEffect(() => {
         if (singleRecipe) {
             setRecipeName(singleRecipe.recipe_name);
@@ -95,14 +94,14 @@ function UpdateRecipeForm({ recipeId }) {
         updatedFormData.append('cook_time', cook_time)
         updatedFormData.append('description', description)
         updatedFormData.append('preview_img', preview_img)
-        // const updatedRecipe = {
-        //     recipe_name: recipe_name,
-        //     recipe_owner: recipe_owner,
-        //     type: type,
-        //     cook_time: cook_time,
-        //     preview_img: preview_img,
-        // };
-        console.log('FORM DATA', updatedFormData)
+            // const updatedRecipe = {
+            //     recipe_name: recipe_name,
+            //     recipe_owner: recipe_owner,
+            //     type: type,
+            //     cook_time: cook_time,
+            //     preview_img: preview_img,
+            // };
+            ('FORM DATA', updatedFormData)
         for (let [key, value] of updatedFormData.entries()) {
             console.log(key, value);
         }
@@ -114,7 +113,7 @@ function UpdateRecipeForm({ recipeId }) {
         closeModal();
         // history.push(`/recipes/${recipeId}`);
     };
-    console.log('single', singleRecipe)
+    
 
 
     return (
