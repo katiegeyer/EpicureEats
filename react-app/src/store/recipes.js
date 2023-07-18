@@ -1,8 +1,10 @@
-const GET_ALLRECIPES = "recipes/GET_ALLRECIPES";
+const GET_ALLRECIPES = "recipes/GET_ALLRECIPES"
 const GET_RECIPE = "recipe/GET_RECIPE"
 const CREATE_RECIPE = 'recipe/CREATE_RECIPE'
 const UPDATE_RECIPE = 'recipe/UPDATE_RECIPE'
 const DELETE_RECIPE = 'recipe/DELETE_RECIPE'
+const SET_SEARCH_QUERY = 'recipes/SET_SEARCH_QUERY'; // new action type
+
 
 export const getAllRecipesAction = (recipes) => ({
     type: GET_ALLRECIPES,
@@ -28,6 +30,11 @@ const deleteRecipeAction = (recipeId) => ({
     type: DELETE_RECIPE,
     recipeId
 })
+
+export const setSearchQuery = (query) => ({
+    type: SET_SEARCH_QUERY,
+    payload: query,
+});
 
 
 export const getAllRecipesThunk = () => async (dispatch) => {
@@ -103,7 +110,8 @@ export const updateRecipeThunk = (recipeId, updatedRecipe) => async (dispatch) =
 }
 
 
-const initialState = { allRecipes: {}, singleRecipe: {} }
+
+const initialState = { allRecipes: {}, singleRecipe: {}, searchQuery: '' }
 
 export default function recipesReducer(state = initialState, action) {
     let newState;
@@ -149,6 +157,9 @@ export default function recipesReducer(state = initialState, action) {
             newState = { ...state, allRecipes: { ...state.allRecipes } }
             delete newState.allRecipes[action.recipeId]
             return newState
+        // case SET_SEARCH_QUERY:
+        //     return { ...state, searchQuery: action.payload }; // new case to handle SET_SEARCH_QUERY action
+        // ...
         default:
             return state;
     }
