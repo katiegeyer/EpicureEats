@@ -38,7 +38,7 @@ function Comments({ recipeId }) {
             console.warn("data fetched not an array", data);
         }
     }
-    
+
     useEffect(() => {
         fetchComments();
     }, [dispatch, recipeId]);
@@ -52,7 +52,6 @@ function Comments({ recipeId }) {
         if (!userName) errors.user_name = "Display name is required";
         if (Object.keys(errors).length > 0) {
             setErr(errors);
-            console.log('errorssss', errors);
             setDisplayErr(true);
         }
         else {
@@ -117,94 +116,3 @@ function Comments({ recipeId }) {
 }
 
 export default Comments;
-
-
-// import React, { useEffect, useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { createCommentThunk, fetchCommentsThunk } from '../../store/comments';
-// import { getRecipeThunk } from '../../store/recipes';
-
-// function Comments({ recipeId }) {
-//     const dispatch = useDispatch();
-//     const [comments, setComments] = useState([]);
-//     const sessionUser = useSelector((state) => state.session.user);
-//     const current_user = sessionUser.id;
-//     console.log('current', current_user)
-
-
-//     // const comments = useSelector(state => state.comments) || [];
-//     // console.log(comments)
-//     // const comments = com.comments
-//     // console.log('these are the comnments', comments)
-//     // const recipe = useSelector(state => state.recipes.singleRecipe)
-//     // const recipeId = recipe.id
-//     console.log(recipeId)
-//     const [commentText, setCommentText] = useState('');
-//     const [userName, setUserName] = useState('')
-//     const [commentTime, setCommentTime] = useState('')
-
-//     // useEffect(async () => {
-//     //     const data = await dispatch(fetchCommentsThunk(recipeId));
-//     //     console.log('data fetched', data);
-//     //     if (Array.isArray(data.comments)) {
-//     //         setComments(data.comments);
-//     //     } else {
-//     //         console.warn("data fetched not an array", data)
-//     //             ;
-//     //     }
-//     // }, [dispatch, recipeId]);
-
-//     const fetchComments = async () => {
-//         const data = await dispatch(fetchCommentsThunk(recipeId));
-//         console.log('data fetched', data);
-//         if (Array.isArray(data.comments)) {
-//             setComments(data.comments);
-//         } else {
-//             console.warn("data fetched not an array", data);
-//         }
-//     }
-
-//     useEffect(() => {
-//         fetchComments();
-//     }, [dispatch, recipeId]);
-
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         const newComment = { user_name: userName, text: commentText, recipe_id: recipeId, user_id: current_user, created_at: commentTime };
-//         dispatch(createCommentThunk(recipeId, newComment));
-//         setCommentText('');
-//         fetchComments();
-//     };
-
-//     // console.log('comments', comments);
-
-//     return (
-//         <div>
-//             <form onSubmit={handleSubmit}>
-//                 <input
-//                     value={userName}
-//                     onChange={e => setUserName(e.target.value)}
-//                     placeholder="Enter your name."
-//                 />
-//                 <input
-//                     value={commentText}
-//                     onChange={e => setCommentText(e.target.value)}
-//                     placeholder="Add a comment..."
-//                 />
-//                 <button type="submit">Submit</button>
-//             </form>
-//             <div>
-//                 {comments && comments.map(comment => (
-//                     <div key={comment.id}>
-//                         <h4>{comment.user_name}</h4>
-//                         <h5>{comment.created_at}</h5>
-//                         <p>{comment.comment}</p>
-
-//                     </div>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Comments;
