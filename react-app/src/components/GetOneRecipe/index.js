@@ -47,7 +47,6 @@ function RecipeDetails() {
         }));
     }
 
-    console.log('this is the list', ingredientList);
     let preparationList = [];
 
 
@@ -73,7 +72,6 @@ function RecipeDetails() {
         dispatch(getRecipeThunk(id));
     }, [dispatch, id, update]);
 
-    console.log('recipe id', recipe.id)
     return (
         <>
             <div className="banner">

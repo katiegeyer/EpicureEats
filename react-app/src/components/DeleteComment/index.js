@@ -8,24 +8,11 @@ import { useHistory } from "react-router-dom"
 
 const DeleteComment = ({ commentId, recipeId }) => {
     const history = useHistory()
-    console.log('commentididid', commentId)
     const { closeModal } = useModal()
     const dispatch = useDispatch()
-    // const recipeId = useParams()
 
-    // console.log("SONGIDDDD", songId)
-    // const songId = useSelector(state => state)
-    // const deleteClick = (e) => {
-    //     if (commentId) {
-    //         dispatch(removeCommentThunk(commentId, recipeId))
-    //         closeModal()
-    //         window.location.replace(`/recipes/${recipeId}`)
-    //     }
-    // }
 
     const deleteClick = (e) => {
-        console.log('Deleting commentId:', commentId);
-        console.log('From recipeId:', recipeId);
         if (commentId) {
             dispatch(removeCommentThunk(recipeId, commentId));
             closeModal();

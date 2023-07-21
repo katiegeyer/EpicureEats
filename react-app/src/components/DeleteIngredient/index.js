@@ -13,9 +13,6 @@ const DeleteIngredient = ({recipeId, ingredientId}) => {
     const dispatch = useDispatch()
     // const params = useParams()
 
-    // console.log("SONGIDDDD", songId)
-    // const songId = useSelector(state => state)
-
     useEffect(() => {
         dispatch(getIngredientsThunk(recipeId));
     }, [dispatch, recipeId]);
