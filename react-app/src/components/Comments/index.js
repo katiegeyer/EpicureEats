@@ -19,8 +19,6 @@ function Comments({ recipeId }) {
     const comment = useSelector(state => state.comments.comments)
     const sessionUser = useSelector((state) => state.session.user);
     const commentUserId = comment.map(c => c.user_id);
-    console.log('COMENT OWNER', commentUserId)
-    console.log('session', sessionUser.id)
 
     // useEffect(() => {
     //     const errors = {}
@@ -40,10 +38,7 @@ function Comments({ recipeId }) {
             console.warn("data fetched not an array", data);
         }
     }
-    console.log('COMEOSOFKJASFSDF', comment.id)
-    console.log('Comment IDs:', comment.map(c => c.id));
-    console.log('recipe ID', recipeId)
-
+    
     useEffect(() => {
         fetchComments();
     }, [dispatch, recipeId]);
