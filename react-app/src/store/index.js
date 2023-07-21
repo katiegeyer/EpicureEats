@@ -5,13 +5,15 @@ import recipesReducer from './recipes';
 import ingredientsReducer from './ingredients';
 import commentsReducer from './comments';
 import preparationsReducer from './preparations';
+import searchReducer from './search';
 
 const rootReducer = combineReducers({
   session,
   recipes: recipesReducer,
   ingredients: ingredientsReducer,
   preparations: preparationsReducer,
-  comments: commentsReducer
+  comments: commentsReducer,
+  searchQuery: searchReducer
 
 });
 

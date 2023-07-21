@@ -484,15 +484,9 @@ def update_comment(comment_id):
 
 
 @recipe_routes.route('/<int:recipe_id>/comments/<int:comment_id>', methods=['DELETE'])
-# def delete_comment(recipe_id, comment_id):
-#     # your code here
-#     print('COMEOMOEMRE', id)
-#     comment = RecipeComment.query.get(id)
-#     db.session.delete(comment)
-#     db.session.commit()
-#     return jsonify({'message': 'deleted'})
+
 def delete_comment(recipe_id, comment_id):
-    print('COMEOMOEMRE', comment_id)
+
     comment = RecipeComment.query.get(comment_id)
     db.session.delete(comment)
     db.session.commit()

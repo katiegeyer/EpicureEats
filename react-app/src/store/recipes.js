@@ -3,7 +3,6 @@ const GET_RECIPE = "recipe/GET_RECIPE"
 const CREATE_RECIPE = 'recipe/CREATE_RECIPE'
 const UPDATE_RECIPE = 'recipe/UPDATE_RECIPE'
 const DELETE_RECIPE = 'recipe/DELETE_RECIPE'
-const SET_SEARCH_QUERY = 'recipes/SET_SEARCH_QUERY'; // new action type
 
 
 export const getAllRecipesAction = (recipes) => ({
@@ -30,12 +29,6 @@ const deleteRecipeAction = (recipeId) => ({
     type: DELETE_RECIPE,
     recipeId
 })
-
-export const setSearchQuery = (query) => ({
-    type: SET_SEARCH_QUERY,
-    payload: query,
-});
-
 
 export const getAllRecipesThunk = () => async (dispatch) => {
     const response = await fetch("/api/recipes/")
@@ -111,7 +104,7 @@ export const updateRecipeThunk = (recipeId, updatedRecipe) => async (dispatch) =
 
 
 
-const initialState = { allRecipes: {}, singleRecipe: {}, searchQuery: '' }
+const initialState = { allRecipes: {}, singleRecipe: {} }
 
 export default function recipesReducer(state = initialState, action) {
     let newState;

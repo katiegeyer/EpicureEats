@@ -37,6 +37,9 @@ function App() {
           <Route path="/">
             <SplashPage />
           </Route>
+          <Route path="/search">
+            <Search/>
+          </Route>
         </Switch>
       )}
     </>
