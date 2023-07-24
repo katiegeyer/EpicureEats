@@ -484,7 +484,6 @@ def update_comment(comment_id):
 
 
 @recipe_routes.route('/<int:recipe_id>/comments/<int:comment_id>', methods=['DELETE'])
-
 def delete_comment(recipe_id, comment_id):
 
     comment = RecipeComment.query.get(comment_id)
@@ -493,14 +492,30 @@ def delete_comment(recipe_id, comment_id):
     return jsonify({'message': 'deleted'})
 
 
+# @recipe_routes.route('/search', methods=['GET'])
+# def search():
+#     query = request.args.get('q')
+#     results = Recipe.query.filter(
+#         db.or_(
+#             Recipe.recipe_name.ilike(f'%{query}%'),
+#             Recipe.description.ilike(f'%{query}%'),
+#             Recipe.type.ilike(f'%{query}%')  # Include the type field in search
+#         )
+#     ).all()
+#     return {"recipes": [result.to_dict() for result in results]}
 @recipe_routes.route('/search', methods=['GET'])
 def search():
     query = request.args.get('q')
-    results = Recipe.query.filter(
-        db.or_(
-            Recipe.recipe_name.ilike(f'%{query}%'),
-            Recipe.description.ilike(f'%{query}%'),
-            Recipe.type.ilike(f'%{query}%')  # Include the type field in search
-        )
-    ).all()
+    if query.lower() == "vegetarian":
+        results = Recipe.query.filter(
+            Recipe.type.ilike('vegetarian')
+        ).all()
+    else:
+        results = Recipe.query.filter(
+            db.or_(
+                Recipe.recipe_name.ilike(f'%{query}%'),
+                Recipe.description.ilike(f'%{query}%'),
+                Recipe.type.ilike(f'%{query}%')
+            )
+        ).all()
     return {"recipes": [result.to_dict() for result in results]}
