@@ -16,25 +16,52 @@ import { NavLink } from 'react-router-dom';
 const RecipePage = () => {
     const dispatch = useDispatch();
     const [query, setQuery] = useState('');
-    const [filteredRecipes, setFilteredRecipes] = useState([]);
-
     const recipes = useSelector(state => Object.values(state.recipes.allRecipes));
+    const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+    const [calledAPI, setCalledAPI] = useState(false)
+    console.log('filtered recipes', filteredRecipes)
+    console.log('recipe 1', recipes)
+
+    // const [filteredRecipes, setFilteredRecipes] = useState([]);
+
+
 
     useEffect(() => {
         dispatch(getAllRecipesThunk());
+        console.log('get recipes')
+        setCalledAPI(true)
+        console.log('useeffect recipe', recipes)
     }, [dispatch]);
 
     useEffect(() => {
-        if (query === '') {
-            setFilteredRecipes(recipes);
-        } else {
-            setFilteredRecipes(recipes.filter((recipe) =>
-                recipe.recipe_name.toLowerCase().includes(query.toLowerCase()) ||
-                recipe.description.toLowerCase().includes(query.toLowerCase()) ||
-                recipe.type.toLowerCase().includes(query.toLowerCase())
-            ));
+        if (calledAPI) {
+            setFilteredRecipes(recipes)
+            setCalledAPI(false)
+            console.log('fire')
         }
-    }, [query, recipes]);
+    }, [calledAPI]);
+
+    // useEffect(() => {
+    //     if (query === '') {
+    //         setFilteredRecipes(recipes);
+    //     } else {
+    //         setFilteredRecipes(recipes.filter((recipe) =>
+    //             recipe.recipe_name.toLowerCase().includes(query.toLowerCase()) ||
+    //             recipe.description.toLowerCase().includes(query.toLowerCase()) ||
+    //             recipe.type.toLowerCase().includes(query.toLowerCase())
+    //         ));
+    //     }
+    // }, [query, recipes]);
+    // useEffect(() => {
+    //     if (query !== '') {
+    //         setFilteredRecipes(recipes.filter((recipe) =>
+    //             recipe.recipe_name.toLowerCase().includes(query.toLowerCase()) ||
+    //             recipe.description.toLowerCase().includes(query.toLowerCase()) ||
+    //             recipe.type.toLowerCase().includes(query.toLowerCase())
+    //         ));
+    //     }
+    // }, [query, recipes]);
+
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
@@ -108,7 +135,7 @@ const RecipePage = () => {
             </div> */}
             <div className="recipes-list">
                 <Slider {...settings}>
-                    {filteredRecipes.map(recipe =>
+                    {recipes.map(recipe =>
                         <div key={recipe.id}>
                             <RecipeCard recipe={recipe} />
                         </div>

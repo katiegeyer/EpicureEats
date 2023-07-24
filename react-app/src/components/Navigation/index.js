@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { setSearchQuery } from '../actions/searchActions';
+// import { setSearchQuery } from '../actions/searchActions';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Navigation.css';
 import { getAllRecipesThunk } from '../../store/recipes';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const alertClickHandler = () => {
     return alert('Feature Coming Soon!')
@@ -20,29 +21,58 @@ const alertClickHandler = () => {
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
+    const history = useHistory();
     const dispatch = useDispatch();
-    const [searchQuery, setSearchQuery] = useState
+    const [searchQuery, setSearchQuery] = useState("")
 
     // const handleInputChange = (e) => {
     //     dispatch(setSearchQuery(e.target.value));
     // };
 
+    // const handleSearch = async (e) => {
+    //     e.preventDefault();
+    //     if (searchQuery) {
+    //         await dispatch(getAllRecipesThunk(searchQuery));
+    //         history.push('/search')
+    //     }
+    //     setSearchQuery("");
+    // }
     const handleSearch = async (e) => {
         e.preventDefault();
         if (searchQuery) {
             await dispatch(getAllRecipesThunk(searchQuery));
             history.push('/search')
         }
+        setSearchQuery("");
     }
+
 
     return (
         <>
             {sessionUser &&
                 <nav className="navbar">
                     <NavLink className="nav-logo" exact to="/">Epicure Eats</NavLink>
-                    <div className="nav-search">
-                        <input type="text" placeholder="Search..." onChange={handleInputChange} />
-                    </div>
+                    {/* <form>
+                        <div className="nav-search">
+                            <input value={searchQuery}
+                                className="search-bar"
+                                type='search' placeholder="Search..." onChange={e => setSearchQuery(e.target.value)} />
+                            <div className='search-icon'>
+                                <button onClick={handleSearch} value={searchQuery} className='search-button' type='submit'><i className="fas fa-search fa-lg"></i></button>
+
+                            </div>
+                        </div>
+                    </form> */}
+                    <form onSubmit={handleSearch}>
+                        <div className="nav-search">
+                            <input value={searchQuery}
+                                type='search' placeholder="Search..." onChange={e => setSearchQuery(e.target.value)} />
+                            <div className='search-icon'>
+                                <button value={searchQuery} className='search-button' type='submit'><i className="fas fa-search fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </form>
+
                     <div className="nav-links">
                         <OpenModalButton
                             buttonText="Post a Recipe"

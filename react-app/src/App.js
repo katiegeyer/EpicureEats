@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import RecipePage from "./components/RecipePage";
+import Search from "./components/Search";
 
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
@@ -28,17 +29,18 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route path="/search">
+            <Search />
+          </Route>
           <Route path="/recipes/:id">
             <RecipeDetails />
           </Route>
           <Route path="/recipes">
             <RecipePage />
           </Route>
-          <Route path="/">
+
+          <Route exact path="/">
             <SplashPage />
-          </Route>
-          <Route path="/search">
-            <Search/>
           </Route>
         </Switch>
       )}

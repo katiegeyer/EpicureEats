@@ -5,7 +5,7 @@ import recipesReducer from './recipes';
 import ingredientsReducer from './ingredients';
 import commentsReducer from './comments';
 import preparationsReducer from './preparations';
-import searchReducer from './search';
+
 
 const rootReducer = combineReducers({
   session,
@@ -13,7 +13,6 @@ const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   preparations: preparationsReducer,
   comments: commentsReducer,
-  searchQuery: searchReducer
 
 });
 

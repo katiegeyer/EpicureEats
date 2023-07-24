@@ -3,6 +3,8 @@ const GET_RECIPE = "recipe/GET_RECIPE"
 const CREATE_RECIPE = 'recipe/CREATE_RECIPE'
 const UPDATE_RECIPE = 'recipe/UPDATE_RECIPE'
 const DELETE_RECIPE = 'recipe/DELETE_RECIPE'
+const SEARCH_RECIPES = 'recipes/SEARCH_RECIPES';
+
 
 
 export const getAllRecipesAction = (recipes) => ({
@@ -30,8 +32,33 @@ const deleteRecipeAction = (recipeId) => ({
     recipeId
 })
 
-export const getAllRecipesThunk = () => async (dispatch) => {
-    const response = await fetch("/api/recipes/")
+const searchRecipesAction = (recipes) => ({
+    type: SEARCH_RECIPES,
+    recipes
+});
+
+
+// export const getAllRecipesThunk = (searchQuery) => async (dispatch) => {
+//     const response = await fetch("/api/recipes/")
+//     if (response.ok) {
+//         const data = await response.json();
+//         if (data.errors) {
+//             return;
+//         }
+
+//         dispatch(getAllRecipesAction(data));
+//     }
+// };
+
+export const getAllRecipesThunk = (searchQuery = "") => async (dispatch) => {
+    let response;
+
+    if (searchQuery) {
+        response = await fetch(`/api/recipes/search?q=${searchQuery}`);
+    } else {
+        response = await fetch("/api/recipes/");
+    }
+
     if (response.ok) {
         const data = await response.json();
         if (data.errors) {
@@ -41,6 +68,7 @@ export const getAllRecipesThunk = () => async (dispatch) => {
         dispatch(getAllRecipesAction(data));
     }
 };
+
 
 export const createRecipeThunk = (recipe) => async (dispatch) => {
     const response = await fetch('/api/recipes/new', {
@@ -101,10 +129,24 @@ export const updateRecipeThunk = (recipeId, updatedRecipe) => async (dispatch) =
         return data
     }
 }
+export const searchRecipesThunk = (searchQuery) => async (dispatch) => {
+    const response = await fetch(`/api/recipes/search?q=${searchQuery}`);
+
+    if (response.ok) {
+        const data = await response.json();
+
+        if (data.errors) {
+            return;
+        }
+
+        dispatch(searchRecipesAction(data.recipes));
+    }
+};
 
 
 
-const initialState = { allRecipes: {}, singleRecipe: {} }
+
+const initialState = { allRecipes: {}, singleRecipe: {}, searchResults: {} }
 
 export default function recipesReducer(state = initialState, action) {
     let newState;
@@ -149,6 +191,9 @@ export default function recipesReducer(state = initialState, action) {
         case DELETE_RECIPE:
             newState = { ...state, allRecipes: { ...state.allRecipes } }
             delete newState.allRecipes[action.recipeId]
+            return newState
+        case SEARCH_RECIPES:
+            newState = { ...state, searchResults: { ...action.recipes } };
             return newState
         // case SET_SEARCH_QUERY:
         //     return { ...state, searchQuery: action.payload }; // new case to handle SET_SEARCH_QUERY action
