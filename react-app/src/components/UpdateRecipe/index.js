@@ -101,7 +101,7 @@ function UpdateRecipeForm({ recipeId }) {
             //     cook_time: cook_time,
             //     preview_img: preview_img,
             // };
-            ('FORM DATA', updatedFormData)
+            // ('FORM DATA', updatedFormData)
         for (let [key, value] of updatedFormData.entries()) {
             console.log(key, value);
         }
@@ -113,7 +113,7 @@ function UpdateRecipeForm({ recipeId }) {
         closeModal();
         // history.push(`/recipes/${recipeId}`);
     };
-    
+
 
 
     return (
