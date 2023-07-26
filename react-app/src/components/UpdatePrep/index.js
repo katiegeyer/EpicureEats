@@ -7,7 +7,6 @@ function UpdatePreparationForm({ preparation, preparationId, recipeId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const prep = useSelector(state => state.preparations[preparation]);
-    console.log('preparation', preparationId)
 
     const [step_number, setStepNumber] = useState('');
     const [instruction, setInstruction] = useState('');

@@ -19,8 +19,6 @@ const RecipePage = () => {
     const recipes = useSelector(state => Object.values(state.recipes.allRecipes));
     const [filteredRecipes, setFilteredRecipes] = useState(recipes);
     const [calledAPI, setCalledAPI] = useState(false)
-    console.log('filtered recipes', filteredRecipes)
-    console.log('recipe 1', recipes)
 
     // const [filteredRecipes, setFilteredRecipes] = useState([]);
 
@@ -28,16 +26,13 @@ const RecipePage = () => {
 
     useEffect(() => {
         dispatch(getAllRecipesThunk());
-        console.log('get recipes')
         setCalledAPI(true)
-        console.log('useeffect recipe', recipes)
     }, [dispatch]);
 
     useEffect(() => {
         if (calledAPI) {
             setFilteredRecipes(recipes)
             setCalledAPI(false)
-            console.log('fire')
         }
     }, [calledAPI]);
 

@@ -12,8 +12,6 @@ function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
     const sessionUser = useSelector((state) => state.session.user);
     const recipe = useSelector(state => state.recipes.singleRecipe);
     const recipeId = recipe.id
-    console.log('recipe', recipe)
-    console.log('recipe id', recipeId)
     const { closeModal } = useModal();
     // const recipeIngredients = useSelector(state => state.ingredients);
     // console.log('recipe ingred', recipeIngredients.ingredients)
@@ -67,10 +65,10 @@ function IngredientsForm({ ingredient, updateRecipe, setUpdate }) {
                 id: ingredient.id
             }))
         };
-        console.log('ingredients values', Object.values(ingred.ingredients));
-        console.log('ingred', ingred)
-        console.log('ingredients', ingred.ingredients);
-        console.log('payload', { ingredients: ingred.ingredients });
+        // console.log('ingredients values', Object.values(ingred.ingredients));
+        // console.log('ingred', ingred)
+        // console.log('ingredients', ingred.ingredients);
+        // console.log('payload', { ingredients: ingred.ingredients });
 
         const data = await dispatch(createIngredientThunk(recipeId, ingred.ingredients));
         if (data.status == 'error') {

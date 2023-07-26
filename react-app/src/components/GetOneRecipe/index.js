@@ -30,12 +30,12 @@ function RecipeDetails() {
     const sessionUser = useSelector((state) => state.session.user);
     const comment = useSelector((state) => state.comments.comments)
     const commentUserId = comment.map(c => c.user_id);
-    console.log('COMENT OWNER', commentUserId)
+
     const owner = recipe.recipe_owner;
     const current_user = sessionUser?.id;
-    console.log('current user', current_user)
+
     const recipeUser = recipe.user_id;
-    console.log('recipe user', recipeUser);
+
     const [update, setUpdate] = useState(false);
     let ingredientList = [];
 
@@ -58,7 +58,7 @@ function RecipeDetails() {
         }));
     }
 
-    console.log(preparationList);
+    // console.log(preparationList);
 
     //   const recipeIngredients = useSelector((state) => state)
 

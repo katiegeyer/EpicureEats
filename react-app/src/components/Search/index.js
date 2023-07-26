@@ -8,8 +8,6 @@ function Search() {
     const history = useHistory();
     const recipes = useSelector(state => Object.values(state.recipes.allRecipes));
     const recipesArray = Object.values(recipes);
-    console.log('recipe array', recipesArray)
-    console.log('recipes', recipes)
 
     // add loading state
     const [isLoading, setIsLoading] = useState(true);

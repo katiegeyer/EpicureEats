@@ -73,7 +73,6 @@ export const getUserThunk = (id) => async (dispatch) => {
 // }
 
 export const updateUserThunk = (user, userId) => async (dispatch) => {
-    console.log("TEST 2", user)
     // console.log("TEST ENTRIES", user.entries())
     const formData = new FormData()
     formData.append('username', user.username)
@@ -82,16 +81,12 @@ export const updateUserThunk = (user, userId) => async (dispatch) => {
         method: 'PUT',
         body: formData
     })
-    console.log(response)
+    // console.log(response)
     if (response.ok) {
-        console.log("TEST 3")
         const data = await response.json();
-        console.log("TEST 5", data)
         if (data.errors) {
-            console.log("TEST 6")
             return data.errors
         }
-        console.log("TEST 4")
         dispatch(updateUserAction(data))
     }
 }
