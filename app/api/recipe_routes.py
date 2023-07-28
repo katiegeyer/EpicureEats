@@ -376,24 +376,63 @@ def add_preparation(recipe_id):
 
     preparations = []
     for preparation_data in data['preparations']:
-        print('Processing prep: ', preparation_data)
-        print('preppp', Preparation)
-        # Find the ingredient by name, or create it if it doesn't exist
-        preparation = Preparation.query.filter_by(
-            step=preparation_data['step_number']).first()
-
-        if not preparation:
-            preparation = Preparation(
-                step=preparation_data['step_number'],
-                instruction=preparation_data['instruction'])
-            db.session.add(preparation)
-            print('Added preparation: ', preparation_data)
-        # Link the preparation with the recipe
-        recipe.preparations.append(preparation)
+        # Create a new Preparation for each step
+        preparation = Preparation(
+            step=preparation_data['step_number'],
+            instruction=preparation_data['instruction'],
+            recipe_id=recipe_id  # Add recipe_id directly to the Preparation
+        )
+        db.session.add(preparation)
         preparations.append(preparation)
 
     # commit the session after the loop
     db.session.commit()
+    return [preparation.to_dict() for preparation in preparations]
+
+# @recipe_routes.route('/<int:recipe_id>/preparations', methods=['POST'])
+# @login_required
+# def add_preparation(recipe_id):
+#     data = request.json
+#     print('request.json:', data)
+
+#     recipe = Recipe.query.get(recipe_id)
+#     if not recipe:
+#         return {"error": "Recipe not found"}, 404
+
+#     preparations = []
+#     for preparation_data in data['preparations']:
+#         # Create a new Preparation for each step
+#         preparation = Preparation(
+#             step=preparation_data['step_number'],
+#             instruction=preparation_data['instruction']
+#         )
+#     db.session.add(preparation)
+#     # Link the preparation with the recipe
+#     recipe.preparations.append(preparation)
+#     preparations.append(preparation)
+
+# # commit the session after the loop
+#     db.session.commit()
+
+    # for preparation_data in data['preparations']:
+    #     print('Processing prep: ', preparation_data)
+    #     print('preppp', Preparation)
+    #     # Find the ingredient by name, or create it if it doesn't exist
+    #     preparation = Preparation.query.filter_by(
+    #         step=preparation_data['step_number']).first()
+
+    #     if not preparation:
+    #         preparation = Preparation(
+    #             step=preparation_data['step_number'],
+    #             instruction=preparation_data['instruction'])
+    #         db.session.add(preparation)
+    #         print('Added preparation: ', preparation_data)
+    #     # Link the preparation with the recipe
+    #     recipe.preparations.append(preparation)
+    #     preparations.append(preparation)
+
+    # # commit the session after the loop
+    # db.session.commit()
     return [preparation.to_dict() for preparation in preparations]
 
 

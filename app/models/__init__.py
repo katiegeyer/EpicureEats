@@ -8,7 +8,7 @@ from .ingredient import Ingredient
 # from .recipe_box import RecipeBox
 from .recipe_comment import RecipeComment
 from .preparation import Preparation
-from .r_preparation_join import recipe_preparation
+# from .r_preparation_join import recipe_preparation
 from .recipe_ingredient_join import recipe_ingredient
 # from .recipe_rating import RecipeRating
 # from .recipe_tag import RecipeTag

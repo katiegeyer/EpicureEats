@@ -3,7 +3,7 @@ const CREATE_PREPARATION = 'preparations/CREATE_PREPARATION';
 const DELETE_PREPARATION = 'preparations/DELETE_PREPARATION';
 const UPDATE_PREPARATION = 'preparations/UPDATE_PREPARATION';
 
-export const getPreparationsAction = (preparations) => ({
+const getPreparationsAction = (preparations) => ({
     type: GET_PREPARATIONS,
     preparations
 });
@@ -33,9 +33,23 @@ export const getPreparationsThunk = (recipeId) => async (dispatch) => {
             return;
         }
 
-        dispatch(getPreparationsAction(data));
+        dispatch(getPreparationsAction(recipeId, data));
     }
 };
+
+// export const getPreparationsThunk = (recipeId) => async (dispatch) => {
+//     const response = await fetch(`/api/recipes/${recipeId}/preparations`)
+
+//     if (response.ok) {
+//         const data = await response.json();
+
+//         if (data.errors) {
+//             return;
+//         }
+
+//         dispatch(getPreparationsAction(data));
+//     }
+// };
 
 export const createPreparationThunk = (recipeId, preparation) => async (dispatch) => {
     const response = await fetch(`/api/recipes/${recipeId}/preparations`, {
@@ -93,11 +107,16 @@ const initialState = { preparations: {} }
 export default function preparationsReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
+        // case GET_PREPARATIONS:
+        // newState = { ...state, preparations: { ...action.preparations } }
+        // return newState
+        // newState = { ...state, preparations: { ...action.preparations } }
+        // action.preparations.preparations.forEach(preparation => newState.preparations[preparation.id] = preparation)
         case GET_PREPARATIONS:
-            // newState = { ...state, preparations: { ...action.preparations } }
-            // return newState
-            newState = { ...state, preparations: { ...action.preparations } }
-            action.preparations.preparations.forEach(preparation => newState.preparations[preparation.id] = preparation)
+            newState = { ...state }
+            newState.preparations[action.recipeId] = { ...action.preparations }
+            return newState
+
         case CREATE_PREPARATION:
             newState = { ...state }
             newState.preparations[action.preparationId] = action.preparation

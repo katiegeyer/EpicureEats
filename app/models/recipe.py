@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .recipe_ingredient_join import recipe_ingredient
-from .r_preparation_join import recipe_preparation
+# from .r_preparation_join import recipe_preparation
 
 
 class Recipe(db.Model):
@@ -29,8 +29,10 @@ class Recipe(db.Model):
     # boxes = db.relationship('RecipeBoxItem', back_populates='recipes')
     # folders = db.relationship('RecipeFolder', back_populates='recipes')
     recipe_comments = db.relationship('RecipeComment', back_populates='recipes')
+    # preparations = db.relationship(
+    #     'Preparation', secondary=recipe_preparation, back_populates='recipes', single_parent=True, cascade='all, delete-orphan')
     preparations = db.relationship(
-        'Preparation', secondary=recipe_preparation, back_populates='recipes', single_parent=True, cascade='all, delete-orphan')
+        'Preparation', back_populates='recipe', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

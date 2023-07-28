@@ -57,6 +57,7 @@ function PreparationForm({ preparation, setUpdate }) {
         };
 
         const data = await dispatch(createPreparationThunk(recipeId, stepObj.steps));
+        console.log('step obj', stepObj.steps);
         if (data.status == 'error') {
             setErrors(data);
         } else {
