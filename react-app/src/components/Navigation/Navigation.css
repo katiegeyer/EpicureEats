@@ -23,8 +23,9 @@
 }
 
 form {
-width: 70%;
+  width: 100%;
 }
+
 .nav-search {
   width: 100%;
   display: flex;

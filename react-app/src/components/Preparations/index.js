@@ -70,7 +70,7 @@ function PreparationForm({ preparation, setUpdate }) {
         <div className="login-page-ing">
             <div className="login-modal prep">
                 <h1>Add Steps</h1>
-                <form onSubmit={handleSubmit}>
+                <form className='forms' onSubmit={handleSubmit}>
                     {steps.map((step, index) => (
                         <div key={index}>
                             {/* <label>
