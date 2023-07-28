@@ -38,12 +38,14 @@
 }
 
 .login-modal {
-  width: 50%;
+  width: 70%;
   /* This will occupy the remaining half of the width */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+  align-items: flex-start;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
   border-radius: 8px;
