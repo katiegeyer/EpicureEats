@@ -29,7 +29,7 @@ function LoginFormModal() {
 
   const demoClick = () => {
     dispatch(sessionActions.login('demo@aa.io', 'password'))
-    history.push('/discover')
+    history.push('/recipes')
     closeModal()
   }
 
