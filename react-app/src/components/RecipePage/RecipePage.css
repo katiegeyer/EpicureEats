@@ -76,7 +76,7 @@ button.slick-next:hover {
 button.slick-arrow,
 button.slick-arrow:hover {
 
-    z-index: 1;
+    z-index: .999;
 }
 
 button.slick-arrow::before,
