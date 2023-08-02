@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import UpdateProfile from "../UpdateUser";
 import DeleteRecipe from "../DeleteRecipe";
 import DeleteUser from "../DeleteUser";
+import MyRecipes from "../MyRecipes";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -41,6 +42,10 @@ function ProfileButton({ user }) {
     history.push('/')
 
   };
+  const goToMyRecipes = () => {
+    history.push('/myrecipes');
+    closeMenu();
+  };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
@@ -57,6 +62,10 @@ function ProfileButton({ user }) {
               <li>{user.username}</li>
               <br />
               <li>{user.email}</li>
+              <br />
+              <li>
+                <button onClick={goToMyRecipes}>My Recipes</button>
+              </li>
               <br />
               <li>
                 <button onClick={handleLogout}>Log Out</button>
