@@ -82,7 +82,10 @@ function SplashPage() {
                 <p>Discover, cook, enjoy.</p>
             </div>
             <br />
-            <div className="splash-image">
+            <div className="splash-image"
+                onMouseEnter={() => setShowOverlay(true)}
+                onMouseLeave={() => setShowOverlay(false)}
+            >
                 <img
                     src='https://www.pnas.org/cms/10.1073/pnas.1913308116/asset/053e8f99-6de4-4c07-b7fc-64424aff27b7/assets/graphic/pnas.1913308116fig01.jpeg'
                     alt="Placeholder"
@@ -129,8 +132,8 @@ function SplashPage() {
                 <p>There is something profoundly satisfying about sharing a meal. Eating together, breaking bread together, is one of the oldest and most fundamentally unifying of human experiences.</p>
                 <p>Barbara Coloroso</p>
             </div>
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <div className='splash-page-footer'>
                 <div className='splash-page-footer-inner'>
