@@ -10,6 +10,10 @@
     border: 2px solid gray
 }
 
+/* .profile-button-wrapper button {
+    margin-left: 0px;
+} */
+
 
 .nav-bar-profile-button-log-out {
     display: inline-block;

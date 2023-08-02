@@ -34,10 +34,15 @@ form {
   margin-left: 20px;
 }
 
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+}
 
 .search-button {
   display: flex;
   flex-direction: row;
+  margin-right: 35px;
 }
 
 .nav-search input {
@@ -53,7 +58,7 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
 }
 
 .nav-links a {
